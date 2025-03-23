@@ -1,0 +1,61 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmisTracking.Localization", "src\EmisTracking.Localization\EmisTracking.Localization.csproj", "{2ED1FCB3-CB30-4B5E-8715-FC182DB82548}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmisTracking.Services", "src\EmisTracking.Services\EmisTracking.Services.csproj", "{C04044E7-5724-4A84-A4AA-D2A7D829AE6E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmisTracking.Services.Database", "src\EmisTracking.Services.Database\EmisTracking.Services.Database.csproj", "{7A5E82EC-05D1-4D25-B529-CEAA0A92B54D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmisTracking.WebApi.Models", "src\EmisTracking.WebApi.Models\EmisTracking.WebApi.Models.csproj", "{78EED65E-DB53-4AF5-92CB-02B31463C946}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmisTracking.Mapping", "src\EmisTracking.Mapping\EmisTracking.Mapping.csproj", "{16677986-64DA-441B-BAA6-CF4AFD5D5A0D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmisTracking.Services.WebApi", "src\EmisTracking.Services.WebApi\EmisTracking.Services.WebApi.csproj", "{1DF2441C-923A-432C-96DA-0DE5ED0F8E31}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmisTracking.WebApi", "src\EmisTracking.WebApi\EmisTracking.WebApi.csproj", "{A2382436-C7C0-4D91-9EE1-E069DE17D3DC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2ED1FCB3-CB30-4B5E-8715-FC182DB82548}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2ED1FCB3-CB30-4B5E-8715-FC182DB82548}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2ED1FCB3-CB30-4B5E-8715-FC182DB82548}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2ED1FCB3-CB30-4B5E-8715-FC182DB82548}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C04044E7-5724-4A84-A4AA-D2A7D829AE6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C04044E7-5724-4A84-A4AA-D2A7D829AE6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C04044E7-5724-4A84-A4AA-D2A7D829AE6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C04044E7-5724-4A84-A4AA-D2A7D829AE6E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A5E82EC-05D1-4D25-B529-CEAA0A92B54D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A5E82EC-05D1-4D25-B529-CEAA0A92B54D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A5E82EC-05D1-4D25-B529-CEAA0A92B54D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A5E82EC-05D1-4D25-B529-CEAA0A92B54D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78EED65E-DB53-4AF5-92CB-02B31463C946}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78EED65E-DB53-4AF5-92CB-02B31463C946}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78EED65E-DB53-4AF5-92CB-02B31463C946}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78EED65E-DB53-4AF5-92CB-02B31463C946}.Release|Any CPU.Build.0 = Release|Any CPU
+		{16677986-64DA-441B-BAA6-CF4AFD5D5A0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16677986-64DA-441B-BAA6-CF4AFD5D5A0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16677986-64DA-441B-BAA6-CF4AFD5D5A0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16677986-64DA-441B-BAA6-CF4AFD5D5A0D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1DF2441C-923A-432C-96DA-0DE5ED0F8E31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1DF2441C-923A-432C-96DA-0DE5ED0F8E31}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1DF2441C-923A-432C-96DA-0DE5ED0F8E31}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1DF2441C-923A-432C-96DA-0DE5ED0F8E31}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2382436-C7C0-4D91-9EE1-E069DE17D3DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2382436-C7C0-4D91-9EE1-E069DE17D3DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2382436-C7C0-4D91-9EE1-E069DE17D3DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2382436-C7C0-4D91-9EE1-E069DE17D3DC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FEA77306-A357-4E53-812C-57757C352CE1}
+	EndGlobalSection
+EndGlobal

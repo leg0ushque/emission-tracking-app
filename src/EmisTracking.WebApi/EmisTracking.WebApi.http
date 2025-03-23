@@ -1,0 +1,6 @@
+@EmisTracking.WebApi_HostAddress = http://localhost:5212
+
+GET {{EmisTracking.WebApi_HostAddress}}/areas/
+Accept: application/json
+
+###
