@@ -1,0 +1,43 @@
+﻿@model EmisTracking.WebApi.Models.Models.LoginModel;
+@{
+    ViewData["Title"] = "Войти";
+}
+
+<h2>@ViewData["Title"]</h2>
+<h5>Используйте локальный аккаунт</h5>
+<hr />
+
+<div class="row">
+    <div class="mb-5 ml-5 mr-5 col-md-5">
+        <section id="inputForm">
+            <form asp-action="PostLogin" asp-controller="Auth" method="post" asp-antiforgery="true"
+                    class="form-horizontal" >
+                <div asp-validation-summary="ModelOnly" class="text-danger" id="validationSummary"></div>
+                <div class="form-group row">
+                    <label asp-for="Email" class="col-md-4"></label>
+                    <div class="col-md-8 p-0">
+                        <input asp-for="Email" class="form-control" id="emailInput" placeholder="Электронная почта" />
+                        <span asp-validation-for="Email" class="text-danger inputError"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label asp-for="Password" class="col-md-4"></label>
+                    <div class="col-md-8 p-0">
+                        <input asp-for="Password" type="password" class="form-control" id="passwordInput" placeholder="Пароль" />
+                        <span asp-validation-for="Password" class="text-danger inputError"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-12 p-0">
+                        <button type="submit" id="loginBtn" class="btn btn-primary col-md-12">Войти</button>
+                    </div>
+                </div>
+            </form>
+        </section>
+    </div>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

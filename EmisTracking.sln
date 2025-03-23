@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmisTracking.Services.WebAp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmisTracking.WebApi", "src\EmisTracking.WebApi\EmisTracking.WebApi.csproj", "{A2382436-C7C0-4D91-9EE1-E069DE17D3DC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmisTracking.WebApp", "src\EmisTracking.WebApp\EmisTracking.WebApp.csproj", "{C1BD8CA2-B4EC-495E-B0F1-748F3B7D5AF7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{A2382436-C7C0-4D91-9EE1-E069DE17D3DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A2382436-C7C0-4D91-9EE1-E069DE17D3DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A2382436-C7C0-4D91-9EE1-E069DE17D3DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1BD8CA2-B4EC-495E-B0F1-748F3B7D5AF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1BD8CA2-B4EC-495E-B0F1-748F3B7D5AF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1BD8CA2-B4EC-495E-B0F1-748F3B7D5AF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1BD8CA2-B4EC-495E-B0F1-748F3B7D5AF7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

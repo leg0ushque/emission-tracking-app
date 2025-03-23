@@ -10,7 +10,9 @@
 
         // Сущности
 
-        public const string Attestation = "аттестация";
-        public const string CurriculumUnit = "единица уч. плана";
+        public const string Area = "площадка";
+        public const string Department = "подразделение";
+        public const string EmissionSource = "источник выбросов";
+        public const string Regime = "режим";
     }
 }

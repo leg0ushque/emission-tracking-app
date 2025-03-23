@@ -1,0 +1,7 @@
+﻿@model (string, string, string, string)
+@*action, controller, icon_name, text*@
+
+<a asp-action="@Model.Item1" asp-controller="@Model.Item2" class="nav-link collapsed">
+    <i class="@Model.Item3"></i>
+    <span>@Model.Item4</span>
+</a>

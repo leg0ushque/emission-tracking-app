@@ -10,9 +10,9 @@ namespace EmisTracking.WebApi.Controllers
     [Route("api/[controller]")]
     public class AreasController : EntityController<AreaViewModel, Area>
     {
-        public AreasController(IEntityService<Area> groupService, IMapper mapper)
+        public AreasController(IEntityService<Area> service, IMapper mapper)
         {
-            _entityService = groupService;
+            _entityService = service;
             _mapper = mapper;
         }
     }
