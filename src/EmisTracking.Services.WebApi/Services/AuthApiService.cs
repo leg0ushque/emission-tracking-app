@@ -20,14 +20,12 @@ namespace EmisTracking.Services.WebApi.Services
             return await response.Content.ReadAsStringAsync();
         }
 
-        public async Task<string> PostChangePasswordAsync(ChangePasswordModel model)
+        public async Task<HttpResponseMessage> PostChangePasswordAsync(ChangePasswordModel model)
         {
             using var content = JsonHelper.ObjectToStringContent(model);
             var response = await _httpClient.PostAsync("auth/changepassword", content);
 
-            response.EnsureSuccessStatusCode();
-
-            return await response.Content.ReadAsStringAsync();
+            return response;
         }
 
         public async Task<HttpResponseMessage> GetAuthValidateToken(string token)

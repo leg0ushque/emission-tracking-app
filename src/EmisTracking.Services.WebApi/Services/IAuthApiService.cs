@@ -7,7 +7,7 @@ namespace EmisTracking.Services.WebApi.Services
     public interface IAuthApiService
     {
         Task<HttpResponseMessage> GetAuthValidateToken(string token);
-        Task<string> PostChangePasswordAsync(ChangePasswordModel model);
+        Task<HttpResponseMessage> PostChangePasswordAsync(ChangePasswordModel model);
         Task<string> PostSignInAsync(LoginModel model);
 
         Task GetAuthLogoutAsync();

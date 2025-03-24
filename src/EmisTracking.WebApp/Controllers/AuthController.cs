@@ -1,3 +1,5 @@
+using EmisTracking.Localization;
+using EmisTracking.Services.WebApi.Helpers;
 using EmisTracking.Services.WebApi.Services;
 using EmisTracking.WebApi.Models.Models;
 using EmisTracking.WebApp.Filters;
@@ -46,11 +48,22 @@ namespace EmisTracking.WebApp.Controllers
         [Authorize]
         [HttpPost("changepassword")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordModel model)
+        public async Task<IActionResult> ChangePassword([FromForm] ChangePasswordModel model)
         {
             var response = await authApiService.PostChangePasswordAsync(model);
 
-            SetTokenCookies(response);
+            if(response.IsSuccessStatusCode)
+            {
+                var token = await response.Content.ReadAsStringAsync();
+                SetTokenCookies(token);
+
+                return RedirectToAction("Index", "Home");
+            }
+
+            //var errors = await response.DeserializeContentAsync<AuthErrorModel[]>();
+            //var error = errors.FirstOrDefault();
+
+            ModelState.AddModelError(string.Empty, LangResources.ChangePasswordError);
 
             return View(model);
         }

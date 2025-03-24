@@ -2,6 +2,14 @@
 
 namespace EmisTracking.WebApi.Models.Models
 {
+    public class AuthErrorModel
+    {
+        public bool IsPasswordMismatch => Code == "PasswordMismatch";
+
+        public string Code { get; set; }
+        public string Description { get; set; }
+    }
+
     public class RegisterModel
     {
         [Required]
