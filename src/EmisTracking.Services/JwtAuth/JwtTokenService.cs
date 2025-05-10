@@ -35,6 +35,7 @@ namespace EmisTracking.Services.JwtAuth
                 new(type: JwtRegisteredClaimNames.GivenName, user.FullName),
                 new(type: Constants.RoleInfoClaimType, roleInfo),
             };
+
             userClaims.AddRange(roleClaims);
 
             var signingCreds = new SigningCredentials(

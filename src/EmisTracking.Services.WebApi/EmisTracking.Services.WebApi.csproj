@@ -13,6 +13,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\EmisTracking.Localization\EmisTracking.Localization.csproj" />
 		<ProjectReference Include="..\EmisTracking.WebApi.Models\EmisTracking.WebApi.Models.csproj" />
 	</ItemGroup>
 

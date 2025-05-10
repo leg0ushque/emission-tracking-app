@@ -27,13 +27,12 @@ namespace EmisTracking.WebApp.Filters
                     : string.Empty;
 
                 var isAdmin = isAuthenticated && user!.IsInRole(ServicesConstants.AdminRole);
-                var isEngineer = isAuthenticated && user!.IsInRole(ServicesConstants.EngineerRole);
 
                 viewData[Constants.ViewDataConstants.IsAuthenticated] = isAuthenticated;
                 viewData[Constants.ViewDataConstants.RoleInfo] = roleInfo;
                 viewData[Constants.ViewDataConstants.UserInfo] = userInfo;
                 viewData[Constants.ViewDataConstants.IsAdmin] = isAdmin;
-                viewData[Constants.ViewDataConstants.IsEngineer] = isEngineer;
+                // FIXME Расширить список ролей!
             }
 
             base.OnActionExecuting(context);

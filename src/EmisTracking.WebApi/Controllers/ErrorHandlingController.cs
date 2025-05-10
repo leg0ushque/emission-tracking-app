@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using EmisTracking.WebApi.Models.Models;
+﻿using EmisTracking.WebApi.Models.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using System.Net;
 using System.Linq;
+using System.Net;
 
 namespace EmisTracking.WebApi.Controllers
 {
@@ -11,7 +11,7 @@ namespace EmisTracking.WebApi.Controllers
         protected BadRequestObjectResult CreateBadRequestResponse(ModelStateDictionary modelStateDictionary)
         {
             return BadRequest(
-                new ErrorResponseModel
+                new ApiResponseModel<object>
                 {
                     StatusCode = HttpStatusCode.BadRequest,
                     Errors = modelStateDictionary.Select(x => new FieldErrorModel

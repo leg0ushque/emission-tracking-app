@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using EmisTracking.WebApi.Models.Models;
 using System;
+using EmisTracking.Localization.StudentsPerf.Localization;
+using System.Linq;
 
 namespace EmisTracking.WebApi.Filters
 {
@@ -17,10 +19,12 @@ namespace EmisTracking.WebApi.Filters
 
                 context.ExceptionHandled = true;
                 context.HttpContext.Response.StatusCode = (int)code;
-                context.Result = new ObjectResult(new ErrorResponseModel()
+                context.Result = new ObjectResult(new ApiResponseModel<object>()
                 {
+                    Success = false,
                     StatusCode = code,
-                    Message = ex.InnerException.Message,
+                    ErrorMessage = ex.InnerException?.Message ?? LangResources.DefaultErrorMessage,
+                    Errors = ex.FieldErrors.Select(e => new FieldErrorModel { Field = e.Field, Message = e.Message }).ToArray()
                 });
 
                 base.OnException(context);

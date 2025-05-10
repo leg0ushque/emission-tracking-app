@@ -5,71 +5,193 @@ using System.Threading.Tasks;
 
 namespace EmisTracking.Services.Services
 {
-    public class AreasService(IPaginatedRepository<Area> repository, IMapper mapper)
-        : GenericEntityService<Area>(repository, mapper)
+    public class AreasService : GenericEntityService<Area>
     {
+        public AreasService(IRepository<Area> repository, IMapper mapper)
+            : base(repository, mapper)
+        { }
+
         protected override Task ValidateAsync(Area item)
         {
             return Task.CompletedTask;
         }
+    }
 
-        protected override Task ValidateDuplicateCreation(Area item)
+    public class SubdivisionsService : GenericEntityService<Subdivision>
+    {
+        public SubdivisionsService(IRepository<Subdivision> repository, IMapper mapper)
+            : base(repository, mapper)
+        { }
+
+        protected override Task ValidateAsync(Subdivision item)
         {
             return Task.CompletedTask;
         }
     }
 
-    public class UsersService(IPaginatedRepository<User> repository, IMapper mapper)
-        : GenericEntityService<User>(repository, mapper)
+    public class ModesService : GenericEntityService<Mode>
     {
-        protected override Task ValidateAsync(User item)
-        {
-            return Task.CompletedTask;
-        }
+        public ModesService(IRepository<Mode> repository, IMapper mapper)
+            : base(repository, mapper)
+        { }
 
-        protected override Task ValidateDuplicateCreation(User item)
+        protected override Task ValidateAsync(Mode item)
         {
             return Task.CompletedTask;
         }
     }
 
-    public class DepartmentsService(IPaginatedRepository<Department> repository, IMapper mapper)
-        : GenericEntityService<Department>(repository, mapper)
+    public class MethodologiesService : GenericEntityService<Methodology>
     {
-        protected override Task ValidateAsync(Department item)
-        {
-            return Task.CompletedTask;
-        }
+        public MethodologiesService(IRepository<Methodology> repository, IMapper mapper)
+            : base(repository, mapper)
+        { }
 
-        protected override Task ValidateDuplicateCreation(Department item)
+        protected override Task ValidateAsync(Methodology item)
         {
             return Task.CompletedTask;
         }
     }
 
-    public class RegimesService(IPaginatedRepository<Regime> repository, IMapper mapper)
-        : GenericEntityService<Regime>(repository, mapper)
+    public class EmissionSourcesService : GenericEntityService<EmissionSource>
     {
-        protected override Task ValidateAsync(Regime item)
-        {
-            return Task.CompletedTask;
-        }
+        public EmissionSourcesService(IRepository<EmissionSource> repository, IMapper mapper)
+            : base(repository, mapper)
+        { }
 
-        protected override Task ValidateDuplicateCreation(Regime item)
-        {
-            return Task.CompletedTask;
-        }
-    }
-
-    public class EmissionSourcesService(IPaginatedRepository<EmissionSource> repository, IMapper mapper)
-        : GenericEntityService<EmissionSource>(repository, mapper)
-    {
         protected override Task ValidateAsync(EmissionSource item)
         {
             return Task.CompletedTask;
         }
+    }
 
-        protected override Task ValidateDuplicateCreation(EmissionSource item)
+    public class OperatingTimesService : GenericEntityService<OperatingTime>
+    {
+        public OperatingTimesService(IRepository<OperatingTime> repository, IMapper mapper)
+            : base(repository, mapper)
+        { }
+
+        protected override Task ValidateAsync(OperatingTime item)
+        {
+            return Task.CompletedTask;
+        }
+    }
+
+    public class PollutantsService : GenericEntityService<Pollutant>
+    {
+        public PollutantsService(IRepository<Pollutant> repository, IMapper mapper)
+            : base(repository, mapper)
+        { }
+
+        protected override Task ValidateAsync(Pollutant item)
+        {
+            return Task.CompletedTask;
+        }
+    }
+
+    public class SourceSubstancesService : GenericEntityService<SourceSubstance>
+    {
+        public SourceSubstancesService(IRepository<SourceSubstance> repository, IMapper mapper)
+            : base(repository, mapper)
+        { }
+
+        protected override Task ValidateAsync(SourceSubstance item)
+        {
+            return Task.CompletedTask;
+        }
+    }
+
+    public class MethodologyParametersService : GenericEntityService<MethodologyParameter>
+    {
+        public MethodologyParametersService(IRepository<MethodologyParameter> repository, IMapper mapper)
+            : base(repository, mapper)
+        { }
+
+        protected override Task ValidateAsync(MethodologyParameter item)
+        {
+            return Task.CompletedTask;
+        }
+    }
+
+    public class ConsumptionGroupsService : GenericEntityService<ConsumptionGroup>
+    {
+        public ConsumptionGroupsService(IRepository<ConsumptionGroup> repository, IMapper mapper)
+            : base(repository, mapper)
+        { }
+
+        protected override Task ValidateAsync(ConsumptionGroup item)
+        {
+            return Task.CompletedTask;
+        }
+    }
+
+    public class SpecificIndicatorsService : GenericEntityService<SpecificIndicator>
+    {
+        public SpecificIndicatorsService(IRepository<SpecificIndicator> repository, IMapper mapper)
+            : base(repository, mapper)
+        { }
+
+        protected override Task ValidateAsync(SpecificIndicator item)
+        {
+            return Task.CompletedTask;
+        }
+    }
+
+    public class ConsumptionsService : GenericEntityService<Consumption>
+    {
+        public ConsumptionsService(IRepository<Consumption> repository, IMapper mapper)
+            : base(repository, mapper)
+        { }
+
+        protected override Task ValidateAsync(Consumption item)
+        {
+            return Task.CompletedTask;
+        }
+    }
+
+    public class ParameterValuesService : GenericEntityService<ParameterValue>
+    {
+        public ParameterValuesService(IRepository<ParameterValue> repository, IMapper mapper)
+            : base(repository, mapper)
+        { }
+
+        protected override Task ValidateAsync(ParameterValue item)
+        {
+            return Task.CompletedTask;
+        }
+    }
+
+    public class GrossEmissionsService : GenericEntityService<GrossEmission>
+    {
+        public GrossEmissionsService(IRepository<GrossEmission> repository, IMapper mapper)
+            : base(repository, mapper)
+        { }
+
+        protected override Task ValidateAsync(GrossEmission item)
+        {
+            return Task.CompletedTask;
+        }
+    }
+
+    public class TaxRatesService : GenericEntityService<TaxRate>
+    {
+        public TaxRatesService(IRepository<TaxRate> repository, IMapper mapper)
+            : base(repository, mapper)
+        { }
+
+        protected override Task ValidateAsync(TaxRate item)
+        {
+            return Task.CompletedTask;
+        }
+    }
+
+    public class TaxesService : GenericEntityService<Tax>
+    {
+        public TaxesService(IRepository<Tax> repository, IMapper mapper)
+            : base(repository, mapper)
+        { }
+
+        protected override Task ValidateAsync(Tax item)
         {
             return Task.CompletedTask;
         }

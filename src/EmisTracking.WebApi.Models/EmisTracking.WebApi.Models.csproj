@@ -6,4 +6,8 @@
 		<Nullable>disable</Nullable>
 	</PropertyGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\EmisTracking.Localization\EmisTracking.Localization.csproj" />
+	</ItemGroup>
+
 </Project>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace EmisTracking.Services.Interfaces
@@ -9,7 +10,7 @@ namespace EmisTracking.Services.Interfaces
     {
         Task<string> CreateAsync(TEntity entity);
 
-        IQueryable<TEntity> GetAll(Func<TEntity, bool>? predicate = null);
+        IQueryable<TEntity> GetAll(Expression<Func<TEntity, bool>> predicate = null);
 
         Task<TEntity> GetByIdAsync(string entityId);
 

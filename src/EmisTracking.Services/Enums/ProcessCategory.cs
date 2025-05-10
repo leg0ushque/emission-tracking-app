@@ -2,10 +2,9 @@
 {
     public enum ProcessCategory
     {
-        First = 1,
-        Second = 2,
-        Third = 3,
-        Fourth = 4,
-        Fifth = 5
+        BurningFuel = 1,
+        WasteProcessing = 2,
+        AgriculturalObject = 3,
+        TechnologicalProcess = 4,
     }
 }

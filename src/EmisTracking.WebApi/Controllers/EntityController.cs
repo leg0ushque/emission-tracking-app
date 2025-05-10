@@ -1,12 +1,14 @@
 ﻿using AutoMapper;
 using EmisTracking.Services.Interfaces;
 using EmisTracking.WebApi.Filters;
+using EmisTracking.WebApi.Models.Models;
 using EmisTracking.WebApi.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using ServicesConstants = EmisTracking.Services.Constants;
 
 namespace EmisTracking.WebApi.Controllers
 {
@@ -23,7 +25,7 @@ namespace EmisTracking.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public virtual async Task<IActionResult> Create(TEntityModel item)
+        public virtual async Task<IActionResult> Create([FromBody] TEntityModel item)
         {
             if (item is null)
             {
@@ -31,9 +33,11 @@ namespace EmisTracking.WebApi.Controllers
             }
 
             var itemDto = _mapper.Map<TEntity>(item);
+            itemDto.Id = Guid.NewGuid().ToString(); // FIXME
+
             var result = await _entityService.AddAsync(itemDto);
 
-            return Ok(result);
+            return Ok(new ApiResponseModel<string> { Success = true, Data = result });
         }
 
         [Authorize]
@@ -42,13 +46,12 @@ namespace EmisTracking.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public async Task<IActionResult> GetAllAtPage(
-            [FromQuery] int? pageNumber = ServicesConstants.MinPageNumber,
-            [FromQuery] int? pageSize = ServicesConstants.DefaultPageSize)
+        public async Task<IActionResult> GetAll()
         {
-            var items = await _entityService.GetAllAtPageAsync(pageNumber, pageSize);
+            var items = await _entityService.GetAllAsync();
+            var itemModelsList = _mapper.Map<List<TEntityModel>>(items);
 
-            return Ok(items);
+            return Ok(new ApiResponseModel<List<TEntityModel>> { Success = true, Data = itemModelsList });
         }
 
         [Authorize]
@@ -60,8 +63,9 @@ namespace EmisTracking.WebApi.Controllers
         public async Task<IActionResult> GetById([FromRoute] string id)
         {
             var item = await _entityService.GetByIdAsync(id);
+            var itemModel = _mapper.Map<TEntityModel>(item);
 
-            return Ok(item);
+            return Ok(new ApiResponseModel<TEntityModel> { Success = true, Data = itemModel });
         }
 
         [Authorize]
@@ -70,7 +74,7 @@ namespace EmisTracking.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public async Task<IActionResult> Update([FromRoute] TEntityModel item)
+        public async Task<IActionResult> Update([FromBody] TEntityModel item)
         {
             if (item is null)
             {
@@ -80,7 +84,7 @@ namespace EmisTracking.WebApi.Controllers
             var itemDto = _mapper.Map<TEntity>(item);
             await _entityService.UpdateAsync(itemDto);
 
-            return Ok();
+            return Ok(new ApiResponseModel<object> { Success = true });
         }
 
         [Authorize]
@@ -93,7 +97,7 @@ namespace EmisTracking.WebApi.Controllers
         {
             await _entityService.DeleteAsync(id);
 
-            return Ok();
+            return Ok(new ApiResponseModel<object> { Success = true });
         }
     }
 }

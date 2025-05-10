@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,8 +18,6 @@ namespace EmisTracking.Services.Interfaces
 
         Task DeleteAsync(string id);
 
-        Task<List<TEntity>> GetAllAtPageAsync(int? pageNumber, int? pageSize);
-
-        Task<int> GetTotalPagesCountAsync(int? pageSize);
+        Task<List<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> predicate = null);
     }
 }

@@ -3,6 +3,7 @@ using EmisTracking.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 
@@ -38,7 +39,7 @@ namespace EmisTracking.Services.Database.Repositories
             return entity;
         }
 
-        public IQueryable<TEntity> GetAll(Func<TEntity, bool> predicate = null)
+        public IQueryable<TEntity> GetAll(Expression<Func<TEntity, bool>> predicate = null)
         {
             return predicate == null ? _context.Set<TEntity>().AsNoTracking()
                 : _context.Set<TEntity>().Where(predicate).AsQueryable().AsNoTracking();
@@ -48,10 +49,10 @@ namespace EmisTracking.Services.Database.Repositories
         {
             ArgumentNullException.ThrowIfNull(entity);
 
-            var entityNotFound = await _context.Set<TEntity>()
+            var entityFound = await _context.Set<TEntity>()
                 .AnyAsync(e => e.Id == entity.Id);
 
-            if (entityNotFound)
+            if (!entityFound)
             {
                 throw new ArgumentException(null, nameof(entity));
             }

@@ -1,5 +1,6 @@
 using EmisTracking.Services.WebApi.Handlers;
 using EmisTracking.Services.WebApi.Services;
+using EmisTracking.WebApi.Models.ViewModels;
 using EmisTracking.WebApp.JwtAuth;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -25,7 +26,7 @@ namespace EmisTracking.WebApp
                 .AddScheme<AuthenticationSchemeOptions, JwtAuthenticationHandler>(
                     JwtBearerDefaults.AuthenticationScheme, null);
 
-            builder.Services.AddTransient<IAuthApiService, AuthApiService>();
+            RegisterHttpServices(builder.Services);
 
             builder.Services.AddTransient<JwtBearerTokenHandler>();
 
@@ -62,6 +63,27 @@ namespace EmisTracking.WebApp
                 pattern: "{controller=Home}/{action=Index}/{id?}");
 
             app.Run();
+        }
+
+        private static void RegisterHttpServices(IServiceCollection services)
+        {
+            services.AddTransient<IAuthApiService, AuthApiService>();
+            services.AddTransient<IBaseApiService<AreaViewModel>, AreaApiService>();
+            services.AddTransient<IBaseApiService<SubdivisionViewModel>, SubdivisionApiService>();
+            services.AddTransient<IBaseApiService<ModeViewModel>, ModeApiService>();
+            services.AddTransient<IBaseApiService<MethodologyViewModel>, MethodologyApiService>();
+            services.AddTransient<IBaseApiService<EmissionSourceViewModel>, EmissionSourceApiService>();
+            services.AddTransient<IBaseApiService<OperatingTimeViewModel>, OperatingTimeApiService>();
+            services.AddTransient<IBaseApiService<PollutantViewModel>, PollutantApiService>();
+            services.AddTransient<IBaseApiService<SourceSubstanceViewModel>, SourceSubstanceApiService>();
+            services.AddTransient<IBaseApiService<MethodologyParameterViewModel>, MethodologyParameterApiService>();
+            services.AddTransient<IBaseApiService<ConsumptionGroupViewModel>, ConsumptionGroupApiService>();
+            services.AddTransient<IBaseApiService<SpecificIndicatorViewModel>, SpecificIndicatorApiService>();
+            services.AddTransient<IBaseApiService<ConsumptionViewModel>, ConsumptionApiService>();
+            services.AddTransient<IBaseApiService<ParameterValueViewModel>, ParameterValueApiService>();
+            services.AddTransient<IBaseApiService<GrossEmissionViewModel>, GrossEmissionApiService>();
+            services.AddTransient<IBaseApiService<TaxRateViewModel>, TaxRateApiService>();
+            services.AddTransient<IBaseApiService<TaxViewModel>, TaxApiService>();
         }
     }
 }

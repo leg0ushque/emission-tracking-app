@@ -1,45 +1,39 @@
-﻿using EmisTracking.Services.WebApi.Helpers;
-using EmisTracking.WebApi.Models.Models;
+﻿using EmisTracking.WebApi.Models.Models;
 using System.Net.Http;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace EmisTracking.Services.WebApi.Services
 {
-    public class AuthApiService(IHttpClientFactory httpClientFactory) : IAuthApiService
+    public class AuthApiService : BaseApiService, IAuthApiService
     {
-        private readonly HttpClient _httpClient = httpClientFactory.CreateClient(Constants.HttpClientName);
-
-        public async Task<string> PostSignInAsync(LoginModel model)
+        public AuthApiService(IHttpClientFactory httpClientFactory)
         {
-            using var content = JsonHelper.ObjectToStringContent(model);
-            var response = await _httpClient.PostAsync("auth/login", content);
-
-            response.EnsureSuccessStatusCode();
-
-            return await response.Content.ReadAsStringAsync();
+            _httpClient = httpClientFactory.CreateClient(Constants.HttpClientName);
         }
 
-        public async Task<HttpResponseMessage> PostChangePasswordAsync(ChangePasswordModel model)
+        public Task<ApiResponseModel<string>> PostRegister(RegisterModel model)
         {
-            using var content = JsonHelper.ObjectToStringContent(model);
-            var response = await _httpClient.PostAsync("auth/changepassword", content);
-
-            return response;
+            return SendRequestAsync<string>(HttpMethod.Post, $"auth/register", model);
         }
 
-        public async Task<HttpResponseMessage> GetAuthValidateToken(string token)
+        public Task<ApiResponseModel<string>> PostSignInAsync(LoginModel model)
         {
-            using var content = JsonHelper.ObjectToStringContent(token);
-            var result = await _httpClient.PostAsync("auth/validate", content);
-            return result;
+            return SendRequestAsync<string>(HttpMethod.Post, $"auth/login", model);
         }
 
-        public async Task GetAuthLogoutAsync()
+        public Task<ApiResponseModel<string>> PostChangePasswordAsync(ChangePasswordModel model)
         {
-            var result = await _httpClient.GetAsync("auth/logout");
+            return SendRequestAsync<string>(HttpMethod.Post, $"auth/changepassword", model);
+        }
 
-            result.EnsureSuccessStatusCode();
+        public Task<ApiResponseModel<object>> GetAuthValidateToken(string token)
+        {
+            return SendRequestAsync<object>(HttpMethod.Post, $"auth/validate", token);
+        }
+
+        public Task<ApiResponseModel<object>> GetAuthLogoutAsync()
+        {
+            return SendRequestAsync<object>(HttpMethod.Get, $"auth/logout");
         }
     }
 }

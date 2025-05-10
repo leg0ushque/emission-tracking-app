@@ -1,28 +1,27 @@
 ﻿using AutoMapper;
-using EmisTracking.Localization;
+using EmisTracking.Localization.StudentsPerf.Localization;
 using EmisTracking.Services.Exceptions;
 using EmisTracking.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace EmisTracking.Services.Services
 {
-    public abstract class GenericEntityService<TEntity>(IPaginatedRepository<TEntity> repository, IMapper mapper)
+    public abstract class GenericEntityService<TEntity>(IRepository<TEntity> repository, IMapper mapper)
         : IEntityService<TEntity>
         where TEntity : class, IEntity
     {
-        private protected readonly IPaginatedRepository<TEntity> _repository = repository;
+        private protected readonly IRepository<TEntity> _repository = repository;
         private protected readonly IMapper _mapper = mapper;
 
-        public async Task<List<TEntity>> GetAllAtPageAsync(int? pageNumber, int? pageSize)
+        public virtual Task<List<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> predicate = null)
         {
             try
             {
-                var allItemsQuery = _repository.GetAll();
-
-                return await _repository.GetAllAtPageAsync(allItemsQuery, pageNumber, pageSize);
+                return _repository.GetAll(predicate).ToListAsync();
             }
             catch (InvalidOperationException ex)
             {
@@ -35,8 +34,6 @@ namespace EmisTracking.Services.Services
             try
             {
                 await ValidateAsync(entity);
-
-                await ValidateDuplicateCreation(entity);
 
                 return await _repository.CreateAsync(_mapper.Map<TEntity>(entity));
             }
@@ -62,33 +59,6 @@ namespace EmisTracking.Services.Services
             }
         }
 
-        public async Task<int> GetTotalPagesCountAsync(int? pageSize)
-        {
-            try
-            {
-                var allItemsQuery = _repository.GetAll();
-
-                return await _repository.GetTotalPagesCountAsync(allItemsQuery, pageSize);
-            }
-            catch (InvalidOperationException ex)
-            {
-                throw new BusinessLogicException(ex.Message, ex);
-            }
-        }
-
-        public async Task<TEntity> GetById(string entityId)
-        {
-            try
-            {
-                return await _repository.GetByIdAsync(entityId);
-            }
-            catch (ArgumentException)
-            {
-                throw new BusinessLogicException(
-                    string.Format(LangResources.ItemNotFoundMessageTemplate, nameof(TEntity), entityId));
-            }
-        }
-
         public async virtual Task UpdateAsync(TEntity entity)
         {
             try
@@ -97,7 +67,7 @@ namespace EmisTracking.Services.Services
 
                 var mappedEntity = _mapper.Map<TEntity>(entity);
 
-                await _repository.CreateAsync(mappedEntity);
+                await _repository.UpdateAsync(mappedEntity);
             }
             catch (ArgumentException)
             {
@@ -120,7 +90,5 @@ namespace EmisTracking.Services.Services
         }
 
         protected abstract Task ValidateAsync(TEntity item);
-
-        protected abstract Task ValidateDuplicateCreation(TEntity item);
     }
 }

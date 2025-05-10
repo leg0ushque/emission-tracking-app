@@ -103,7 +103,6 @@ namespace EmisTracking.WebApi
             services.AddDbContext<EmissionDbContext>(options =>
                 options.UseSqlServer(connectionString: emissionDbConnectionString));
 
-            services.AddScoped(typeof(IPaginatedRepository<>), typeof(PaginatedRepository<>));
             services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
         }
 
@@ -111,10 +110,24 @@ namespace EmisTracking.WebApi
         {
             services.AddTransient<IEntityService<User>, UsersService>();
             services.AddTransient<IEntityService<Area>, AreasService>();
-            services.AddTransient<IEntityService<Department>, DepartmentsService>();
+            services.AddTransient<IEntityService<Subdivision>, SubdivisionsService>();
+            services.AddTransient<IEntityService<Mode>, ModesService>();
+            services.AddTransient<IEntityService<Methodology>, MethodologiesService>();
             services.AddTransient<IEntityService<EmissionSource>, EmissionSourcesService>();
-            services.AddTransient<IEntityService<EmissionSource>, EmissionSourcesService>();
-            services.AddTransient<IEntityService<Regime>, RegimesService>();
+            services.AddTransient<IEntityService<OperatingTime>, OperatingTimesService>();
+            services.AddTransient<IEntityService<Pollutant>, PollutantsService>();
+            services.AddTransient<IEntityService<SourceSubstance>, SourceSubstancesService>();
+            services.AddTransient<IEntityService<MethodologyParameter>, MethodologyParametersService>();
+            services.AddTransient<IEntityService<ConsumptionGroup>, ConsumptionGroupsService>();
+            services.AddTransient<IEntityService<SpecificIndicator>, SpecificIndicatorsService>();
+            services.AddTransient<IEntityService<Consumption>, ConsumptionsService>();
+            services.AddTransient<IEntityService<ParameterValue>, ParameterValuesService>();
+            services.AddTransient<IEntityService<GrossEmission>, GrossEmissionsService>();
+            services.AddTransient<IEntityService<TaxRate>, TaxRatesService>();
+            services.AddTransient<IEntityService<Tax>, TaxesService>();
+
+            services.AddTransient<IEntityService<User>, UsersService>();
+            services.AddTransient<IUsersService, UsersService>();
         }
 
         private static void ConfigureAuthentication(IServiceCollection services, IConfiguration configuration)
