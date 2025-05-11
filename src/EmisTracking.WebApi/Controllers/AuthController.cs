@@ -182,9 +182,9 @@ namespace EmisTracking.WebApi.Controllers
                     return responseContent;
                 }
 
-                var eduUser = await _usersService.GetBySystemUserId(systemUser.Id);
+                var emissionUser = await _usersService.GetBySystemUserId(systemUser.Id);
 
-                if (eduUser == null && systemUser.Email != Services.Database.Constants.AdminMailbox)
+                if (emissionUser == null && systemUser.Email != Services.Database.Constants.AdminMailbox)
                 {
                     responseContent.Success = false;
                     responseContent.ErrorMessage = string.Format(LangResources.AuthUserNotFoundErrorMessageTemplate, systemUser.Id);
@@ -192,7 +192,7 @@ namespace EmisTracking.WebApi.Controllers
                     return responseContent;
                 }
 
-                var token = await CreateUserTokenAsync(eduUser, systemUser);
+                var token = await CreateUserTokenAsync(emissionUser, systemUser);
 
                 responseContent.Success = true;
                 responseContent.Data = token;

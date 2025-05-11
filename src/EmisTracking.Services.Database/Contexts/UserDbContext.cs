@@ -28,13 +28,13 @@ namespace EmisTracking.Services.Database.Contexts
             var adminUser = new SystemUser
             {
                 Id = Guid.NewGuid().ToString(),
-                UserName = Constants.AdminMailboxLowerCase,
+                UserName = Constants.AdminMailbox,
                 FirstName = Constants.AdminFirstName,
                 MiddleName = string.Empty,
                 LastName = Constants.AdminLastName,
-                Email = Constants.AdminMailboxLowerCase,
-                NormalizedUserName = Constants.AdminMailboxLowerCase,
-                NormalizedEmail = Constants.AdminMailboxLowerCase,
+                Email = Constants.AdminMailbox,
+                NormalizedUserName = Constants.AdminMailbox,
+                NormalizedEmail = Constants.AdminMailbox,
                 EmailConfirmed = true,
                 LockoutEnabled = false,
                 SecurityStamp = Guid.NewGuid().ToString("D")

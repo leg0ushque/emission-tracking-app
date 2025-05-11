@@ -17,6 +17,7 @@
             public const string UserInfo = "UserInfo";
             public const string RoleInfo = "RoleInfo";
             public const string IsAdmin = "IsAdmin";
+            public const string IsEngineer = "IsEngineer";
         }
     }
 }

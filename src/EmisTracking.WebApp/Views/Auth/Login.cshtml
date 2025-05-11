@@ -1,41 +1,35 @@
-﻿@model EmisTracking.WebApi.Models.Models.LoginModel;
+﻿@using EmisTracking.Localization
+@using EmisTracking.Localization.StudentsPerf.Localization
+@model EmisTracking.WebApi.Models.Models.LoginModel;
 @{
-    ViewData["Title"] = "Войти";
+    ViewData["Title"] = LangResources.Titles.AuthLogin;
 }
 
-<h2>@ViewData["Title"]</h2>
-<h5>Используйте локальный аккаунт</h5>
-<hr />
-
-<div class="row">
-    <div class="mb-5 ml-5 mr-5 col-md-5">
-        <section id="inputForm">
-            <form asp-action="PostLogin" asp-controller="Auth" method="post" asp-antiforgery="true"
-                    class="form-horizontal" >
-                <div asp-validation-summary="ModelOnly" class="text-danger" id="validationSummary"></div>
-                <div class="form-group row">
-                    <label asp-for="Email" class="col-md-4"></label>
-                    <div class="col-md-8 p-0">
-                        <input asp-for="Email" class="form-control" id="emailInput" placeholder="Электронная почта" />
-                        <span asp-validation-for="Email" class="text-danger inputError"></span>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label asp-for="Password" class="col-md-4"></label>
-                    <div class="col-md-8 p-0">
-                        <input asp-for="Password" type="password" class="form-control" id="passwordInput" placeholder="Пароль" />
-                        <span asp-validation-for="Password" class="text-danger inputError"></span>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <div class="col-md-12 p-0">
-                        <button type="submit" id="loginBtn" class="btn btn-primary col-md-12">Войти</button>
-                    </div>
-                </div>
-            </form>
-        </section>
+<form asp-action="Login" asp-controller="Auth" method="post" asp-antiforgery="true"
+      class="form-horizontal">
+    <div asp-validation-summary="ModelOnly" class="text-danger" id="validationSummary"></div>
+    <div class="row mb-3">
+        <label asp-for="Email" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-6">
+            <input asp-for="Email" class="form-control" id="emailInput" />
+            <span asp-validation-for="Email" class="text-danger inputError"></span>
+        </div>
     </div>
-</div>
+    <div class="row mb-3">
+        <label asp-for="Password" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-6">
+            <input asp-for="Password" type="password" class="form-control" id="passwordInput" />
+            <span asp-validation-for="Password" class="text-danger inputError"></span>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-6">
+            <button type="submit" id="loginBtn" class="btn btn-primary">@LangResources.LoginButtonText</button>
+        </div>
+    </div>
+</form>
+
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");

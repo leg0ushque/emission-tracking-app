@@ -1,59 +1,65 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using EmisTracking.Localization.StudentsPerf.Localization;
+using System.ComponentModel.DataAnnotations;
 
 namespace EmisTracking.WebApi.Models.Models
 {
-    public class AuthErrorModel
-    {
-        public bool IsPasswordMismatch => Code == "PasswordMismatch";
-
-        public string Code { get; set; }
-        public string Description { get; set; }
-    }
-
     public class RegisterModel
     {
-        [Required]
+        [Display(Name = LangResources.Fields.Email)]
+        [Required(ErrorMessage = LangResources.MustBeFilledMessage)]
         public string Email { get; set; }
 
-        [Required]
-        public string Surname { get; set; }
-
-        [Required]
+        [Display(Name = LangResources.Fields.FirstName)]
+        [Required(ErrorMessage = LangResources.MustBeFilledMessage)]
         public string FirstName { get; set; }
 
+
+        [Display(Name = LangResources.Fields.MiddleName)]
+        [Required(ErrorMessage = LangResources.MustBeFilledMessage)]
         public string MiddleName { get; set; }
 
-        [Required]
+
+        [Display(Name = LangResources.Fields.LastName)]
+        [Required(ErrorMessage = LangResources.MustBeFilledMessage)]
         public string LastName { get; set; }
 
-        [Required]
+
+        [Display(Name = LangResources.Fields.Password)]
+        [Required(ErrorMessage = LangResources.MustBeFilledMessage)]
         public string Password { get; set; }
 
-        [Required]
+        [Display(Name = LangResources.Fields.ConfirmPassword)]
+        [Required(ErrorMessage = LangResources.MustBeFilledMessage)]
         public string ConfirmPassword { get; set; }
 
-        [Required]
+        [Display(Name = LangResources.Fields.Info)]
+        [Required(ErrorMessage = LangResources.MustBeFilledMessage)]
         public string Info { get; set; }
     }
 
     public class ChangePasswordModel
     {
-        [Required]
+        [Display(Name = LangResources.Fields.OldPassword)]
+        [Required(ErrorMessage = LangResources.MustBeFilledMessage)]
         public string OldPassword { get; set; }
 
-        [Required]
+        [Display(Name = LangResources.Fields.NewPassword)]
+        [Required(ErrorMessage = LangResources.MustBeFilledMessage)]
         public string NewPassword { get; set; }
 
-        [Required]
+        [Display(Name = LangResources.Fields.ConfirmPassword)]
+        [Required(ErrorMessage = LangResources.MustBeFilledMessage)]
         public string ConfirmPassword { get; set; }
     }
 
     public class LoginModel
     {
-        [Required]
+        [Display(Name = LangResources.Fields.Email)]
+        [Required(ErrorMessage = LangResources.MustBeFilledMessage)]
         public string Email { get; set; }
 
-        [Required]
+        [Display(Name = LangResources.Fields.Password)]
+        [Required(ErrorMessage = LangResources.MustBeFilledMessage)]
         public string Password { get; set; }
     }
 }

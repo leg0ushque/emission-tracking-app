@@ -4,6 +4,7 @@ using EmisTracking.Services.Database.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EmisTracking.Services.Database.Migrations.EmissionDb
 {
     [DbContext(typeof(EmissionDbContext))]
-    partial class EmissionDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250511074542_InitialEdbCreate")]
+    partial class InitialEdbCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

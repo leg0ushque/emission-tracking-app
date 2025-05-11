@@ -26,6 +26,8 @@ namespace EmisTracking.WebApp
                 .AddScheme<AuthenticationSchemeOptions, JwtAuthenticationHandler>(
                     JwtBearerDefaults.AuthenticationScheme, null);
 
+            builder.Services.AddTransient<IAuthApiService, AuthApiService>();
+
             RegisterHttpServices(builder.Services);
 
             builder.Services.AddTransient<JwtBearerTokenHandler>();

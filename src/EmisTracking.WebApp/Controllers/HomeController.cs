@@ -3,9 +3,9 @@ using EmisTracking.WebApp.Filters;
 
 namespace EmisTracking.WebApp.Controllers
 {
+    [LoadLayoutDataFilter]
     public class HomeController : Controller
     {
-        [LoadLayoutDataFilter]
         public IActionResult Index()
         {
             return View();

@@ -1,10 +1,12 @@
 using EmisTracking.Localization;
+using EmisTracking.Localization.StudentsPerf.Localization;
 using EmisTracking.Services.WebApi.Helpers;
 using EmisTracking.Services.WebApi.Services;
 using EmisTracking.WebApi.Models.Models;
 using EmisTracking.WebApp.Filters;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace EmisTracking.WebApp.Controllers
 {
@@ -12,6 +14,39 @@ namespace EmisTracking.WebApp.Controllers
     public class AuthController(IAuthApiService authApiService) : Controller
     {
         private readonly IAuthApiService authApiService = authApiService;
+
+        [HttpGet("register")]
+        public IActionResult Register()
+        {
+            var model = new RegisterModel();
+
+            return View(model);
+        }
+
+        [HttpPost("register")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Register([FromForm] RegisterModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var response = await authApiService.PostRegister(model);
+
+            if (response.Success)
+            {
+                SetTokenCookies(response.Data);
+
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                UpdateModelStateErrors(ModelState, response.Errors, response.ErrorMessage);
+
+                return View(model);
+            }
+        }
 
         [AllowAnonymous]
         [HttpGet("login")]
@@ -26,13 +61,28 @@ namespace EmisTracking.WebApp.Controllers
         [AllowAnonymous]
         [HttpPost("login")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> PostLogin([FromForm] LoginModel model)
+        public async Task<IActionResult> Login([FromForm] LoginModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
             var response = await authApiService.PostSignInAsync(model);
 
-            SetTokenCookies(response);
+            if (response.Success)
+            {
+                SetTokenCookies(response.Data);
 
-            return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Home");
+
+            }
+            else
+            {
+                UpdateModelStateErrors(ModelState, response.Errors, response.ErrorMessage);
+
+                return View(model);
+            }
         }
 
         [Authorize]
@@ -48,24 +98,27 @@ namespace EmisTracking.WebApp.Controllers
         [Authorize]
         [HttpPost("changepassword")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ChangePassword([FromForm] ChangePasswordModel model)
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
             var response = await authApiService.PostChangePasswordAsync(model);
 
-            if(response.IsSuccessStatusCode)
+            if (response.Success)
             {
-                var token = await response.Content.ReadAsStringAsync();
-                SetTokenCookies(token);
+                SetTokenCookies(response.Data);
 
                 return RedirectToAction("Index", "Home");
             }
+            else
+            {
+                UpdateModelStateErrors(ModelState, response.Errors, response.ErrorMessage);
 
-            //var errors = await response.DeserializeContentAsync<AuthErrorModel[]>();
-            //var error = errors.FirstOrDefault();
-
-            ModelState.AddModelError(string.Empty, LangResources.ChangePasswordError);
-
-            return View(model);
+                return View(model);
+            }
         }
 
         [Authorize]
@@ -73,11 +126,18 @@ namespace EmisTracking.WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> LogOut()
         {
-            await authApiService.GetAuthLogoutAsync();
+            var response = await authApiService.GetAuthLogoutAsync();
 
-            HttpContext.Response.Cookies.Delete(Services.WebApi.Constants.JwtCookiesKey);
+            if (response.Success)
+            {
+                HttpContext.Response.Cookies.Delete(Services.WebApi.Constants.JwtCookiesKey);
 
-            return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                return View(Constants.ErrorView, (response.ErrorMessage, controller: string.Empty, action: string.Empty));
+            }
         }
 
         private void SetTokenCookies(string jwtToken)
@@ -88,6 +148,27 @@ namespace EmisTracking.WebApp.Controllers
                     HttpOnly = true,
                     SameSite = SameSiteMode.Strict,
                 });
+        }
+
+        protected static void UpdateModelStateErrors(ModelStateDictionary modelState, FieldErrorModel[] errors, string errorMessage = null)
+        {
+            if (errorMessage != null)
+            {
+                modelState.AddModelError(string.Empty, errorMessage);
+            }
+
+            if (errors == null || errors.Length == 0)
+            {
+                return;
+            }
+
+            foreach (var error in errors)
+            {
+                if (!string.IsNullOrEmpty(error.Field))
+                {
+                    modelState.AddModelError(error.Field, error.Message);
+                }
+            }
         }
     }
 }

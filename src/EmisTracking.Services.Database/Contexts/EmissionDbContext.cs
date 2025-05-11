@@ -22,6 +22,7 @@ namespace EmisTracking.Services.Database.Contexts
         public DbSet<GrossEmission> GrossEmissions { get; set; }
         public DbSet<TaxRate> TaxRates { get; set; }
         public DbSet<Tax> Taxes { get; set; }
+        public DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

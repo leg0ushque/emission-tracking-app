@@ -27,7 +27,7 @@ namespace EmisTracking.WebApp.JwtAuth
 
             var response = await _authApiService.GetAuthValidateToken(token);
 
-            if (response.StatusCode == HttpStatusCode.OK)
+            if (response.Success)
             {
                 var tokenHandler = new JwtSecurityTokenHandler();
                 var jwtToken = tokenHandler.ReadJwtToken(token);
