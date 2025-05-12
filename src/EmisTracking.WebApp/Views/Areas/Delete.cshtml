@@ -1,0 +1,27 @@
+﻿@using EmisTracking.WebApi.Models.ViewModels
+@using EmisTracking.Localization
+@model AreaViewModel
+@{
+    ViewData[Constants.GenerateBreadcrumb] = new();
+    ViewData["Title"] = string.Format(LangResources.Titles.NameTemplate, Model.Name);
+}
+
+@section Breadcrumb
+{
+    <li class="breadcrumb-item"><a asp-action="Index">@LangResources.Titles.AreasIndex</a></li>
+    <li class="breadcrumb-item active">@ViewData["Title"]</li>
+}
+
+<h4 class="text-danger">@LangResources.ConfirmDeleteText:</h4>
+
+<p><b><u>@LangResources.Entities.Area</u></b></p>
+<span><strong>@LangResources.Fields.Name:</strong> @Model.Name</span>
+<br />
+<br />
+
+<h5 class="text-danger">@LangResources.CannotBeUndoneText</h5>
+
+<a asp-action="ConfirmDelete" asp-route-id="@Model.Id" class="btn btn-danger">
+    <i class="fas fa-trash"></i>
+    @LangResources.ConfirmDeleteButtonText
+</a>

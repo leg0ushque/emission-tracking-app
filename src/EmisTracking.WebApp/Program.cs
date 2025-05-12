@@ -72,6 +72,7 @@ namespace EmisTracking.WebApp
             services.AddTransient<IAuthApiService, AuthApiService>();
             services.AddTransient<IBaseApiService<AreaViewModel>, AreaApiService>();
             services.AddTransient<IBaseApiService<SubdivisionViewModel>, SubdivisionApiService>();
+            services.AddTransient<ISubdivisionApiService, SubdivisionApiService>();
             services.AddTransient<IBaseApiService<ModeViewModel>, ModeApiService>();
             services.AddTransient<IBaseApiService<MethodologyViewModel>, MethodologyApiService>();
             services.AddTransient<IBaseApiService<EmissionSourceViewModel>, EmissionSourceApiService>();

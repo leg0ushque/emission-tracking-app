@@ -1,5 +1,5 @@
 using EmisTracking.Localization;
-using EmisTracking.Localization.StudentsPerf.Localization;
+using EmisTracking.Localization;
 using EmisTracking.Services.WebApi.Helpers;
 using EmisTracking.Services.WebApi.Services;
 using EmisTracking.WebApi.Models.Models;

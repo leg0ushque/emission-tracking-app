@@ -1,4 +1,5 @@
-﻿@using EmisTracking.WebApp;
+﻿@using EmisTracking.Localization
+@using EmisTracking.WebApp;
 @{
     var isAuthenticated = ViewData[Constants.ViewDataConstants.IsAuthenticated] as bool? ?? false;
     var roleInfo = ViewData[Constants.ViewDataConstants.RoleInfo] as string;
@@ -118,19 +119,20 @@
         <ul class="sidebar-nav" id="sidebar-nav">
 
             <li class="nav-item">
-                @await Html.PartialAsync("_SidebarButton", ("Index", "Home", "fas fa-home", "Главная"))
+                @await Html.PartialAsync("_SidebarButton", ("Index", "Home", "fas fa-home", LangResources.Titles.HomeIndex))
             </li>
 
             @if (isAuthenticated)
             {
                 <li class="nav-heading">Объекты выбросов</li>
-
                 <li class="nav-item">
-                    @await Html.PartialAsync("_SidebarButton", ("Index", "Home", "fas fa-solid fa-vector-square", "Площадки и подразделения"))
+                    @await Html.PartialAsync("_SidebarButton", ("Index", "Areas", "fas fa-solid fa-vector-square", LangResources.Titles.AreasIndex))
                 </li>
+
                 <li class="nav-item">
                     @await Html.PartialAsync("_SidebarButton", ("Index", "Home", "fas fa-solid fa-bullseye", "Источники выбросов"))
                 </li>
+
                 <li class="nav-item">
                     @await Html.PartialAsync("_SidebarButton", ("Index", "Home", "fas fa-solid fa-clipboard-check", "Режимы"))
                 </li>
@@ -249,7 +251,10 @@
     <script src="~/assets/vendor/tinymce/tinymce.min.js"></script>
     <script src="~/assets/vendor/php-email-form/validate.js"></script>
 
-    <!-- Template Main JS File -->
+    <!-- Template Main JS Files -->
+    <a href="~/lib/jquery/dist/jquery.min.map">~/lib/jquery/dist/jquery.min.map</a>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
     <script src="~/assets/js/main.js"></script>
     <script src="~/js/site.js"></script>
 

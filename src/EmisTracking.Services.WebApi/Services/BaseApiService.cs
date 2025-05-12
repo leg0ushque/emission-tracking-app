@@ -6,7 +6,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using EmisTracking.WebApi.Models.Models;
-using EmisTracking.Localization.StudentsPerf.Localization;
+using EmisTracking.Localization;
 
 namespace EmisTracking.Services.WebApi.Services
 {

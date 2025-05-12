@@ -1,0 +1,112 @@
+﻿@using EmisTracking.WebApi.Models.ViewModels
+@using EmisTracking.Localization
+@model AreaSubdivisionsViewModel
+@{
+    ViewData[Constants.GenerateBreadcrumb] = new();
+    ViewData["Title"] = string.Format(LangResources.Titles.NameTemplate, Model.Area.Name);
+
+    var isAdmin = (ViewData[Constants.ViewDataConstants.IsAdmin] as bool?).GetValueOrDefault();
+}
+
+@section Breadcrumb
+{
+    <li class="breadcrumb-item"><a asp-action="Index">@LangResources.Titles.AreasIndex</a></li>
+    <li class="breadcrumb-item active">@ViewData["Title"]</li>
+}
+
+<p><strong>@LangResources.Fields.Name:</strong> @Model.Area.Name</p>
+
+@if (isAdmin)
+{
+    <a class="btn btn-outline-primary"
+       asp-controller="Areas" asp-action="Update" asp-route-id="@Model.Area.Id"
+       name="@LangResources.UpdateButtonText">
+        <i class="fas fa-pen"></i> @LangResources.UpdateButtonText
+    </a>
+    <a class="btn btn-outline-danger"
+       asp-controller="Areas" asp-action="Delete" asp-route-id="@Model.Area.Id"
+       text="@LangResources.DeleteButtonText">
+        <i class="fas fa-trash"></i> @LangResources.DeleteButtonText
+    </a>
+    <br />
+}
+<br />
+<h4>@LangResources.Titles.SubdivisionsList </h4>
+
+<a class="btn btn-primary" asp-action="CreateForArea" asp-controller="Subdivisions" asp-route-id="@Model.Area.Id">
+    <i class="fas fa-plus"></i>
+    @LangResources.CreateButtonText
+</a>
+<hr />
+
+<table class="table-striped table-bordered" id="mainItemsTable">
+    <thead>
+        <tr>
+            <th scope="col">№</th>
+            <th scope="col">@LangResources.Fields.Name</th>
+
+            @if (isAdmin)
+            {
+                <th scope="col" orderable="false"></th>
+                <th scope="col" orderable="false"></th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            foreach (var item in Model.Subdivisions)
+            {
+                <tr>
+                    <td scope="row"></td>
+                    <td>
+                        <a asp-action="Item" asp-route-id="@item.Id">@item.Name</a>
+                    </td>
+
+                    @if (isAdmin)
+                    {
+                        <td>
+                            <a class="btn btn-outline-primary"
+                               asp-controller="Subdivisions" asp-action="Update" asp-route-id="@item.Id"
+                               name="@LangResources.UpdateButtonText">
+                                <i class="fas fa-pen"></i>
+                            </a>
+                        </td>
+                        <td>
+                            <a class="btn btn-outline-danger"
+                               asp-controller="Subdivisions" asp-action="Delete" asp-route-id="@item.Id"
+                               text="@LangResources.DeleteButtonText">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </td>
+                    }
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<a asp-action="Index" class="btn btn-outline-secondary">
+    <i class="fas fa-arrow-left"></i>
+    @LangResources.ReturnButtonText
+</a>
+
+@{
+    var tableLocalization = LangResources.JqueryDatatableLang;
+}
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        await Html.RenderPartialAsync("_JqueryDatatable");
+
+        var columnWidths = new Queue<string>(new[] { "40%" });
+        if (isAdmin)
+        {
+            // add width for admin edit/delete buttons
+            columnWidths.Enqueue(Constants.DefaultEditDeleteButtonsWidth);
+            columnWidths.Enqueue(Constants.DefaultEditDeleteButtonsWidth);
+        }
+
+        await Html.RenderPartialAsync("_DataTableInitialization", columnWidths);
+    }
+}

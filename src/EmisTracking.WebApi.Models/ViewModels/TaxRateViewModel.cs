@@ -1,4 +1,4 @@
-﻿    using EmisTracking.Localization.StudentsPerf.Localization;
+﻿    using EmisTracking.Localization;
 using System;
 using System.ComponentModel.DataAnnotations;
 

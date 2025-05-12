@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using EmisTracking.WebApi.Models.Models;
 using System;
-using EmisTracking.Localization.StudentsPerf.Localization;
+using EmisTracking.Localization;
 using System.Linq;
 
 namespace EmisTracking.WebApi.Filters

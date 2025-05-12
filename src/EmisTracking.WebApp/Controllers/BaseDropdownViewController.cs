@@ -1,17 +1,17 @@
-﻿using EmisTracking.Localization.StudentsPerf.Localization;
+﻿using EmisTracking.Localization;
 using EmisTracking.WebApi.Models.ViewModels;
 using EmisTracking.WebApp.Filters;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EmisTracking.WebApp.Controllers
 {
+    [LoadLayoutDataFilter]
     public abstract class BaseDropdownViewController<TEntityViewModel> : BaseViewController<TEntityViewModel>
         where TEntityViewModel : class, IViewModel, new()
     {
         public abstract Task LoadDropdownsValuesAsync(TEntityViewModel model);
 
         [HttpGet("create")]
-        [LoadLayoutDataFilter]
         public override async Task<IActionResult> Create()
         {
             var model = new TEntityViewModel();
@@ -52,8 +52,6 @@ namespace EmisTracking.WebApp.Controllers
             }
         }
 
-
-        [LoadLayoutDataFilter]
         [HttpGet("update/{id}")]
         public override async Task<IActionResult> Update([FromRoute] string id)
         {

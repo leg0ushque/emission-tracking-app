@@ -93,7 +93,7 @@ namespace EmisTracking.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public async Task<IActionResult> Delete([FromRoute] string id)
+        public virtual async Task<IActionResult> Delete([FromRoute] string id)
         {
             await _entityService.DeleteAsync(id);
 

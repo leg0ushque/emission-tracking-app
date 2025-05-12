@@ -1,0 +1,13 @@
+﻿@model List<EmisTracking.WebApi.Models.ViewModels.SubdivisionViewModel>
+@using EmisTracking.Localization
+@{
+    ViewData[Constants.GenerateBreadcrumb] = new();
+    ViewData["Title"] = LangResources.Titles.SubdivisionsIndex;
+
+    var isAdmin = (ViewData[Constants.ViewDataConstants.IsAdmin] as bool?).GetValueOrDefault();
+}
+
+@section Breadcrumb
+{
+    <li class="breadcrumb-item active">@ViewData["Title"]</li>
+}

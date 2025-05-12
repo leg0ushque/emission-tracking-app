@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using EmisTracking.Localization.StudentsPerf.Localization;
+using EmisTracking.Localization;
 using EmisTracking.Services.Exceptions;
 using EmisTracking.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;

@@ -1,0 +1,51 @@
+﻿@using EmisTracking.Localization
+@model Queue<string>
+@{
+    var tableLocalization = LangResources.JqueryDatatableLang;
+}
+
+<script>
+    var dataTableLocalization = {
+        "lengthMenu": '@tableLocalization["lengthMenuText"]',
+        "zeroRecords": '@tableLocalization["zeroRecordText"]',
+        "info": '@tableLocalization["infoText"]',
+        "infoEmpty": '@tableLocalization["infoEmptyText"]',
+        "infoFiltered": '@tableLocalization["infoFilteredText"]',
+        "emptyTable": '@tableLocalization["emptyTableText"]',
+        "loadingRecords": '@tableLocalization["loadingText"]',
+        "processing": '@tableLocalization["processingText"]',
+        "search": '@tableLocalization["searchText"]',
+        "paginate": {
+            "first": '@tableLocalization["firstText"]',
+            "last": '@tableLocalization["lastText"]',
+            "next": '@tableLocalization["nextText"]',
+            "previous": '@tableLocalization["previousText"]',
+        },
+        "aria": {
+            "sortAscending": '@tableLocalization["ascText"]',
+            "sortDescending": '@tableLocalization["descText"]',
+        }
+    };
+
+    let columnWidths = @Json.Serialize(Model);
+
+    $(document).ready(function () {
+        $('#mainItemsTable').DataTable({
+            "language": dataTableLocalization,
+            "columnDefs": [
+            {
+                "targets": 0,
+                "orderable": true,
+                "width": "3%",
+                "searchable": false,
+                "render": function (data, type, row, meta) {
+                    return meta.row + meta.settings._iDisplayStart + 1;
+                }
+            },
+            ...columnWidths.map((width, index) => ({
+                "width": width,
+                "targets": [index + 1]
+            }))]
+        });
+    });
+</script>
