@@ -6,10 +6,10 @@ using EmisTracking.WebApp.Filters;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System.Threading.Tasks;
 
 namespace EmisTracking.WebApp.Controllers
 {
-    [LoadLayoutDataFilter]
     public abstract class BaseViewController<TEntityViewModel> : Controller
         where TEntityViewModel : class, IViewModel, new()
     {
@@ -22,10 +22,12 @@ namespace EmisTracking.WebApp.Controllers
         protected abstract string UpdateTitle { get; }
 
         [Authorize]
+        [Authorize]
+        [LoadLayoutDataFilter]
         [HttpGet("")]
         public virtual async Task<IActionResult> Index()
         {
-            var response = await _apiService.GetAllAsync();
+            var response = await _apiService.GetAllAsync(loadDependencies: true);
 
             if (response.Success)
             {
@@ -38,6 +40,7 @@ namespace EmisTracking.WebApp.Controllers
         }
 
         [Authorize]
+        [LoadLayoutDataFilter]
         [HttpGet("{id}")]
         public virtual async Task<IActionResult> Item([FromRoute] string id)
         {
@@ -46,7 +49,7 @@ namespace EmisTracking.WebApp.Controllers
                 return View(Constants.ErrorView, (LangResources.EmptyIdText, controller: string.Empty, action: nameof(Index)));
             }
 
-            var response = await _apiService.GetByIdAsync(id);
+            var response = await _apiService.GetByIdAsync(id, loadDependencies: true);
 
             if (response.Success)
             {
@@ -59,6 +62,7 @@ namespace EmisTracking.WebApp.Controllers
         }
 
         [Authorize(Roles = Services.Constants.AdminRole)]
+        [LoadLayoutDataFilter]
         [HttpGet("create")]
         public virtual Task<IActionResult> Create()
         {
@@ -70,6 +74,7 @@ namespace EmisTracking.WebApp.Controllers
         }
 
         [Authorize(Roles = Services.Constants.AdminRole)]
+        [LoadLayoutDataFilter]
         [HttpPost("create")]
         public virtual async Task<IActionResult> Create([FromForm] TEntityViewModel model)
         {
@@ -96,6 +101,7 @@ namespace EmisTracking.WebApp.Controllers
         }
 
         [Authorize(Roles = Services.Constants.AdminRole)]
+        [LoadLayoutDataFilter]
         [HttpGet("update/{id}")]
         public virtual async Task<IActionResult> Update([FromRoute] string id)
         {
@@ -104,7 +110,7 @@ namespace EmisTracking.WebApp.Controllers
                 return View(Constants.ErrorView, (LangResources.EmptyIdText, controller: string.Empty, action: nameof(Index)));
             }
 
-            var response = await _apiService.GetByIdAsync(id);
+            var response = await _apiService.GetByIdAsync(id, loadDependencies: true);
 
             ViewData[AspAction] = nameof(Update);
             ViewData[Title] = UpdateTitle;
@@ -120,6 +126,7 @@ namespace EmisTracking.WebApp.Controllers
         }
 
         [Authorize(Roles = Services.Constants.AdminRole)]
+        [LoadLayoutDataFilter]
         [HttpPost("update/{id}")]
         public virtual async Task<IActionResult> Update([FromRoute] string id, [FromForm] TEntityViewModel model)
         {
@@ -146,6 +153,7 @@ namespace EmisTracking.WebApp.Controllers
         }
 
         [Authorize(Roles = Services.Constants.AdminRole)]
+        [LoadLayoutDataFilter]
         [HttpGet("delete/{id}")]
         public virtual async Task<IActionResult> Delete([FromRoute] string id)
         {
@@ -154,7 +162,7 @@ namespace EmisTracking.WebApp.Controllers
                 return View(Constants.ErrorView, (LangResources.EmptyIdText, controller: string.Empty, action: nameof(Index)));
             }
 
-            var response = await _apiService.GetByIdAsync(id);
+            var response = await _apiService.GetByIdAsync(id, loadDependencies: true);
 
             if (response.Success)
             {
@@ -167,10 +175,11 @@ namespace EmisTracking.WebApp.Controllers
         }
 
         [Authorize(Roles = Services.Constants.AdminRole)]
+        [LoadLayoutDataFilter]
         [HttpGet("confirm-delete/{id}")]
         public virtual async Task<IActionResult> ConfirmDelete([FromRoute] string id)
         {
-            if(string.IsNullOrEmpty(id))
+            if (string.IsNullOrEmpty(id))
             {
                 return View(Constants.ErrorView, (LangResources.EmptyIdText, controller: string.Empty, action: nameof(Index)));
             }

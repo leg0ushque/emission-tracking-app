@@ -1,10 +1,12 @@
 ﻿using EmisTracking.Services.WebApi.Services;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 using System.Security.Claims;
 using System.Text.Encodings.Web;
+using System.Threading.Tasks;
 
 namespace EmisTracking.WebApp.JwtAuth
 {

@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using System;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using ServicesConstants = EmisTracking.Services.Constants;
 
 namespace EmisTracking.WebApp.Filters

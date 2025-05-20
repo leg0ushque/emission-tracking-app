@@ -1,4 +1,6 @@
-﻿namespace EmisTracking.WebApp.Models
+﻿using System.Collections.Generic;
+
+namespace EmisTracking.WebApp.Models
 {
     public class SidebarDropdownModel
     {

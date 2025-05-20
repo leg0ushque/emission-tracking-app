@@ -3,8 +3,12 @@
     public class OperatingTime : BaseEntity
     {
         public string EmissionSourceId { get; set; }
+        public virtual EmissionSource EmissionSource { get; set; }
+
         public int Month { get; set; }
+
         public int Year { get; set; }
+
         public int Hours { get; set; }
     }
 }

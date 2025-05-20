@@ -10,9 +10,11 @@ namespace EmisTracking.Services.Interfaces
     {
         Task<string> CreateAsync(TEntity entity);
 
-        IQueryable<TEntity> GetAll(Expression<Func<TEntity, bool>> predicate = null);
+        IQueryable<TEntity> GetAll(Expression<Func<TEntity, bool>> predicate = null,
+            params Expression<Func<TEntity, object>>[] includes);
 
-        Task<TEntity> GetByIdAsync(string entityId);
+        Task<TEntity> GetByIdAsync(string entityId,
+            params Expression<Func<TEntity, object>>[] includes);
 
         Task UpdateAsync(TEntity entity);
 

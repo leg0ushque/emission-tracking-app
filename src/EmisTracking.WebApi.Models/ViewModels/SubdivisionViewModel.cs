@@ -9,9 +9,7 @@ namespace EmisTracking.WebApi.Models.ViewModels
     {
         [Display(Name = LangResources.Fields.Area)]
         public string AreaId { get; set; }
-
-        public string Area { get; set; }
-
+        public AreaViewModel Area { get; set; }
         public IEnumerable<DropdownItemModel> Areas { get; set; }
 
         [Display(Name = LangResources.Fields.Name)]

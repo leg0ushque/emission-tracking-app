@@ -4,6 +4,7 @@ using EmisTracking.Services.Exceptions;
 using EmisTracking.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace EmisTracking.Services.Services
@@ -13,6 +14,8 @@ namespace EmisTracking.Services.Services
         public UsersService(IRepository<User> repository, IMapper mapper)
             : base(repository, mapper)
         { }
+
+        protected override Expression<Func<User, object>>[] DependenciesIncludes => [];
 
         public Task<User> GetBySystemUserId(string systemUserId)
         {

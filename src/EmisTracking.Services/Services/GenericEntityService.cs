@@ -17,13 +17,31 @@ namespace EmisTracking.Services.Services
         private protected readonly IRepository<TEntity> _repository = repository;
         private protected readonly IMapper _mapper = mapper;
 
-        public virtual Task<List<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> predicate = null)
+        protected abstract Expression<Func<TEntity, object>>[] DependenciesIncludes { get; }
+
+        public virtual Task<List<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> predicate = null, bool loadDependencies = false)
         {
             try
             {
-                return _repository.GetAll(predicate).ToListAsync();
+                return loadDependencies ?
+                    _repository.GetAll(predicate, DependenciesIncludes).ToListAsync()
+                    : _repository.GetAll(predicate).ToListAsync();
             }
             catch (InvalidOperationException ex)
+            {
+                throw new BusinessLogicException(ex.Message, ex);
+            }
+        }
+
+        public Task<TEntity> GetByIdAsync(string id, bool loadDependencies = false)
+        {
+            try
+            {
+                return loadDependencies ?
+                    _repository.GetByIdAsync(id, DependenciesIncludes)
+                    : _repository.GetByIdAsync(id);
+            }
+            catch (ArgumentNullException ex)
             {
                 throw new BusinessLogicException(ex.Message, ex);
             }
@@ -42,18 +60,6 @@ namespace EmisTracking.Services.Services
                 throw new BusinessLogicException(ex.Message, ex);
             }
             catch (DbUpdateException ex)
-            {
-                throw new BusinessLogicException(ex.Message, ex);
-            }
-        }
-
-        public async Task<TEntity> GetByIdAsync(string id)
-        {
-            try
-            {
-                return await _repository.GetByIdAsync(id);
-            }
-            catch (ArgumentNullException ex)
             {
                 throw new BusinessLogicException(ex.Message, ex);
             }

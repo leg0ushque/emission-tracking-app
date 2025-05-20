@@ -6,7 +6,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-
 namespace EmisTracking.Services.Database.Repositories
 {
     public class GenericRepository<TEntity>(EmissionDbContext context) : IRepository<TEntity>
@@ -24,12 +23,22 @@ namespace EmisTracking.Services.Database.Repositories
             return entity.Id;
         }
 
-        public async Task<TEntity> GetByIdAsync(string entityId)
+        public async Task<TEntity> GetByIdAsync(string entityId,
+            params Expression<Func<TEntity, object>>[] includes)
         {
             ArgumentNullException.ThrowIfNull(entityId);
 
-            var entity = await _context.Set<TEntity>()
-                .FirstOrDefaultAsync(e => e.Id == entityId);
+            IQueryable<TEntity> query = _context.Set<TEntity>();
+
+            if (includes != null && includes.Length != 0)
+            {
+                foreach (var include in includes)
+                {
+                    query = query.Include(include);
+                }
+            }
+
+            var entity = await query.FirstOrDefaultAsync(e => e.Id == entityId);
 
             if (entity != null)
             {
@@ -39,10 +48,25 @@ namespace EmisTracking.Services.Database.Repositories
             return entity;
         }
 
-        public IQueryable<TEntity> GetAll(Expression<Func<TEntity, bool>> predicate = null)
+        public IQueryable<TEntity> GetAll(Expression<Func<TEntity, bool>> predicate = null,
+            params Expression<Func<TEntity, object>>[] includes)
         {
-            return predicate == null ? _context.Set<TEntity>().AsNoTracking()
-                : _context.Set<TEntity>().Where(predicate).AsQueryable().AsNoTracking();
+            IQueryable<TEntity> query = _context.Set<TEntity>().AsNoTracking();
+
+            if (predicate != null)
+            {
+                query = query.Where(predicate);
+            }
+
+            if (includes != null && includes.Length != 0)
+            {
+                foreach (var include in includes)
+                {
+                    query = query.Include(include);
+                }
+            }
+
+            return query;
         }
 
         public async Task UpdateAsync(TEntity entity)

@@ -3,6 +3,7 @@ using EmisTracking.Services.WebApi.Services;
 using EmisTracking.WebApi.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace EmisTracking.WebApp.Controllers
 {
@@ -34,7 +35,7 @@ namespace EmisTracking.WebApp.Controllers
             if (areaResponse.Success)
             {
                 model.AreaId = id;
-                model.Area = areaResponse.Data.Name;
+                model.Area = areaResponse.Data;
 
                 ViewData[AspAction] = nameof(Create);
                 ViewData[Title] = CreationTitle;
@@ -97,7 +98,7 @@ namespace EmisTracking.WebApp.Controllers
                 ViewData[Title] = UpdateTitle;
 
                 response.Data.AreaId = id;
-                response.Data.Area = areaResponse.Data.Name;
+                response.Data.Area = areaResponse.Data;
 
                 return View(Constants.FormView, response.Data);
             }

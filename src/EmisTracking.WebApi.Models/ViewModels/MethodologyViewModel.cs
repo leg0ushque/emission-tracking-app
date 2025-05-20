@@ -1,4 +1,6 @@
 ﻿using EmisTracking.Localization;
+using EmisTracking.WebApi.Models.Models;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace EmisTracking.WebApi.Models.ViewModels
@@ -13,6 +15,8 @@ namespace EmisTracking.WebApi.Models.ViewModels
 
         [Display(Name = LangResources.Fields.Mode)]
         public string ModeId { get; set; }
+        public ModeViewModel Mode { get; set; }
+        public IEnumerable<DropdownItemModel> Modes { get; set; }
 
         [Display(Name = LangResources.Fields.Formula)]
         public string Formula { get; set; }

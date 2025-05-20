@@ -4,6 +4,11 @@ using EmisTracking.WebApi.Models.ViewModels;
 using EmisTracking.WebApp.JwtAuth;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using System;
 
 namespace EmisTracking.WebApp
 {

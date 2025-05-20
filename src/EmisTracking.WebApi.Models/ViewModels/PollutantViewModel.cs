@@ -9,6 +9,9 @@ namespace EmisTracking.WebApi.Models.ViewModels
         [Display(Name = LangResources.Fields.Name)]
         public string Name { get; set; }
 
+        [Display(Name = LangResources.Fields.Formula)]
+        public string Formula { get; set; }
+
         [Display(Name = LangResources.Fields.HazardClass)]
         public HazardClass HazardClass { get; set; }
 

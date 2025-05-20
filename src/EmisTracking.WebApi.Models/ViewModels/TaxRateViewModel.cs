@@ -1,4 +1,5 @@
-﻿    using EmisTracking.Localization;
+﻿using EmisTracking.Localization;
+using EmisTracking.WebApi.Models.Enums;
 using System;
 using System.ComponentModel.DataAnnotations;
 
@@ -7,7 +8,7 @@ namespace EmisTracking.WebApi.Models.ViewModels
     public class TaxRateViewModel : BaseViewModel
     {
         [Display(Name = LangResources.Fields.HazardClass)]
-        public string HazardClass { get; set; }
+        public HazardClass HazardClass { get; set; }
 
         [Display(Name = LangResources.Fields.TaxRate)]
         public double Amount { get; set; }

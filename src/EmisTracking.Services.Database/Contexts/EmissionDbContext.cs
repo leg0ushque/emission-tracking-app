@@ -30,7 +30,7 @@ namespace EmisTracking.Services.Database.Contexts
 
             modelBuilder.Entity<Subdivision>(entity =>
             {
-                entity.HasOne<Area>()
+                entity.HasOne(s => s.Area)
                     .WithMany()
                     .HasForeignKey(m => m.AreaId)
                     .OnDelete(DeleteBehavior.Restrict);
@@ -38,17 +38,17 @@ namespace EmisTracking.Services.Database.Contexts
 
             modelBuilder.Entity<EmissionSource>(entity =>
             {
-                entity.HasOne<Subdivision>()
+                entity.HasOne(e => e.Subdivision)
                     .WithMany()
                     .HasForeignKey(m => m.SubdivisionId)
                     .OnDelete(DeleteBehavior.Restrict);
 
-                entity.HasOne<Mode>()
+                entity.HasOne(e => e.Mode)
                     .WithMany()
                     .HasForeignKey(m => m.ModeId)
                     .OnDelete(DeleteBehavior.Restrict);
 
-                entity.HasOne<Methodology>()
+                entity.HasOne(e => e.Methodology)
                     .WithMany()
                     .HasForeignKey(m => m.MethodologyId)
                     .OnDelete(DeleteBehavior.Restrict);
@@ -56,7 +56,7 @@ namespace EmisTracking.Services.Database.Contexts
 
             modelBuilder.Entity<OperatingTime>(entity =>
             {
-                entity.HasOne<EmissionSource>()
+                entity.HasOne(o => o.EmissionSource)
                     .WithMany()
                     .HasForeignKey(m => m.EmissionSourceId)
                     .OnDelete(DeleteBehavior.Restrict);
@@ -64,12 +64,12 @@ namespace EmisTracking.Services.Database.Contexts
 
             modelBuilder.Entity<SourceSubstance>(entity =>
             {
-                entity.HasOne<EmissionSource>()
+                entity.HasOne(s => s.EmissionSource)
                     .WithMany()
                     .HasForeignKey(m => m.EmissionSourceId)
                     .OnDelete(DeleteBehavior.Restrict);
 
-                entity.HasOne<Pollutant>()
+                entity.HasOne(s => s.Pollutant)
                     .WithMany()
                     .HasForeignKey(m => m.PollutantId)
                     .OnDelete(DeleteBehavior.Restrict);
@@ -77,7 +77,7 @@ namespace EmisTracking.Services.Database.Contexts
 
             modelBuilder.Entity<MethodologyParameter>(entity =>
             {
-                entity.HasOne<Methodology>()
+                entity.HasOne(m => m.Methodology)
                     .WithMany()
                     .HasForeignKey(m => m.MethodologyId)
                     .OnDelete(DeleteBehavior.Restrict);
@@ -85,12 +85,12 @@ namespace EmisTracking.Services.Database.Contexts
 
             modelBuilder.Entity<SpecificIndicator>(entity =>
             {
-                entity.HasOne<ConsumptionGroup>()
+                entity.HasOne(g => g.ConsumptionGroup)
                     .WithMany()
                     .HasForeignKey(m => m.ConsumptionGroupId)
                     .OnDelete(DeleteBehavior.Restrict);
 
-                entity.HasOne<Pollutant>()
+                entity.HasOne(g => g.Pollutant)
                     .WithMany()
                     .HasForeignKey(m => m.PollutantId)
                     .OnDelete(DeleteBehavior.Restrict);
@@ -98,7 +98,7 @@ namespace EmisTracking.Services.Database.Contexts
 
             modelBuilder.Entity<Consumption>(entity =>
             {
-                entity.HasOne<ConsumptionGroup>()
+                entity.HasOne(x => x.ConsumptionGroup)
                     .WithMany()
                     .HasForeignKey(m => m.ConsumptionGroupId)
                     .OnDelete(DeleteBehavior.Restrict);
@@ -106,12 +106,12 @@ namespace EmisTracking.Services.Database.Contexts
 
             modelBuilder.Entity<ParameterValue>(entity =>
             {
-                entity.HasOne<MethodologyParameter>()
+                entity.HasOne(p => p.MethodologyParameter)
                     .WithMany()
                     .HasForeignKey(m => m.MethodologyParameterId)
                     .OnDelete(DeleteBehavior.Restrict);
 
-                entity.HasOne<GrossEmission>()
+                entity.HasOne(p => p.GrossEmission)
                     .WithMany()
                     .HasForeignKey(m => m.GrossEmissionId)
                     .OnDelete(DeleteBehavior.Restrict);
@@ -119,27 +119,19 @@ namespace EmisTracking.Services.Database.Contexts
 
             modelBuilder.Entity<GrossEmission>(entity =>
             {
-                entity.HasOne<SourceSubstance>()
+                entity.HasOne(g => g.SourceSubstance)
                     .WithMany()
                     .HasForeignKey(m => m.SourceSubstanceId)
                     .OnDelete(DeleteBehavior.Restrict);
 
-                entity.HasOne<Methodology>()
+                entity.HasOne(g => g.Methodology)
                     .WithMany()
                     .HasForeignKey(m => m.MethodologyId)
                     .OnDelete(DeleteBehavior.Restrict);
 
-                entity.HasOne<Tax>()
+                entity.HasOne(g => g.Tax)
                     .WithMany()
                     .HasForeignKey(m => m.TaxId)
-                    .OnDelete(DeleteBehavior.Restrict);
-            });
-
-            modelBuilder.Entity<Tax>(entity =>
-            {
-                entity.HasOne<TaxRate>()
-                    .WithMany()
-                    .HasForeignKey(m => m.TaxRateId)
                     .OnDelete(DeleteBehavior.Restrict);
             });
         }

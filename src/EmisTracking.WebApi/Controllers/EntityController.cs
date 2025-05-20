@@ -46,9 +46,9 @@ namespace EmisTracking.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] bool loadDependencies = false)
         {
-            var items = await _entityService.GetAllAsync();
+            var items = await _entityService.GetAllAsync(loadDependencies: loadDependencies);
             var itemModelsList = _mapper.Map<List<TEntityModel>>(items);
 
             return Ok(new ApiResponseModel<List<TEntityModel>> { Success = true, Data = itemModelsList });
@@ -60,9 +60,9 @@ namespace EmisTracking.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public async Task<IActionResult> GetById([FromRoute] string id)
+        public async Task<IActionResult> GetById([FromRoute] string id, [FromQuery] bool loadDependencies = false)
         {
-            var item = await _entityService.GetByIdAsync(id);
+            var item = await _entityService.GetByIdAsync(id, loadDependencies);
             var itemModel = _mapper.Map<TEntityModel>(item);
 
             return Ok(new ApiResponseModel<TEntityModel> { Success = true, Data = itemModel });
@@ -93,7 +93,7 @@ namespace EmisTracking.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public virtual async Task<IActionResult> Delete([FromRoute] string id)
+        public async Task<IActionResult> Delete([FromRoute] string id)
         {
             await _entityService.DeleteAsync(id);
 

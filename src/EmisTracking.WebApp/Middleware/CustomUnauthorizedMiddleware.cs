@@ -1,4 +1,7 @@
-﻿namespace EmisTracking.WebApp.Middleware
+﻿using Microsoft.AspNetCore.Http;
+using System.Threading.Tasks;
+
+namespace EmisTracking.WebApp.Middleware
 {
     public class CustomUnauthorizedMiddleware
     {

@@ -55,7 +55,7 @@
         }
 
         // Названия полей
-        public class Fields
+        public static class Fields
         {
             public const string Area = "Площадка";
             public const string Subdivision = "Подразделение";

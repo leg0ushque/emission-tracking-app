@@ -1,4 +1,5 @@
 ﻿using EmisTracking.WebApi.Models.ViewModels;
+using System.Collections.Generic;
 
 namespace EmisTracking.WebApp.Models
 {

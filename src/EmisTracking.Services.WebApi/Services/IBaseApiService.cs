@@ -11,9 +11,9 @@ namespace EmisTracking.Services.WebApi.Services
 
         public Task<ApiResponseModel<string>> CreateAsync(TEntityViewModel item);
 
-        public Task<ApiResponseModel<List<TEntityViewModel>>> GetAllAsync();
+        public Task<ApiResponseModel<List<TEntityViewModel>>> GetAllAsync(bool loadDependencies = false);
 
-        public Task<ApiResponseModel<TEntityViewModel>> GetByIdAsync(string id);
+        public Task<ApiResponseModel<TEntityViewModel>> GetByIdAsync(string id, bool loadDependencies = false);
 
         public Task<ApiResponseModel<object>> UpdateAsync(TEntityViewModel item);
 

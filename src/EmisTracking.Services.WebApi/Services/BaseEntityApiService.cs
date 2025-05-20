@@ -16,14 +16,23 @@ namespace EmisTracking.Services.WebApi.Services
             return SendRequestAsync<string>(HttpMethod.Post, $"{ControllerPath}", item);
         }
 
-        public Task<ApiResponseModel<List<TEntityViewModel>>> GetAllAsync()
+        public Task<ApiResponseModel<List<TEntityViewModel>>> GetAllAsync(bool loadDependencies = false)
         {
-            return SendRequestAsync<List<TEntityViewModel>>(HttpMethod.Get, $"{ControllerPath}");
+            var path = $"{ControllerPath}";
+
+            if (loadDependencies)
+                path += "?loadDependencies=true";
+
+            return SendRequestAsync<List<TEntityViewModel>>(HttpMethod.Get, path);
         }
 
-        public virtual Task<ApiResponseModel<TEntityViewModel>> GetByIdAsync(string id)
+        public virtual Task<ApiResponseModel<TEntityViewModel>> GetByIdAsync(string id, bool loadDependencies = false)
         {
-            return SendRequestAsync<TEntityViewModel>(HttpMethod.Get, $"{ControllerPath}/{id}");
+            var path = $"{ControllerPath}/{id}";
+            if (loadDependencies)
+                path += "?loadDependencies=true";
+
+            return SendRequestAsync<TEntityViewModel>(HttpMethod.Get, path);
         }
 
         public virtual Task<ApiResponseModel<object>> UpdateAsync(TEntityViewModel item)
