@@ -3,11 +3,9 @@ using System.Threading.Tasks;
 
 namespace EmisTracking.WebApp.Middleware
 {
-    public class CustomUnauthorizedMiddleware
+    public class CustomUnauthorizedMiddleware(RequestDelegate next)
     {
-        private readonly RequestDelegate _next;
-
-        public CustomUnauthorizedMiddleware(RequestDelegate next) => _next = next;
+        private readonly RequestDelegate _next = next;
 
         public async Task Invoke(HttpContext context)
         {

@@ -2,21 +2,14 @@
 
 namespace EmisTracking.WebApp.Models
 {
-    public class SidebarDropdownModel
+    public class SidebarDropdownModel(string dropdownId, string iconName, string text, List<(string, string, string)> items)
     {
-        public SidebarDropdownModel(string dropdownId, string iconName, string text, List<(string, string, string)> items)
-        {
-            DropdownId = dropdownId;
-            IconName = iconName;
-            Text = text;
-            Items = items;
-        }
-        public string DropdownId { get; set; }
+        public string DropdownId { get; set; } = dropdownId;
 
-        public string IconName { get; set; }
+        public string IconName { get; set; } = iconName;
 
-        public string Text { get; set; }
+        public string Text { get; set; } = text;
 
-        public List<(string,string,string)> Items { get; set; }
+        public List<(string, string, string)> Items { get; set; } = items;
     }
 }

@@ -7,12 +7,8 @@ using System.Threading.Tasks;
 
 namespace EmisTracking.Services.Services
 {
-    public class AreasService : GenericEntityService<Area>
+    public class AreasService(IRepository<Area> repository, IMapper mapper) : GenericEntityService<Area>(repository, mapper)
     {
-        public AreasService(IRepository<Area> repository, IMapper mapper)
-            : base(repository, mapper)
-        { }
-
         protected override Expression<Func<Area, object>>[] DependenciesIncludes => [];
 
         protected override Task ValidateAsync(Area item)
@@ -21,12 +17,8 @@ namespace EmisTracking.Services.Services
         }
     }
 
-    public class SubdivisionsService : GenericEntityService<Subdivision>
+    public class SubdivisionsService(IRepository<Subdivision> repository, IMapper mapper) : GenericEntityService<Subdivision>(repository, mapper)
     {
-        public SubdivisionsService(IRepository<Subdivision> repository, IMapper mapper)
-            : base(repository, mapper)
-        { }
-
         protected override Expression<Func<Subdivision, object>>[] DependenciesIncludes =>
         [
             x => x.Area,
@@ -38,12 +30,8 @@ namespace EmisTracking.Services.Services
         }
     }
 
-    public class ModesService : GenericEntityService<Mode>
+    public class ModesService(IRepository<Mode> repository, IMapper mapper) : GenericEntityService<Mode>(repository, mapper)
     {
-        public ModesService(IRepository<Mode> repository, IMapper mapper)
-            : base(repository, mapper)
-        { }
-
         protected override Expression<Func<Mode, object>>[] DependenciesIncludes => [];
 
         protected override Task ValidateAsync(Mode item)
@@ -52,12 +40,8 @@ namespace EmisTracking.Services.Services
         }
     }
 
-    public class MethodologiesService : GenericEntityService<Methodology>
+    public class MethodologiesService(IRepository<Methodology> repository, IMapper mapper) : GenericEntityService<Methodology>(repository, mapper)
     {
-        public MethodologiesService(IRepository<Methodology> repository, IMapper mapper)
-            : base(repository, mapper)
-        { }
-
         protected override Expression<Func<Methodology, object>>[] DependenciesIncludes =>
         [
             x => x.Mode,
@@ -69,12 +53,8 @@ namespace EmisTracking.Services.Services
         }
     }
 
-    public class EmissionSourcesService : GenericEntityService<EmissionSource>
+    public class EmissionSourcesService(IRepository<EmissionSource> repository, IMapper mapper) : GenericEntityService<EmissionSource>(repository, mapper)
     {
-        public EmissionSourcesService(IRepository<EmissionSource> repository, IMapper mapper)
-            : base(repository, mapper)
-        { }
-
         protected override Expression<Func<EmissionSource, object>>[] DependenciesIncludes =>
         [
             x => x.Mode,
@@ -88,12 +68,8 @@ namespace EmisTracking.Services.Services
         }
     }
 
-    public class OperatingTimesService : GenericEntityService<OperatingTime>
+    public class OperatingTimesService(IRepository<OperatingTime> repository, IMapper mapper) : GenericEntityService<OperatingTime>(repository, mapper)
     {
-        public OperatingTimesService(IRepository<OperatingTime> repository, IMapper mapper)
-            : base(repository, mapper)
-        { }
-
         protected override Expression<Func<OperatingTime, object>>[] DependenciesIncludes =>
         [
             x => x.EmissionSource,
@@ -105,12 +81,8 @@ namespace EmisTracking.Services.Services
         }
     }
 
-    public class PollutantsService : GenericEntityService<Pollutant>
+    public class PollutantsService(IRepository<Pollutant> repository, IMapper mapper) : GenericEntityService<Pollutant>(repository, mapper)
     {
-        public PollutantsService(IRepository<Pollutant> repository, IMapper mapper)
-            : base(repository, mapper)
-        { }
-
         protected override Expression<Func<Pollutant, object>>[] DependenciesIncludes => [];
 
         protected override Task ValidateAsync(Pollutant item)
@@ -119,12 +91,8 @@ namespace EmisTracking.Services.Services
         }
     }
 
-    public class SourceSubstancesService : GenericEntityService<SourceSubstance>
+    public class SourceSubstancesService(IRepository<SourceSubstance> repository, IMapper mapper) : GenericEntityService<SourceSubstance>(repository, mapper)
     {
-        public SourceSubstancesService(IRepository<SourceSubstance> repository, IMapper mapper)
-            : base(repository, mapper)
-        { }
-
         protected override Expression<Func<SourceSubstance, object>>[] DependenciesIncludes =>
         [
             x => x.EmissionSource,
@@ -137,12 +105,8 @@ namespace EmisTracking.Services.Services
         }
     }
 
-    public class MethodologyParametersService : GenericEntityService<MethodologyParameter>
+    public class MethodologyParametersService(IRepository<MethodologyParameter> repository, IMapper mapper) : GenericEntityService<MethodologyParameter>(repository, mapper)
     {
-        public MethodologyParametersService(IRepository<MethodologyParameter> repository, IMapper mapper)
-            : base(repository, mapper)
-        { }
-
         protected override Expression<Func<MethodologyParameter, object>>[] DependenciesIncludes =>
         [
             x => x.Methodology,
@@ -154,12 +118,8 @@ namespace EmisTracking.Services.Services
         }
     }
 
-    public class ConsumptionGroupsService : GenericEntityService<ConsumptionGroup>
+    public class ConsumptionGroupsService(IRepository<ConsumptionGroup> repository, IMapper mapper) : GenericEntityService<ConsumptionGroup>(repository, mapper)
     {
-        public ConsumptionGroupsService(IRepository<ConsumptionGroup> repository, IMapper mapper)
-            : base(repository, mapper)
-        { }
-
         protected override Expression<Func<ConsumptionGroup, object>>[] DependenciesIncludes =>
         [
             x => x.Methodology,
@@ -171,12 +131,8 @@ namespace EmisTracking.Services.Services
         }
     }
 
-    public class SpecificIndicatorsService : GenericEntityService<SpecificIndicator>
+    public class SpecificIndicatorsService(IRepository<SpecificIndicator> repository, IMapper mapper) : GenericEntityService<SpecificIndicator>(repository, mapper)
     {
-        public SpecificIndicatorsService(IRepository<SpecificIndicator> repository, IMapper mapper)
-            : base(repository, mapper)
-        { }
-
         protected override Expression<Func<SpecificIndicator, object>>[] DependenciesIncludes =>
         [
             x => x.ConsumptionGroup,
@@ -189,12 +145,8 @@ namespace EmisTracking.Services.Services
         }
     }
 
-    public class ConsumptionsService : GenericEntityService<Consumption>
+    public class ConsumptionsService(IRepository<Consumption> repository, IMapper mapper) : GenericEntityService<Consumption>(repository, mapper)
     {
-        public ConsumptionsService(IRepository<Consumption> repository, IMapper mapper)
-            : base(repository, mapper)
-        { }
-
         protected override Expression<Func<Consumption, object>>[] DependenciesIncludes =>
         [
             x => x.ConsumptionGroup
@@ -206,12 +158,8 @@ namespace EmisTracking.Services.Services
         }
     }
 
-    public class ParameterValuesService : GenericEntityService<ParameterValue>
+    public class ParameterValuesService(IRepository<ParameterValue> repository, IMapper mapper) : GenericEntityService<ParameterValue>(repository, mapper)
     {
-        public ParameterValuesService(IRepository<ParameterValue> repository, IMapper mapper)
-            : base(repository, mapper)
-        { }
-
         protected override Expression<Func<ParameterValue, object>>[] DependenciesIncludes =>
         [
             x => x.MethodologyParameter,
@@ -224,12 +172,8 @@ namespace EmisTracking.Services.Services
         }
     }
 
-    public class GrossEmissionsService : GenericEntityService<GrossEmission>
+    public class GrossEmissionsService(IRepository<GrossEmission> repository, IMapper mapper) : GenericEntityService<GrossEmission>(repository, mapper)
     {
-        public GrossEmissionsService(IRepository<GrossEmission> repository, IMapper mapper)
-            : base(repository, mapper)
-        { }
-
         protected override Expression<Func<GrossEmission, object>>[] DependenciesIncludes =>
         [
             x => x.SourceSubstance,
@@ -243,12 +187,8 @@ namespace EmisTracking.Services.Services
         }
     }
 
-    public class TaxRatesService : GenericEntityService<TaxRate>
+    public class TaxRatesService(IRepository<TaxRate> repository, IMapper mapper) : GenericEntityService<TaxRate>(repository, mapper)
     {
-        public TaxRatesService(IRepository<TaxRate> repository, IMapper mapper)
-            : base(repository, mapper)
-        { }
-
         protected override Expression<Func<TaxRate, object>>[] DependenciesIncludes => [];
 
         protected override Task ValidateAsync(TaxRate item)
@@ -257,12 +197,8 @@ namespace EmisTracking.Services.Services
         }
     }
 
-    public class TaxesService : GenericEntityService<Tax>
+    public class TaxesService(IRepository<Tax> repository, IMapper mapper) : GenericEntityService<Tax>(repository, mapper)
     {
-        public TaxesService(IRepository<Tax> repository, IMapper mapper)
-            : base(repository, mapper)
-        { }
-
         protected override Expression<Func<Tax, object>>[] DependenciesIncludes => [];
 
         protected override Task ValidateAsync(Tax item)

@@ -9,12 +9,8 @@ using System.Threading.Tasks;
 
 namespace EmisTracking.Services.Services
 {
-    public class UsersService : GenericEntityService<User>, IUsersService
+    public class UsersService(IRepository<User> repository, IMapper mapper) : GenericEntityService<User>(repository, mapper), IUsersService
     {
-        public UsersService(IRepository<User> repository, IMapper mapper)
-            : base(repository, mapper)
-        { }
-
         protected override Expression<Func<User, object>>[] DependenciesIncludes => [];
 
         public Task<User> GetBySystemUserId(string systemUserId)
