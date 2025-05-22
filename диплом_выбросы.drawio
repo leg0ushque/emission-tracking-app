@@ -184,7 +184,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="zghjpL5PGYh1nHS3tVW9-177" value="&lt;span style=&quot;font-weight: 400;&quot;&gt;Загрязняющее вещество&lt;/span&gt;" style="shape=table;startSize=30;container=1;collapsible=1;childLayout=tableLayout;fixedRows=1;rowLines=0;fontStyle=1;align=center;resizeLast=1;html=1;fontSize=14;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="WtCbudRc5a6JGBQGcXM_-1" vertex="1">
-          <mxGeometry x="-1035" y="994.02" width="180" height="150" as="geometry" />
+          <mxGeometry x="-1035" y="994.02" width="180" height="180" as="geometry" />
         </mxCell>
         <mxCell id="zghjpL5PGYh1nHS3tVW9-178" value="" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=none;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;top=0;left=0;right=0;bottom=1;fontSize=14;" parent="zghjpL5PGYh1nHS3tVW9-177" vertex="1">
           <mxGeometry y="30" width="180" height="30" as="geometry" />
@@ -234,6 +234,19 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="zghjpL5PGYh1nHS3tVW9-189" value="Агр. состояние" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;whiteSpace=wrap;html=1;fontSize=14;" parent="zghjpL5PGYh1nHS3tVW9-187" vertex="1">
+          <mxGeometry x="30" width="150" height="30" as="geometry">
+            <mxRectangle width="150" height="30" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="CGaRHqQi3hpCxMgVWklY-0" value="" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=none;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;top=0;left=0;right=0;bottom=0;fontSize=14;" vertex="1" parent="zghjpL5PGYh1nHS3tVW9-177">
+          <mxGeometry y="150" width="180" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="CGaRHqQi3hpCxMgVWklY-1" value="" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;editable=1;overflow=hidden;whiteSpace=wrap;html=1;fontSize=14;" vertex="1" parent="CGaRHqQi3hpCxMgVWklY-0">
+          <mxGeometry width="30" height="30" as="geometry">
+            <mxRectangle width="30" height="30" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="CGaRHqQi3hpCxMgVWklY-2" value="Формула" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;whiteSpace=wrap;html=1;fontSize=14;" vertex="1" parent="CGaRHqQi3hpCxMgVWklY-0">
           <mxGeometry x="30" width="150" height="30" as="geometry">
             <mxRectangle width="150" height="30" as="alternateBounds" />
           </mxGeometry>
@@ -586,28 +599,28 @@
             <mxRectangle width="150" height="30" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="fkq1QzzCfgOq9MC0g9Wc-0" value="" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=none;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;top=0;left=0;right=0;bottom=0;fontSize=14;" vertex="1" parent="zghjpL5PGYh1nHS3tVW9-291">
+        <mxCell id="fkq1QzzCfgOq9MC0g9Wc-0" value="" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=none;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;top=0;left=0;right=0;bottom=0;fontSize=14;" parent="zghjpL5PGYh1nHS3tVW9-291" vertex="1">
           <mxGeometry y="90" width="180" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="fkq1QzzCfgOq9MC0g9Wc-1" value="" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;editable=1;overflow=hidden;whiteSpace=wrap;html=1;fontSize=14;" vertex="1" parent="fkq1QzzCfgOq9MC0g9Wc-0">
+        <mxCell id="fkq1QzzCfgOq9MC0g9Wc-1" value="" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;editable=1;overflow=hidden;whiteSpace=wrap;html=1;fontSize=14;" parent="fkq1QzzCfgOq9MC0g9Wc-0" vertex="1">
           <mxGeometry width="30" height="30" as="geometry">
             <mxRectangle width="30" height="30" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="fkq1QzzCfgOq9MC0g9Wc-2" value="Название" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;whiteSpace=wrap;html=1;fontSize=14;" vertex="1" parent="fkq1QzzCfgOq9MC0g9Wc-0">
+        <mxCell id="fkq1QzzCfgOq9MC0g9Wc-2" value="Название" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;whiteSpace=wrap;html=1;fontSize=14;" parent="fkq1QzzCfgOq9MC0g9Wc-0" vertex="1">
           <mxGeometry x="30" width="150" height="30" as="geometry">
             <mxRectangle width="150" height="30" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="QKDlAFT7BktThfhd8skN-0" value="" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=none;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;top=0;left=0;right=0;bottom=0;fontSize=14;" vertex="1" parent="zghjpL5PGYh1nHS3tVW9-291">
+        <mxCell id="QKDlAFT7BktThfhd8skN-0" value="" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=none;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;top=0;left=0;right=0;bottom=0;fontSize=14;" parent="zghjpL5PGYh1nHS3tVW9-291" vertex="1">
           <mxGeometry y="120" width="180" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="QKDlAFT7BktThfhd8skN-1" value="" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;editable=1;overflow=hidden;whiteSpace=wrap;html=1;fontSize=14;" vertex="1" parent="QKDlAFT7BktThfhd8skN-0">
+        <mxCell id="QKDlAFT7BktThfhd8skN-1" value="" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;editable=1;overflow=hidden;whiteSpace=wrap;html=1;fontSize=14;" parent="QKDlAFT7BktThfhd8skN-0" vertex="1">
           <mxGeometry width="30" height="30" as="geometry">
             <mxRectangle width="30" height="30" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="QKDlAFT7BktThfhd8skN-2" value="Вид в формуле" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;whiteSpace=wrap;html=1;fontSize=14;" vertex="1" parent="QKDlAFT7BktThfhd8skN-0">
+        <mxCell id="QKDlAFT7BktThfhd8skN-2" value="Вид в формуле" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;whiteSpace=wrap;html=1;fontSize=14;" parent="QKDlAFT7BktThfhd8skN-0" vertex="1">
           <mxGeometry x="30" width="150" height="30" as="geometry">
             <mxRectangle width="150" height="30" as="alternateBounds" />
           </mxGeometry>
@@ -919,15 +932,15 @@
             <mxRectangle width="150" height="30" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="oEXRGoFVD6R48yeFGaLN-0" value="" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=none;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;top=0;left=0;right=0;bottom=0;fontSize=14;" vertex="1" parent="zghjpL5PGYh1nHS3tVW9-570">
+        <mxCell id="oEXRGoFVD6R48yeFGaLN-0" value="" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=none;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;top=0;left=0;right=0;bottom=0;fontSize=14;" parent="zghjpL5PGYh1nHS3tVW9-570" vertex="1">
           <mxGeometry y="150" width="180" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="oEXRGoFVD6R48yeFGaLN-1" value="" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;editable=1;overflow=hidden;whiteSpace=wrap;html=1;fontSize=14;" vertex="1" parent="oEXRGoFVD6R48yeFGaLN-0">
+        <mxCell id="oEXRGoFVD6R48yeFGaLN-1" value="" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;editable=1;overflow=hidden;whiteSpace=wrap;html=1;fontSize=14;" parent="oEXRGoFVD6R48yeFGaLN-0" vertex="1">
           <mxGeometry width="30" height="30" as="geometry">
             <mxRectangle width="30" height="30" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="oEXRGoFVD6R48yeFGaLN-2" value="Оплачен" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;whiteSpace=wrap;html=1;fontSize=14;" vertex="1" parent="oEXRGoFVD6R48yeFGaLN-0">
+        <mxCell id="oEXRGoFVD6R48yeFGaLN-2" value="Оплачен" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;whiteSpace=wrap;html=1;fontSize=14;" parent="oEXRGoFVD6R48yeFGaLN-0" vertex="1">
           <mxGeometry x="30" width="150" height="30" as="geometry">
             <mxRectangle width="150" height="30" as="alternateBounds" />
           </mxGeometry>
@@ -940,13 +953,10 @@
             <mxRectangle width="30" height="30" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="zghjpL5PGYh1nHS3tVW9-609" value="ID ставки" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;whiteSpace=wrap;html=1;fontSize=14;" parent="zghjpL5PGYh1nHS3tVW9-607" vertex="1">
+        <mxCell id="zghjpL5PGYh1nHS3tVW9-609" value="Класс опасности" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;whiteSpace=wrap;html=1;fontSize=14;" parent="zghjpL5PGYh1nHS3tVW9-607" vertex="1">
           <mxGeometry x="30" width="150" height="30" as="geometry">
             <mxRectangle width="150" height="30" as="alternateBounds" />
           </mxGeometry>
-        </mxCell>
-        <mxCell id="zghjpL5PGYh1nHS3tVW9-611" style="edgeStyle=orthogonalEdgeStyle;shape=connector;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=14;fontColor=default;labelBackgroundColor=default;startArrow=ERmandOne;startFill=0;endArrow=ERzeroToMany;endFill=0;" parent="WtCbudRc5a6JGBQGcXM_-1" source="zghjpL5PGYh1nHS3tVW9-552" target="zghjpL5PGYh1nHS3tVW9-607" edge="1">
-          <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="zghjpL5PGYh1nHS3tVW9-621" value="&lt;span style=&quot;font-weight: 400;&quot;&gt;Расход&lt;/span&gt;" style="shape=table;startSize=30;container=1;collapsible=1;childLayout=tableLayout;fixedRows=1;rowLines=0;fontStyle=1;align=center;resizeLast=1;html=1;fontSize=14;" parent="WtCbudRc5a6JGBQGcXM_-1" vertex="1">
           <mxGeometry x="-1579" y="804.02" width="180" height="180" as="geometry" />
@@ -1145,34 +1155,34 @@
         <mxCell id="zghjpL5PGYh1nHS3tVW9-706" style="edgeStyle=orthogonalEdgeStyle;shape=connector;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=14;fontColor=default;labelBackgroundColor=default;startArrow=ERmandOne;startFill=0;endArrow=ERzeroToMany;endFill=0;" parent="WtCbudRc5a6JGBQGcXM_-1" source="zghjpL5PGYh1nHS3tVW9-459" target="zghjpL5PGYh1nHS3tVW9-612" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="lOiwvZ2CePTdBakl0nH5-0" value="1. Сварка&lt;br&gt;2. Резка&lt;br&gt;&lt;br&gt;ID_Азот - ист1 - норм ....&lt;br&gt;ID_Азот - ист2 - норм&lt;br&gt;Углерод - ист1 - ненорм..." style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;" vertex="1" parent="WtCbudRc5a6JGBQGcXM_-1">
+        <mxCell id="lOiwvZ2CePTdBakl0nH5-0" value="1. Сварка&lt;br&gt;2. Резка&lt;br&gt;&lt;br&gt;ID_Азот - ист1 - норм ....&lt;br&gt;ID_Азот - ист2 - норм&lt;br&gt;Углерод - ист1 - ненорм..." style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;" parent="WtCbudRc5a6JGBQGcXM_-1" vertex="1">
           <mxGeometry x="-780" y="220.02" width="280" height="89.98" as="geometry" />
         </mxCell>
-        <mxCell id="Jm_bSrvgs1c4PkI1HIp_-0" value="Сварка&lt;div&gt;(1-G/100) * Mass * (A * B + C * D) * Time&lt;/div&gt;" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=13;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=17;" vertex="1" parent="WtCbudRc5a6JGBQGcXM_-1">
+        <mxCell id="Jm_bSrvgs1c4PkI1HIp_-0" value="Сварка&lt;div&gt;(1-G/100) * Mass * (A * B + C * D) * Time&lt;/div&gt;" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=13;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=17;" parent="WtCbudRc5a6JGBQGcXM_-1" vertex="1">
           <mxGeometry x="-2019" y="248.01999999999998" width="319" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="Jm_bSrvgs1c4PkI1HIp_-1" value="&lt;div&gt;A - Показатель1&lt;/div&gt;&lt;div&gt;B - Сред.показ. 2&lt;/div&gt;&lt;div&gt;C - Суммар.показ. 3&lt;/div&gt;&lt;div&gt;D - Значение 4&lt;/div&gt;&lt;div&gt;Mass - Расход (кг)&lt;/div&gt;&lt;div&gt;T - время работы&lt;/div&gt;&lt;div&gt;G - % ГОУ&lt;/div&gt;" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=13;fillColor=#fff2cc;strokeColor=#d6b656;align=left;verticalAlign=top;fontSize=14;" vertex="1" parent="WtCbudRc5a6JGBQGcXM_-1">
+        <mxCell id="Jm_bSrvgs1c4PkI1HIp_-1" value="&lt;div&gt;A - Показатель1&lt;/div&gt;&lt;div&gt;B - Сред.показ. 2&lt;/div&gt;&lt;div&gt;C - Суммар.показ. 3&lt;/div&gt;&lt;div&gt;D - Значение 4&lt;/div&gt;&lt;div&gt;Mass - Расход (кг)&lt;/div&gt;&lt;div&gt;T - время работы&lt;/div&gt;&lt;div&gt;G - % ГОУ&lt;/div&gt;" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=13;fillColor=#fff2cc;strokeColor=#d6b656;align=left;verticalAlign=top;fontSize=14;" parent="WtCbudRc5a6JGBQGcXM_-1" vertex="1">
           <mxGeometry x="-1920" y="350" width="140" height="130" as="geometry" />
         </mxCell>
-        <mxCell id="DgLV8NCRFqRnG06dz23F-0" value="Электрод1&lt;div&gt;Электрод2&lt;/div&gt;" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=13;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="WtCbudRc5a6JGBQGcXM_-1">
+        <mxCell id="DgLV8NCRFqRnG06dz23F-0" value="Электрод1&lt;div&gt;Электрод2&lt;/div&gt;" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=13;fillColor=#fff2cc;strokeColor=#d6b656;" parent="WtCbudRc5a6JGBQGcXM_-1" vertex="1">
           <mxGeometry x="-1650" y="1120" width="65" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="DgLV8NCRFqRnG06dz23F-1" value="янв25- Ист1 - Электрод1 - &lt;b&gt;Азот&lt;/b&gt; - 5кг&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;янв25 - Ист1 - Электрод1 - &lt;b&gt;Углерод&lt;/b&gt; - 1.5кг&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;янв25 - Ист1 - Электрод2 - Азот - 7.6кг&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&lt;b&gt;&lt;u&gt;янв25 - ВАЛ. ВЫБРОС АЗОТА в ист1 = 12.6кг&amp;nbsp;&lt;/u&gt;&lt;/b&gt;&lt;/span&gt;&lt;/div&gt;" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=13;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="WtCbudRc5a6JGBQGcXM_-1">
+        <mxCell id="DgLV8NCRFqRnG06dz23F-1" value="янв25- Ист1 - Электрод1 - &lt;b&gt;Азот&lt;/b&gt; - 5кг&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;янв25 - Ист1 - Электрод1 - &lt;b&gt;Углерод&lt;/b&gt; - 1.5кг&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;янв25 - Ист1 - Электрод2 - Азот - 7.6кг&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&lt;b&gt;&lt;u&gt;янв25 - ВАЛ. ВЫБРОС АЗОТА в ист1 = 12.6кг&amp;nbsp;&lt;/u&gt;&lt;/b&gt;&lt;/span&gt;&lt;/div&gt;" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=13;fillColor=#fff2cc;strokeColor=#d6b656;" parent="WtCbudRc5a6JGBQGcXM_-1" vertex="1">
           <mxGeometry x="-1140" y="749.02" width="280" height="95" as="geometry" />
         </mxCell>
-        <mxCell id="DgLV8NCRFqRnG06dz23F-2" value="май2025 - Электрод1 - 5.5кг&lt;div&gt;Электрод2 - 7.6кг&lt;/div&gt;" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=13;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="WtCbudRc5a6JGBQGcXM_-1">
+        <mxCell id="DgLV8NCRFqRnG06dz23F-2" value="май2025 - Электрод1 - 5.5кг&lt;div&gt;Электрод2 - 7.6кг&lt;/div&gt;" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=13;fillColor=#fff2cc;strokeColor=#d6b656;" parent="WtCbudRc5a6JGBQGcXM_-1" vertex="1">
           <mxGeometry x="-1890" y="860" width="190" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="uLnzjwghlE5aYMJQaDzi-0" value="Азот - 0.3&lt;div&gt;Углерод - 0.5&lt;/div&gt;" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=13;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="WtCbudRc5a6JGBQGcXM_-1">
+        <mxCell id="uLnzjwghlE5aYMJQaDzi-0" value="Азот - 0.3&lt;div&gt;Углерод - 0.5&lt;/div&gt;" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=13;fillColor=#fff2cc;strokeColor=#d6b656;" parent="WtCbudRc5a6JGBQGcXM_-1" vertex="1">
           <mxGeometry x="-1241.5" y="1160" width="75" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="uLnzjwghlE5aYMJQaDzi-1" value="Азот - 0.67&lt;div&gt;Углерод - 0.1&lt;/div&gt;" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=13;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="WtCbudRc5a6JGBQGcXM_-1">
+        <mxCell id="uLnzjwghlE5aYMJQaDzi-1" value="Азот - 0.67&lt;div&gt;Углерод - 0.1&lt;/div&gt;" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=13;fillColor=#fff2cc;strokeColor=#d6b656;" parent="WtCbudRc5a6JGBQGcXM_-1" vertex="1">
           <mxGeometry x="-1241.5" y="1220" width="75" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="eZGjl8210K7J8-bHXAmL-0" value="1. Сварка&lt;br&gt;2. Резка&lt;br&gt;&lt;br&gt;ID_Азот - ист1 - норм ....&lt;br&gt;ID_Азот - ист2 - норм&lt;br&gt;Углерод - ист1 - ненорм..." style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;" vertex="1" parent="WtCbudRc5a6JGBQGcXM_-1">
+        <mxCell id="eZGjl8210K7J8-bHXAmL-0" value="1. Сварка&lt;br&gt;2. Резка&lt;br&gt;&lt;br&gt;ID_Азот - ист1 - норм ....&lt;br&gt;ID_Азот - ист2 - норм&lt;br&gt;Углерод - ист1 - ненорм..." style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;" parent="WtCbudRc5a6JGBQGcXM_-1" vertex="1">
           <mxGeometry x="-780" y="334.04" width="280" height="89.98" as="geometry" />
         </mxCell>
-        <mxCell id="xhjnCZup5TrS5StfqOlW-0" value="1. ВЫБОР МЕТОДИКИ&lt;div&gt;&lt;span style=&quot;font-weight: normal;&quot;&gt;- у методики есть несколько расходных групп&lt;/span&gt;&lt;span style=&quot;font-weight: normal; background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&amp;nbsp;- считаем общий валовый выброс по всем из них!&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;font-weight: normal;&quot;&gt;То есть суммарный выброс АЗОТА на электроде 1 + электроде 2 и т.д.&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;2. ПРОВЕРКА ВЕЩЕСТВ В ГРУППАХ ПОКАЗАТЕЛЕЙ И НЕСОВПАДЕНИЯ В ВЕЩЕСТВАХ ИСТОЧНИКА&lt;br&gt;- вещества методики (суммарный список)&lt;/div&gt;&lt;div&gt;- вещества источника&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;3. По каждому веществу применить формулу методики, попутно вводя все параметры.&amp;nbsp;&lt;/div&gt;&lt;div&gt;Если встречается ГОУ - взять % из инфы об источнике.&amp;nbsp;&lt;/div&gt;&lt;div&gt;Если встречается общая масса - взять из расхода группы за период, в который считаем валовый выброс (месяц-год)&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Подсчёт вести по группе? раз массу можно узнать только о ней...&lt;/div&gt;&lt;div&gt;а уже дальше суммировать полученные результаты&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=13;fillColor=#f8cecc;strokeColor=#b85450;align=left;fontStyle=3;fontSize=16;" vertex="1" parent="WtCbudRc5a6JGBQGcXM_-1">
+        <mxCell id="xhjnCZup5TrS5StfqOlW-0" value="1. ВЫБОР МЕТОДИКИ&lt;div&gt;&lt;span style=&quot;font-weight: normal;&quot;&gt;- у методики есть несколько расходных групп&lt;/span&gt;&lt;span style=&quot;font-weight: normal; background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&amp;nbsp;- считаем общий валовый выброс по всем из них!&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;font-weight: normal;&quot;&gt;То есть суммарный выброс АЗОТА на электроде 1 + электроде 2 и т.д.&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;2. ПРОВЕРКА ВЕЩЕСТВ В ГРУППАХ ПОКАЗАТЕЛЕЙ И НЕСОВПАДЕНИЯ В ВЕЩЕСТВАХ ИСТОЧНИКА&lt;br&gt;- вещества методики (суммарный список)&lt;/div&gt;&lt;div&gt;- вещества источника&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;3. По каждому веществу применить формулу методики, попутно вводя все параметры.&amp;nbsp;&lt;/div&gt;&lt;div&gt;Если встречается ГОУ - взять % из инфы об источнике.&amp;nbsp;&lt;/div&gt;&lt;div&gt;Если встречается общая масса - взять из расхода группы за период, в который считаем валовый выброс (месяц-год)&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Подсчёт вести по группе? раз массу можно узнать только о ней...&lt;/div&gt;&lt;div&gt;а уже дальше суммировать полученные результаты&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=13;fillColor=#f8cecc;strokeColor=#b85450;align=left;fontStyle=3;fontSize=16;" parent="WtCbudRc5a6JGBQGcXM_-1" vertex="1">
           <mxGeometry x="-2440" y="500" width="540" height="430" as="geometry" />
         </mxCell>
       </root>

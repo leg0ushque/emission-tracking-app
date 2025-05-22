@@ -1,0 +1,74 @@
+﻿@model EmisTracking.WebApi.Models.ViewModels.TaxRateViewModel
+
+@{
+    ViewData[Constants.GenerateBreadcrumb] = new();
+}
+
+@using EmisTracking.Localization
+@using EmisTracking.WebApi.Models.Enums
+
+@section Breadcrumb
+{
+    <li class="breadcrumb-item active"><a asp-controller="TaxRates" asp-action="Index">@LangResources.Titles.TaxRatesIndex</a></li>
+    <li class="breadcrumb-item active">@ViewData["Title"]</li>
+}
+
+<form asp-controller="TaxRates" asp-action="@ViewData["AspAction"]" asp-antiforgery="true" method="post">
+    <div class="validation text-danger" asp-validation-summary="ModelOnly"></div>
+    <input asp-for="Id" hidden="hidden" />
+
+    <div class="row mb-3">
+        <label asp-for="HazardClass" class="col-md-2 control-form-label"></label>
+        <div class="col-sm-6">
+            <select asp-for="HazardClass" class="form-control">
+                <option value="" disabled selected>@LangResources.ChooseSomething</option>
+                @foreach (var classType in Enum.GetValues(typeof(HazardClass)))
+                {
+                    <option value="@classType">@classType</option>
+                }
+            </select>
+            <span asp-validation-for="HazardClass" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label asp-for="Amount" class="col-md-2 control-form-label"></label>
+        <div class="col-sm-6">
+            <input asp-for="Amount" class="form-control" />
+            <span asp-validation-for="Amount" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label asp-for="StartDate" class="col-md-2 control-form-label"></label>
+        <div class="col-sm-6">
+            <input type="date" asp-for="StartDate" class="form-control" />
+            <span asp-validation-for="StartDate" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label asp-for="EndDate" class="col-md-2 control-form-label"></label>
+        <div class="col-sm-6">
+            <input type="date" asp-for="EndDate" class="form-control" />
+            <span asp-validation-for="EndDate" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-6">
+            <input type="submit" class="btn btn-primary" value="@LangResources.SaveButtonText" />
+        </div>
+    </div>
+    <br />
+    <a asp-action="Index" class="btn btn-outline-secondary">
+        <i class="fas fa-arrow-left"></i>
+        @LangResources.ReturnButtonText
+    </a>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

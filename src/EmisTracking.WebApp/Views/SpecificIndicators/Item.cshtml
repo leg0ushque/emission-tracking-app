@@ -1,0 +1,36 @@
+﻿@using EmisTracking.WebApi.Models.ViewModels
+@using EmisTracking.Localization
+@model SpecificIndicatorViewModel
+
+@{
+    ViewData[Constants.GenerateBreadcrumb] = new();
+    ViewData["Title"] = LangResources.Titles.SpecificIndicatorsIndex;
+
+    var isAdmin = (ViewData[Constants.ViewDataConstants.IsAdmin] as bool?).GetValueOrDefault();
+}
+
+@section Breadcrumb
+{
+    <li class="breadcrumb-item"><a asp-action="Index">@LangResources.Titles.SpecificIndicatorsIndex</a></li>
+    <li class="breadcrumb-item active">@ViewData["Title"]</li>
+}
+
+<p><strong>@LangResources.Fields.ConsumptionGroup:</strong> @Model.ConsumptionGroup.Name</p>
+<p><strong>@LangResources.Fields.Pollutant:</strong> @Model.Pollutant.Name</p>
+<p><strong>@LangResources.Fields.Value:</strong> @Model.Value</p>
+
+@if (isAdmin)
+{
+    <a class="btn btn-outline-primary" asp-controller="SpecificIndicators" asp-action="Update" asp-route-id="@Model.Id" name="@LangResources.UpdateButtonText">
+        <i class="fas fa-pen"></i> @LangResources.UpdateButtonText
+    </a>
+    <a class="btn btn-outline-danger" asp-controller="SpecificIndicators" asp-action="Delete" asp-route-id="@Model.Id" name="@LangResources.DeleteButtonText">
+        <i class="fas fa-trash"></i> @LangResources.DeleteButtonText
+    </a>
+    <br />
+}
+<br />
+<a asp-action="Index" class="btn btn-outline-secondary">
+    <i class="fas fa-arrow-left"></i>
+    @LangResources.ReturnButtonText
+</a>

@@ -11,3 +11,70 @@
 {
     <li class="breadcrumb-item active">@ViewData["Title"]</li>
 }
+
+<a class="btn btn-primary" asp-action="Create" asp-controller="Subdivisions">
+    <i class="fas fa-plus"></i>
+    @LangResources.CreateButtonText
+</a>
+
+<table class="table-striped table-bordered" id="mainItemsTable">
+    <thead>
+        <tr>
+            <th scope="col">№</th>
+            <th scope="col">@LangResources.Fields.Area</th>
+            <th scope="col">@LangResources.Fields.Name</th>
+
+            @if (isAdmin)
+            {
+                <th scope="col" orderable="false"></th>
+                <th scope="col" orderable="false"></th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td></td>
+                    <td>@item.Area.Name</td>
+                    <td>@item.Name</td>
+
+                    @if (isAdmin)
+                    {
+                        <td>
+                            <a class="btn btn-outline-primary"
+                               asp-controller="Subdivisions" asp-action="Update" asp-route-id="@item.Id"
+                               name="@LangResources.UpdateButtonText">
+                                <i class="fas fa-pen"></i>
+                            </a>
+                        </td>
+                        <td>
+                            <a class="btn btn-outline-danger"
+                               asp-controller="Subdivisions" asp-action="Delete" asp-route-id="@item.Id"
+                               name="@LangResources.DeleteButtonText">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </td>
+                    }
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        await Html.RenderPartialAsync("_JqueryDatatable");
+
+        var columnWidths = new Queue<string>(new[] { "30%", "40%" });
+        if (isAdmin)
+        {
+            columnWidths.Enqueue(Constants.DefaultEditDeleteButtonsWidth);
+            columnWidths.Enqueue(Constants.DefaultEditDeleteButtonsWidth);
+        }
+
+        await Html.RenderPartialAsync("_DataTableInitialization", columnWidths);
+    }
+}

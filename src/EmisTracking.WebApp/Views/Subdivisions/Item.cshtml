@@ -1,6 +1,7 @@
 ﻿@using EmisTracking.WebApi.Models.ViewModels
 @using EmisTracking.Localization
 @model SubdivisionViewModel
+
 @{
     ViewData[Constants.GenerateBreadcrumb] = new();
     ViewData["Title"] = string.Format(LangResources.Titles.NameTemplate, Model.Name);
@@ -14,25 +15,20 @@
     <li class="breadcrumb-item active">@ViewData["Title"]</li>
 }
 
+<p><strong>@LangResources.Fields.Area:</strong> @Model.Area.Name</p>
 <p><strong>@LangResources.Fields.Name:</strong> @Model.Name</p>
-<p><strong>@LangResources.Fields.Area:</strong> @Model.Area</p>
 
 @if (isAdmin)
 {
-    <a class="btn btn-outline-primary"
-       asp-controller="Subdivisions" asp-action="Update" asp-route-id="@Model.Id"
-       name="@LangResources.UpdateButtonText">
+    <a class="btn btn-outline-primary" asp-controller="Subdivisions" asp-action="Update" asp-route-id="@Model.Id" name="@LangResources.UpdateButtonText">
         <i class="fas fa-pen"></i> @LangResources.UpdateButtonText
     </a>
-    <a class="btn btn-outline-danger"
-       asp-controller="Subdivisions" asp-action="Delete" asp-route-id="@Model.Id"
-       text="@LangResources.DeleteButtonText">
+    <a class="btn btn-outline-danger" asp-controller="Subdivisions" asp-action="Delete" asp-route-id="@Model.Id" name="@LangResources.DeleteButtonText">
         <i class="fas fa-trash"></i> @LangResources.DeleteButtonText
     </a>
     <br />
 }
 <br />
 <a asp-action="Index" class="btn btn-outline-secondary">
-    <i class="fas fa-arrow-left"></i>
-    @LangResources.ReturnButtonText
+    <i class="fas fa-arrow-left"></i> @LangResources.ReturnButtonText
 </a>

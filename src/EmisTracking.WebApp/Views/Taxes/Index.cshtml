@@ -1,0 +1,86 @@
+﻿@model List<EmisTracking.WebApi.Models.ViewModels.TaxViewModel>
+@using EmisTracking.Localization
+@{
+    ViewData[Constants.GenerateBreadcrumb] = new();
+    ViewData["Title"] = LangResources.Titles.TaxesIndex;
+
+    var isAdmin = (ViewData[Constants.ViewDataConstants.IsAdmin] as bool?).GetValueOrDefault();
+}
+
+@section Breadcrumb
+{
+    <li class="breadcrumb-item active">@ViewData["Title"]</li>
+}
+
+<a class="btn btn-primary" asp-action="Create" asp-controller="Taxes">
+    <i class="fas fa-plus"></i>
+    @LangResources.CreateButtonText
+</a>
+
+<table class="table-striped table-bordered" id="mainItemsTable">
+    <thead>
+        <tr>
+            <th scope="col">№</th>
+            <th scope="col">@LangResources.Fields.Month</th>
+            <th scope="col">@LangResources.Fields.Year</th>
+            <th scope="col">@LangResources.Fields.HazardClass</th>
+            <th scope="col">@LangResources.Fields.TaxAmount</th>
+            <th scope="col">@LangResources.Fields.IsPaid</th>
+
+            @if (isAdmin)
+            {
+                <th scope="col" orderable="false"></th>
+                <th scope="col" orderable="false"></th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td></td>
+                    <td>@item.Month</td>
+                    <td>@item.Year</td>
+                    <td>@item.HazardClass.ToString()</td>
+                    <td>@item.TotalAmount</td>
+                    <td>@item.IsPaid.ToString()</td>
+
+                    @if (isAdmin)
+                    {
+                        <td>
+                            <a class="btn btn-outline-primary"
+                               asp-controller="Taxes" asp-action="Update" asp-route-id="@item.Id"
+                               name="@LangResources.UpdateButtonText">
+                                <i class="fas fa-pen"></i>
+                            </a>
+                        </td>
+                        <td>
+                            <a class="btn btn-outline-danger"
+                               asp-controller="Taxes" asp-action="Delete" asp-route-id="@item.Id"
+                               name="@LangResources.DeleteButtonText">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </td>
+                    }
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        await Html.RenderPartialAsync("_JqueryDatatable");
+
+        var columnWidths = new Queue<string>(new[] { "15%", "15%", "20%", "20%", "20%" });
+        if (isAdmin)
+        {
+            columnWidths.Enqueue(Constants.DefaultEditDeleteButtonsWidth);
+            columnWidths.Enqueue(Constants.DefaultEditDeleteButtonsWidth);
+        }
+
+        await Html.RenderPartialAsync("_DataTableInitialization", columnWidths);
+    }
+}

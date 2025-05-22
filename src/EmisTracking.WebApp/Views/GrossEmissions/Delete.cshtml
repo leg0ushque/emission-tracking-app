@@ -1,0 +1,40 @@
+﻿@using EmisTracking.WebApi.Models.ViewModels
+@using EmisTracking.Localization
+@model GrossEmissionViewModel
+
+@{
+    ViewData[Constants.GenerateBreadcrumb] = new();
+    ViewData["Title"] = string.Format(LangResources.Titles.NameTemplate, Model.SourceSubstance.EmissionSourceId);
+}
+
+@section Breadcrumb
+{
+    <li class="breadcrumb-item"><a asp-action="Index">@LangResources.Titles.GrossEmissionsIndex</a></li>
+    <li class="breadcrumb-item active">@ViewData["Title"]</li>
+}
+
+<h4 class="text-danger">@LangResources.ConfirmDeleteText:</h4>
+
+<p><b><u>@LangResources.Entities.GrossEmission</u></b></p>
+<span><strong>@LangResources.Fields.SourceSubstance:</strong> @Model.SourceSubstance.EmissionSourceId</span>
+<br />
+<span><strong>@LangResources.Fields.Methodology:</strong> @Model.Methodology.Name</span>
+<br />
+<span><strong>@LangResources.Fields.Mass:</strong> @Model.Mass</span>
+<br />
+<span><strong>@LangResources.Fields.Month:</strong> @Model.Month</span>
+<br />
+<span><strong>@LangResources.Fields.Year:</strong> @Model.Year</span>
+<br />
+<br />
+
+<h5 class="text-danger">@LangResources.CannotBeUndoneText</h5>
+
+<a asp-action="Index" class="btn btn-secondary">
+    <i class="fas fa-arrow-left"></i>
+    @LangResources.ReturnToListButtonText
+</a>
+<a asp-action="ConfirmDelete" asp-route-id="@Model.Id" class="btn btn-danger">
+    <i class="fas fa-trash"></i>
+    @LangResources.ConfirmDeleteButtonText
+</a>

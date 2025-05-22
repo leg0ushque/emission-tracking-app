@@ -1,6 +1,7 @@
 ﻿@using EmisTracking.WebApi.Models.ViewModels
 @using EmisTracking.Localization
 @model SubdivisionViewModel
+
 @{
     ViewData[Constants.GenerateBreadcrumb] = new();
     ViewData["Title"] = string.Format(LangResources.Titles.NameTemplate, Model.Name);
@@ -8,20 +9,25 @@
 
 @section Breadcrumb
 {
-    <li class="breadcrumb-item active"><a asp-controller="Areas" asp-action="Index">@LangResources.Titles.AreasIndex</a></li>
-    <li class="breadcrumb-item active"><a asp-controller="Areas" asp-action="Item" asp-route-id="@Model.Id">@string.Format(LangResources.Titles.NameTemplate, Model.Area)</a></li>
+    <li class="breadcrumb-item"><a asp-action="Index">@LangResources.Titles.SubdivisionsIndex</a></li>
     <li class="breadcrumb-item active">@ViewData["Title"]</li>
 }
 
 <h4 class="text-danger">@LangResources.ConfirmDeleteText:</h4>
 
 <p><b><u>@LangResources.Entities.Subdivision</u></b></p>
+<span><strong>@LangResources.Fields.Area:</strong> @Model.Area.Name</span>
+<br />
 <span><strong>@LangResources.Fields.Name:</strong> @Model.Name</span>
 <br />
 <br />
 
 <h5 class="text-danger">@LangResources.CannotBeUndoneText</h5>
 
+<a asp-action="Index" class="btn btn-secondary">
+    <i class="fas fa-arrow-left"></i>
+    @LangResources.ReturnToListButtonText
+</a>
 <a asp-action="ConfirmDelete" asp-route-id="@Model.Id" class="btn btn-danger">
     <i class="fas fa-trash"></i>
     @LangResources.ConfirmDeleteButtonText

@@ -5,6 +5,7 @@
         public const string ErrorTitle = "Ошибка!";
 
         public const string ReturnButtonText = "Вернуться";
+        public const string ReturnToListButtonText = "Вернуться к списку";
 
         public const string ToHomePageButtonText = "На домашнюю страницу";
 

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using AutoMapper.Extensions.EnumMapping;
 using EmisTracking.Services.Entities;
 using EmisTracking.WebApi.Models.ViewModels;
 
@@ -24,6 +25,22 @@ namespace EmisTracking.Mapping
             CreateMap<GrossEmission, GrossEmissionViewModel>().ReverseMap();
             CreateMap<TaxRate, TaxRateViewModel>().ReverseMap();
             CreateMap<Tax, TaxViewModel>().ReverseMap();
+
+            CreateMap<Services.Enums.AggregateState, WebApi.Models.Enums.AggregateState>()
+                .ConvertUsingEnumMapping()
+                .ReverseMap();
+            CreateMap<Services.Enums.GasCleaningUnitType, WebApi.Models.Enums.GasCleaningUnitType>()
+                .ConvertUsingEnumMapping()
+                .ReverseMap();
+            CreateMap<Services.Enums.HazardClass, WebApi.Models.Enums.HazardClass>()
+                .ConvertUsingEnumMapping()
+                .ReverseMap();
+            CreateMap<Services.Enums.ParameterType, WebApi.Models.Enums.ParameterType>()
+                .ConvertUsingEnumMapping()
+                .ReverseMap();
+            CreateMap<Services.Enums.ProcessCategory, WebApi.Models.Enums.ProcessCategory>()
+                .ConvertUsingEnumMapping()
+                .ReverseMap();
         }
     }
 }

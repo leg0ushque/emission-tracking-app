@@ -16,12 +16,12 @@
     <i class="fas fa-plus"></i>
     @LangResources.CreateButtonText
 </a>
-<hr />
 
 <table class="table-striped table-bordered" id="mainItemsTable">
     <thead>
         <tr>
             <th scope="col">№</th>
+            <th scope="col">@LangResources.Fields.Number</th>
             <th scope="col">@LangResources.Fields.Name</th>
 
             @if (isAdmin)
@@ -36,10 +36,9 @@
             foreach (var item in Model)
             {
                 <tr>
-                    <td scope="row"></td>
-                    <td>
-                        <a asp-action="Item" asp-route-id="@item.Id">@item.Name</a>
-                    </td>
+                    <td></td>
+                    <td>@item.Number</td>
+                    <td>@item.Name</td>
 
                     @if (isAdmin)
                     {
@@ -53,7 +52,7 @@
                         <td>
                             <a class="btn btn-outline-danger"
                                asp-controller="Areas" asp-action="Delete" asp-route-id="@item.Id"
-                               text="@LangResources.DeleteButtonText">
+                               name="@LangResources.DeleteButtonText">
                                 <i class="fas fa-trash"></i>
                             </a>
                         </td>
@@ -64,19 +63,14 @@
     </tbody>
 </table>
 
-@{
-    var tableLocalization = LangResources.JqueryDatatableLang;
-}
-
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
         await Html.RenderPartialAsync("_JqueryDatatable");
 
-        var columnWidths = new Queue<string>(new[] { "40%" });
+        var columnWidths = new Queue<string>(new[] { "20%", "40%" });
         if (isAdmin)
         {
-            // add width for admin edit/delete buttons
             columnWidths.Enqueue(Constants.DefaultEditDeleteButtonsWidth);
             columnWidths.Enqueue(Constants.DefaultEditDeleteButtonsWidth);
         }

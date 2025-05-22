@@ -1,0 +1,58 @@
+﻿@model EmisTracking.WebApi.Models.ViewModels.ModeViewModel
+
+@{
+    ViewData[Constants.GenerateBreadcrumb] = new();
+}
+
+@using EmisTracking.Localization
+@using EmisTracking.WebApi.Models.Enums
+
+@section Breadcrumb
+{
+    <li class="breadcrumb-item active"><a asp-controller="Modes" asp-action="Index">@LangResources.Titles.ModesIndex</a></li>
+    <li class="breadcrumb-item active">@ViewData["Title"]</li>
+}
+
+<form asp-controller="Modes" asp-action="@ViewData["AspAction"]" asp-antiforgery="true" method="post">
+    <div class="validation text-danger" asp-validation-summary="ModelOnly"></div>
+    <input asp-for="Id" hidden="hidden" />
+
+    <div class="row mb-3">
+        <label asp-for="Name" class="col-md-2 control-form-label"></label>
+        <div class="col-sm-6">
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label asp-for="ProcessCategory" class="col-md-2 control-form-label"></label>
+        <div class="col-sm-6">
+            <select asp-for="ProcessCategory" class="form-control">
+                <option value="" disabled selected>@LangResources.ChooseSomething</option>
+                @foreach (var category in Enum.GetValues(typeof(ProcessCategory)))
+                {
+                    <option value="@category">@category</option>
+                }
+            </select>
+            <span asp-validation-for="ProcessCategory" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-6">
+            <input type="submit" class="btn btn-primary" value="@LangResources.SaveButtonText" />
+        </div>
+    </div>
+    <br />
+    <a asp-action="Index" class="btn btn-outline-secondary">
+        <i class="fas fa-arrow-left"></i>
+        @LangResources.ReturnButtonText
+    </a>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -130,38 +130,41 @@
                 </li>
 
                 <li class="nav-item">
-                    @await Html.PartialAsync("_SidebarButton", ("Index", "Home", "fas fa-solid fa-bullseye", "Источники выбросов"))
+                    @await Html.PartialAsync("_SidebarButton", ("Index", "EmissionSources", "fas fa-solid fa-bullseye", "Источники выбросов"))
                 </li>
 
                 <li class="nav-item">
-                    @await Html.PartialAsync("_SidebarButton", ("Index", "Home", "fas fa-solid fa-clipboard-check", "Режимы"))
+                    @await Html.PartialAsync("_SidebarButton", ("Index", "Methodologies", "fas fa-list", "Методики и параметры"))
+                </li>
+
+                <li class="nav-item">
+                    @await Html.PartialAsync("_SidebarButton", ("Index", "Modes", "fas fa-solid fa-clipboard-check", "Режимы"))
                 </li>
 
                 <li class="nav-heading">Расход и удельные показатели</li>
 
                 <li class="nav-item">
-                    @await Html.PartialAsync("_SidebarButton", ("Index", "Home", "fas fa-book", "Общий перечень веществ"))
+                    @await Html.PartialAsync("_SidebarButton", ("Index", "Pollutants", "fas fa-book", "Общий перечень веществ"))
                 </li>
                 <li class="nav-item">
-                    @await Html.PartialAsync("_SidebarButton", ("Index", "Home", "fas fa-list", "Методики и удельные показатели"))
+                    @await Html.PartialAsync("_SidebarButton", ("Index", "ConsumptionGroups", "fas fa-list", "Расходные группы и удельные показатели"))
+                </li>
+                <li class="nav-item">
+                    @await Html.PartialAsync("_SidebarButton", ("Index", "Consumptions", "fas fa-clipboard-list", "Расход материалов"))
                 </li>
 
                 <li class="nav-heading">Расчёт и оплата налогов</li>
 
                 <li class="nav-item">
-                    @await Html.PartialAsync("_SidebarButton", ("Index", "CurriculumUnits", "fas fa-tag", "Ставки налога"))
+                    @await Html.PartialAsync("_SidebarButton", ("Index", "TaxRates", "fas fa-tag", "Ставки налога"))
                 </li>
 
                 <li class="nav-item">
-                    @await Html.PartialAsync("_SidebarButton", ("Index", "CurriculumUnits", "fas fa-receipt", "Налоговые выплаты"))
+                    @await Html.PartialAsync("_SidebarButton", ("Index", "Taxes", "fas fa-receipt", "Налоговые выплаты"))
                 </li>
 
 
                 <li class="nav-heading">Статистика</li>
-
-                <li class="nav-item">
-                    @await Html.PartialAsync("_SidebarButton", ("Index", "Stats", "fas fa-clipboard-list", "Расход материалов"))
-                </li>
 
                 <li class="nav-item">
                     @await Html.PartialAsync("_SidebarButton", ("Index", "Stats", "fa-solid fa-bottle-droplet", "Выбросы"))

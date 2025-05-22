@@ -1,0 +1,67 @@
+﻿@model EmisTracking.WebApi.Models.ViewModels.MethodologyParameterViewModel
+
+@{
+    ViewData[Constants.GenerateBreadcrumb] = new();
+}
+
+@using EmisTracking.Localization
+@using EmisTracking.WebApi.Models.Enums
+
+@section Breadcrumb
+{
+    <li class="breadcrumb-item active"><a asp-controller="MethodologyParameters" asp-action="Index">@LangResources.Titles.MethodologyParametersIndex</a></li>
+    <li class="breadcrumb-item active">@ViewData["Title"]</li>
+}
+
+<form asp-controller="MethodologyParameters" asp-action="@ViewData["AspAction"]" asp-antiforgery="true" method="post">
+    <div class="validation text-danger" asp-validation-summary="ModelOnly"></div>
+    <input asp-for="Id" hidden="hidden" />
+
+    <div class="row mb-3">
+        <label asp-for="MethodologyId" class="col-md-2 control-form-label"></label>
+        <div class="col-sm-6">
+            <select asp-for="MethodologyId" class="form-control">
+                <option value="" disabled selected>@LangResources.ChooseSomething</option>
+                @if (Model.Methodologies?.Any() ?? false)
+                {
+                    @foreach (var item in Model.Methodologies)
+                    {
+                        <option value="@item.Value">@item.Name</option>
+                    }
+                }
+            </select>
+            <span asp-validation-for="MethodologyId" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label asp-for="ParameterType" class="col-md-2 control-form-label"></label>
+        <div class="col-sm-6">
+            <select asp-for="ParameterType" class="form-control">
+                <option value="" disabled selected>@LangResources.ChooseSomething</option>
+                @foreach (var type in Enum.GetValues(typeof(ParameterType)))
+                {
+                    <option value="@type">@type</option>
+                }
+            </select>
+            <span asp-validation-for="ParameterType" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-6">
+            <input type="submit" class="btn btn-primary" value="@LangResources.SaveButtonText" />
+        </div>
+    </div>
+    <br />
+    <a asp-action="Index" class="btn btn-outline-secondary">
+        <i class="fas fa-arrow-left"></i>
+        @LangResources.ReturnButtonText
+    </a>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

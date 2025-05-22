@@ -1,0 +1,38 @@
+﻿@using EmisTracking.WebApi.Models.ViewModels
+@using EmisTracking.Localization
+@model SourceSubstanceViewModel
+
+@{
+    ViewData[Constants.GenerateBreadcrumb] = new();
+    ViewData["Title"] = string.Format(LangResources.Titles.NameTemplate, Model.EmissionSource.Name);
+
+    var isAdmin = (ViewData[Constants.ViewDataConstants.IsAdmin] as bool?).GetValueOrDefault();
+}
+
+@section Breadcrumb
+{
+    <li class="breadcrumb-item"><a asp-action="Index">@LangResources.Titles.SourceSubstancesIndex</a></li>
+    <li class="breadcrumb-item active">@ViewData["Title"]</li>
+}
+
+<p><strong>@LangResources.Fields.EmissionSource:</strong> @Model.EmissionSource.Name</p>
+<p><strong>@LangResources.Fields.Pollutant:</strong> @Model.Pollutant.Name</p>
+<p><strong>@LangResources.Fields.IsRegulated:</strong> @Model.IsRegulated.ToString()</p>
+<p><strong>@LangResources.Fields.GasCleaningUnit:</strong> @Model.GasCleaningUnit.ToString()</p>
+<p><strong>@LangResources.Fields.PurificationPercentage:</strong> @Model.PurificationPercentage</p>
+<p><strong>@LangResources.Fields.AnnualAmount:</strong> @Model.AnnualAmount</p>
+
+@if (isAdmin)
+{
+    <a class="btn btn-outline-primary" asp-controller="SourceSubstances" asp-action="Update" asp-route-id="@Model.Id" name="@LangResources.UpdateButtonText">
+        <i class="fas fa-pen"></i> @LangResources.UpdateButtonText
+    </a>
+    <a class="btn btn-outline-danger" asp-controller="SourceSubstances" asp-action="Delete" asp-route-id="@Model.Id" name="@LangResources.DeleteButtonText">
+        <i class="fas fa-trash"></i> @LangResources.DeleteButtonText
+    </a>
+    <br />
+}
+<br />
+<a asp-action="Index" class="btn btn-outline-secondary">
+    <i class="fas fa-arrow-left"></i> @LangResources.ReturnButtonText
+</a>

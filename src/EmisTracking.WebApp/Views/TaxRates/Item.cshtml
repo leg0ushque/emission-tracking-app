@@ -1,0 +1,37 @@
+﻿@using EmisTracking.WebApi.Models.ViewModels
+@using EmisTracking.Localization
+@model TaxRateViewModel
+
+@{
+    ViewData[Constants.GenerateBreadcrumb] = new();
+    ViewData["Title"] = LangResources.Titles.TaxRatesIndex;
+
+    var isAdmin = (ViewData[Constants.ViewDataConstants.IsAdmin] as bool?).GetValueOrDefault();
+}
+
+@section Breadcrumb
+{
+    <li class="breadcrumb-item"><a asp-action="Index">@LangResources.Titles.TaxRatesIndex</a></li>
+    <li class="breadcrumb-item active">@ViewData["Title"]</li>
+}
+
+<p><strong>@LangResources.Fields.HazardClass:</strong> @Model.HazardClass.ToString()</p>
+<p><strong>@LangResources.Fields.TaxRate:</strong> @Model.Amount</p>
+<p><strong>@LangResources.Fields.StartDate:</strong> @Model.StartDate.ToShortDateString()</p>
+<p><strong>@LangResources.Fields.EndDate:</strong> @Model.EndDate.ToShortDateString()</p>
+
+@if (isAdmin)
+{
+    <a class="btn btn-outline-primary" asp-controller="TaxRates" asp-action="Update" asp-route-id="@Model.Id" name="@LangResources.UpdateButtonText">
+        <i class="fas fa-pen"></i> @LangResources.UpdateButtonText
+    </a>
+    <a class="btn btn-outline-danger" asp-controller="TaxRates" asp-action="Delete" asp-route-id="@Model.Id" name="@LangResources.DeleteButtonText">
+        <i class="fas fa-trash"></i> @LangResources.DeleteButtonText
+    </a>
+    <br />
+}
+<br />
+<a asp-action="Index" class="btn btn-outline-secondary">
+    <i class="fas fa-arrow-left"></i>
+    @LangResources.ReturnButtonText
+</a>

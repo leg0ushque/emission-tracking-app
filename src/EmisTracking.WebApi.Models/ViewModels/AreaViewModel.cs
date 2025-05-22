@@ -1,5 +1,4 @@
 ﻿using EmisTracking.Localization;
-using System.Collections;
 using System.ComponentModel.DataAnnotations;
 
 namespace EmisTracking.WebApi.Models.ViewModels

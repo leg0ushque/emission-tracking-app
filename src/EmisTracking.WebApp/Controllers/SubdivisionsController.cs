@@ -1,14 +1,17 @@
 ﻿using EmisTracking.Localization;
+using EmisTracking.Services.Services;
 using EmisTracking.Services.WebApi.Services;
+using EmisTracking.WebApi.Models.Models;
 using EmisTracking.WebApi.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace EmisTracking.WebApp.Controllers
 {
     [Route("[controller]")]
-    public class SubdivisionsController : BaseViewController<SubdivisionViewModel>
+    public class SubdivisionsController : BaseDropdownViewController<SubdivisionViewModel>
     {
         private readonly IBaseApiService<AreaViewModel> _areaApiService;
 
@@ -46,133 +49,14 @@ namespace EmisTracking.WebApp.Controllers
                 return View(Constants.ErrorView, (areaResponse.ErrorMessage, controller: string.Empty, action: nameof(Index)));
             }
         }
-
-        [Authorize(Roles = Services.Constants.AdminRole)]
-        [HttpPost("create")]
-        public override async Task<IActionResult> Create([FromForm] SubdivisionViewModel model)
+        public override async Task LoadDropdownsValuesAsync(SubdivisionViewModel model)
         {
-            ViewData[AspAction] = nameof(Create);
-            ViewData[Title] = CreationTitle;
-
-            if (!ModelState.IsValid)
+            var areasResponse = await _areaApiService.GetAllAsync();
+            if (areasResponse.Success)
             {
-                return View(Constants.FormView, model);
-            }
-
-            var response = await _apiService.CreateAsync(model);
-
-            if (response.Success)
-            {
-                return RedirectToAction("Item", "Areas", new { id = model.AreaId });
-            }
-            else
-            {
-                UpdateModelStateErrors(ModelState, response.Errors, response.ErrorMessage);
-
-                return View(Constants.FormView, model);
-            }
-        }
-
-        [Authorize(Roles = Services.Constants.AdminRole)]
-        [HttpGet("update/{id}")]
-        public override async Task<IActionResult> Update([FromRoute] string id)
-        {
-            if (string.IsNullOrEmpty(id))
-            {
-                return View(Constants.ErrorView, (LangResources.EmptyIdText, controller: string.Empty, action: nameof(Index)));
-            }
-
-            var response = await _apiService.GetByIdAsync(id);
-
-
-            if (!response.Success)
-            {
-                return View(Constants.ErrorView, (response.ErrorMessage, controller: string.Empty, action: nameof(Index)));
-            }
-
-            var areaResponse = await _areaApiService.GetByIdAsync(id);
-
-            if (areaResponse.Success)
-            {
-                ViewData[AspAction] = nameof(Update);
-                ViewData[Title] = UpdateTitle;
-
-                response.Data.AreaId = id;
-                response.Data.Area = areaResponse.Data;
-
-                return View(Constants.FormView, response.Data);
-            }
-            else
-            {
-                return View(Constants.ErrorView, (areaResponse.ErrorMessage, controller: string.Empty, action: nameof(Index)));
-            }
-        }
-
-        [Authorize(Roles = Services.Constants.AdminRole)]
-        [HttpPost("update/{id}")]
-        public override async Task<IActionResult> Update([FromRoute] string id, [FromForm] SubdivisionViewModel model)
-        {
-            ViewData[AspAction] = nameof(Update);
-            ViewData[Title] = UpdateTitle;
-
-            if (!ModelState.IsValid)
-            {
-                return View(Constants.FormView, model);
-            }
-
-            var response = await _apiService.UpdateAsync(model);
-
-            if (response.Success)
-            {
-                return RedirectToAction("Item", "Areas", new { id = model.AreaId });
-            }
-            else
-            {
-                UpdateModelStateErrors(ModelState, response.Errors, response.ErrorMessage);
-
-                return View(Constants.FormView, model);
-            }
-        }
-
-        [Authorize(Roles = Services.Constants.AdminRole)]
-        [HttpGet("delete/{id}")]
-        public override async Task<IActionResult> Delete([FromRoute] string id)
-        {
-            if (string.IsNullOrEmpty(id))
-            {
-                return View(Constants.ErrorView, (LangResources.EmptyIdText, controller: string.Empty, action: nameof(Index)));
-            }
-
-            var response = await _apiService.GetByIdAsync(id);
-
-            if (response.Success)
-            {
-                return View(response.Data);
-            }
-            else
-            {
-                return View(Constants.ErrorView, (response.ErrorMessage, controller: string.Empty, action: nameof(Index)));
-            }
-        }
-
-        [Authorize(Roles = Services.Constants.AdminRole)]
-        [HttpGet("confirm-delete/{id}")]
-        public override async Task<IActionResult> ConfirmDelete([FromRoute] string id)
-        {
-            if (string.IsNullOrEmpty(id))
-            {
-                return View(Constants.ErrorView, (LangResources.EmptyIdText, controller: string.Empty, action: nameof(Index)));
-            }
-
-            var response = await _apiService.DeleteByIdAsync(id);
-
-            if (response.Success)
-            {
-                return RedirectToAction(nameof(Item));
-            }
-            else
-            {
-                return View(Constants.ErrorView, (response.ErrorMessage, controller: string.Empty, action: nameof(Index)));
+                model.Areas = areasResponse.Data
+                    .Select(a => new DropdownItemModel { Value = a.Id, Name = a.Name })
+                    .ToList();
             }
         }
     }

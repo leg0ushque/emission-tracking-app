@@ -1,0 +1,84 @@
+﻿@model List<EmisTracking.WebApi.Models.ViewModels.SourceSubstanceViewModel>
+@using EmisTracking.Localization
+@{
+    ViewData[Constants.GenerateBreadcrumb] = new();
+    ViewData["Title"] = LangResources.Titles.SourceSubstancesIndex;
+
+    var isAdmin = (ViewData[Constants.ViewDataConstants.IsAdmin] as bool?).GetValueOrDefault();
+}
+
+@section Breadcrumb
+{
+    <li class="breadcrumb-item active">@ViewData["Title"]</li>
+}
+
+<a class="btn btn-primary" asp-action="Create" asp-controller="SourceSubstances">
+    <i class="fas fa-plus"></i>
+    @LangResources.CreateButtonText
+</a>
+
+<table class="table-striped table-bordered" id="mainItemsTable">
+    <thead>
+        <tr>
+            <th scope="col">№</th>
+            <th scope="col">@LangResources.Fields.EmissionSource</th>
+            <th scope="col">@LangResources.Fields.Pollutant</th>
+            <th scope="col">@LangResources.Fields.GasCleaningUnit</th>
+            <th scope="col">@LangResources.Fields.PurificationPercentage</th>
+
+            @if (isAdmin)
+            {
+                <th scope="col" orderable="false"></th>
+                <th scope="col" orderable="false"></th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td></td>
+                    <td>@item.EmissionSource.Name</td>
+                    <td>@item.Pollutant.Name</td>
+                    <td>@item.GasCleaningUnit.ToString()</td>
+                    <td>@item.PurificationPercentage</td>
+
+                    @if (isAdmin)
+                    {
+                        <td>
+                            <a class="btn btn-outline-primary"
+                               asp-controller="SourceSubstances" asp-action="Update" asp-route-id="@item.Id"
+                               name="@LangResources.UpdateButtonText">
+                                <i class="fas fa-pen"></i>
+                            </a>
+                        </td>
+                        <td>
+                            <a class="btn btn-outline-danger"
+                               asp-controller="SourceSubstances" asp-action="Delete" asp-route-id="@item.Id"
+                               name="@LangResources.DeleteButtonText">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </td>
+                    }
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        await Html.RenderPartialAsync("_JqueryDatatable");
+
+        var columnWidths = new Queue<string>(new[] { "25%", "25%", "25%", "25%" });
+        if (isAdmin)
+        {
+            columnWidths.Enqueue(Constants.DefaultEditDeleteButtonsWidth);
+            columnWidths.Enqueue(Constants.DefaultEditDeleteButtonsWidth);
+        }
+
+        await Html.RenderPartialAsync("_DataTableInitialization", columnWidths);
+    }
+}
