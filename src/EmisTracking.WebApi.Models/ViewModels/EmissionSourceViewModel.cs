@@ -9,15 +9,17 @@ namespace EmisTracking.WebApi.Models.ViewModels
     public class EmissionSourceViewModel : BaseViewModel
     {
         [Display(Name = LangResources.Fields.Subdivision)]
+        [Required(ErrorMessage = LangResources.MustBeChosen)]
         public string SubdivisionId { get; set; }
         public SubdivisionViewModel Subdivision { get; set; }
         public IEnumerable<DropdownItemModel> Subdivisions { get; set; }
 
         [Display(Name = LangResources.Fields.Name)]
+        [Required(ErrorMessage = LangResources.MustBeFilledMessage)]
         public string Name { get; set; }
 
         [Display(Name = LangResources.Fields.ProcessCategory)]
-        public ProcessCategory ProcessCategory { get; set; }
+        public ProcessCategory? ProcessCategory { get; set; }
 
         [Display(Name = LangResources.Fields.Methodology)]
         public string MethodologyId { get; set; }
@@ -26,5 +28,7 @@ namespace EmisTracking.WebApi.Models.ViewModels
 
         [Display(Name = LangResources.Fields.Mode)]
         public string ModeId { get; set; }
+        public ModeViewModel Mode { get; set; }
+        public IEnumerable<DropdownItemModel> Modes { get; set; }
     }
 }

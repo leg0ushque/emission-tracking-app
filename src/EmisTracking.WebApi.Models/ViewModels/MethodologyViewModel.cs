@@ -8,9 +8,11 @@ namespace EmisTracking.WebApi.Models.ViewModels
     public class MethodologyViewModel : BaseViewModel
     {
         [Display(Name = LangResources.Fields.ShortName)]
+        [Required(ErrorMessage = LangResources.MustBeFilledMessage)]
         public string ShortName { get; set; }
 
         [Display(Name = LangResources.Fields.Name)]
+        [Required(ErrorMessage = LangResources.MustBeFilledMessage)]
         public string Name { get; set; }
 
         [Display(Name = LangResources.Fields.Mode)]
@@ -19,6 +21,7 @@ namespace EmisTracking.WebApi.Models.ViewModels
         public IEnumerable<DropdownItemModel> Modes { get; set; }
 
         [Display(Name = LangResources.Fields.Formula)]
+        [Required(ErrorMessage = LangResources.MustBeFilledMessage)]
         public string Formula { get; set; }
     }
 }

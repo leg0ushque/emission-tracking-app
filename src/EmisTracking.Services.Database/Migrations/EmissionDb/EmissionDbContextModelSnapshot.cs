@@ -406,7 +406,7 @@ namespace EmisTracking.Services.Database.Migrations.EmissionDb
                     b.Property<double>("Amount")
                         .HasColumnType("float");
 
-                    b.Property<DateTime>("EndDate")
+                    b.Property<DateTime?>("EndDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("HazardClass")

@@ -1,10 +1,12 @@
 ﻿@model List<EmisTracking.WebApi.Models.ViewModels.SourceSubstanceViewModel>
 @using EmisTracking.Localization
+@using EmisTracking.WebApp.Helpers
 @{
     ViewData[Constants.GenerateBreadcrumb] = new();
     ViewData["Title"] = LangResources.Titles.SourceSubstancesIndex;
 
     var isAdmin = (ViewData[Constants.ViewDataConstants.IsAdmin] as bool?).GetValueOrDefault();
+    var gasCleaningUnitTypes = EnumHelper.GasCleaningUnitTypes;
 }
 
 @section Breadcrumb
@@ -41,7 +43,7 @@
                     <td></td>
                     <td>@item.EmissionSource.Name</td>
                     <td>@item.Pollutant.Name</td>
-                    <td>@item.GasCleaningUnit.ToString()</td>
+                    <td>@gasCleaningUnitTypes[item.GasCleaningUnit]</td>
                     <td>@item.PurificationPercentage</td>
 
                     @if (isAdmin)

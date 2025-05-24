@@ -1,5 +1,6 @@
 ﻿@using EmisTracking.Localization
 @using EmisTracking.WebApi.Models.ViewModels
+@using EmisTracking.WebApp.Helpers
 @model ModeViewModel
 
 @{
@@ -7,6 +8,7 @@
     ViewData["Title"] = string.Format(LangResources.Titles.NameTemplate, Model.Name);
 
     var isAdmin = (ViewData[Constants.ViewDataConstants.IsAdmin] as bool?).GetValueOrDefault();
+    var processCat = EnumHelper.ProcessCategories[Model.ProcessCategory];
 }
 
 @section Breadcrumb
@@ -16,7 +18,7 @@
 }
 
 <p><strong>@LangResources.Fields.Name:</strong> @Model.Name</p>
-<p><strong>@LangResources.Fields.ProcessCategory:</strong> @Model.ProcessCategory.ToString()</p>
+<p><strong>@LangResources.Fields.ProcessCategory:</strong> @processCat</p>
 
 @if (isAdmin)
 {

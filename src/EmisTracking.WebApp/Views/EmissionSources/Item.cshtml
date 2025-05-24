@@ -1,5 +1,6 @@
 ﻿@using EmisTracking.WebApi.Models.ViewModels
 @using EmisTracking.Localization
+@using EmisTracking.WebApp.Helpers
 @model ModelWithDependencies<EmissionSourceViewModel,PollutantViewModel>
 
 @{
@@ -7,6 +8,8 @@
     ViewData["Title"] = string.Format(LangResources.Titles.NameTemplate, Model.MainItem.Name);
 
     var isAdmin = (ViewData[Constants.ViewDataConstants.IsAdmin] as bool?).GetValueOrDefault();
+    var processCategories = EnumHelper.ProcessCategories;
+    var processCategory = Model.MainItem.ProcessCategory.HasValue ? processCategories[Model.MainItem.ProcessCategory.Value] : LangResources.NoValue;
 }
 
 @section Breadcrumb
@@ -27,9 +30,9 @@
 
 <p><strong>@LangResources.Fields.Subdivision:</strong> @Model.MainItem.Subdivision.Name</p>
 <p><strong>@LangResources.Fields.Name:</strong> @Model.MainItem.Name</p>
-<p><strong>@LangResources.Fields.ProcessCategory:</strong> @Model.MainItem.ProcessCategory.ToString()</p>
-<p><strong>@LangResources.Fields.Methodology:</strong> @Model.MainItem.Methodology.Name</p>
-<p><strong>@LangResources.Fields.Mode:</strong> @Model.MainItem.ModeId</p>
+<p><strong>@LangResources.Fields.ProcessCategory:</strong> @processCategory</p>
+<p><strong>@LangResources.Fields.Methodology:</strong> @(Model.MainItem.Methodology?.Name ?? LangResources.NoValue)</p>
+<p><strong>@LangResources.Fields.Mode:</strong> @Model.MainItem.Mode.Name</p>
 
 @if (isAdmin)
 {

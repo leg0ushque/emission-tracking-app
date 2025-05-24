@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EmisTracking.Services.Database.Migrations.EmissionDb
 {
     [DbContext(typeof(EmissionDbContext))]
-    [Migration("20250524151436_InitialEdbCreate")]
+    [Migration("20250524200450_InitialEdbCreate")]
     partial class InitialEdbCreate
     {
         /// <inheritdoc />
@@ -409,7 +409,7 @@ namespace EmisTracking.Services.Database.Migrations.EmissionDb
                     b.Property<double>("Amount")
                         .HasColumnType("float");
 
-                    b.Property<DateTime>("EndDate")
+                    b.Property<DateTime?>("EndDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("HazardClass")

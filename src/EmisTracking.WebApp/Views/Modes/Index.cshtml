@@ -39,7 +39,7 @@
             {
                 <tr>
                     <td></td>
-                    <td>@item.Name</td>
+                    <td><a asp-action="Item" asp-controller="Modes" asp-route-id="@item.Id">@item.Name</a></td>
                     <td>@items[item.ProcessCategory]</td>
 
                     @if (isAdmin)

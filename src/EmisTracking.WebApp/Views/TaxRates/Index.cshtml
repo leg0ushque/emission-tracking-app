@@ -1,10 +1,12 @@
 ﻿@model List<EmisTracking.WebApi.Models.ViewModels.TaxRateViewModel>
 @using EmisTracking.Localization
+@using EmisTracking.WebApp.Helpers
 @{
     ViewData[Constants.GenerateBreadcrumb] = new();
     ViewData["Title"] = LangResources.Titles.TaxRatesIndex;
 
     var isAdmin = (ViewData[Constants.ViewDataConstants.IsAdmin] as bool?).GetValueOrDefault();
+    var hazClasses = EnumHelper.HazardClasses;
 }
 
 @section Breadcrumb
@@ -39,10 +41,10 @@
             {
                 <tr>
                     <td></td>
-                    <td>@item.HazardClass.ToString()</td>
+                    <td>@hazClasses[item.HazardClass]</td>
                     <td>@item.Amount</td>
                     <td>@item.StartDate.ToShortDateString()</td>
-                    <td>@item.EndDate.ToShortDateString()</td>
+                    <td>@(item.EndDate.HasValue ? item.EndDate.Value.ToShortDateString() : LangResources.NoValue)</td>
 
                     @if (isAdmin)
                     {

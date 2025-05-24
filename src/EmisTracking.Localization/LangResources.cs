@@ -16,22 +16,33 @@
         public const string SetGraduationYear = "Установить год выпуска ";
         public const string RegisterButtonText = "Зарегистрироваться";
         public const string LoginButtonText = "Войти";
+        public const string NoValue = "не установлено";
+        public const string True = "Да";
+        public const string False = "Нет";
         public const string ConfirmDeleteButtonText = "Подтвердить удаление";
         public const string ConfirmDeleteText = "Пожалуйста, подтвердите удаление";
         public const string CannotBeUndoneText = "Данное действие необратимо!";
         public const string EmptyIdText = "Поиск по пустому идентификатору невозможен!";
 
         public const string TypeSomething = "Введите значение";
-        public const string ChooseSomething = "Выберите элемент списка";
+        public const string ChooseSomething = "Выберите элемент из списка";
         public const string MustBeFilledMessage = "Поле должно быть заполнено";
+        public const string MustBeChosen = "Должно быть выбрано значение из списка";
         public const string DuplicationMessage = "Запись уже существует, измените данные и повторите попытку снова!";
         public const string ItemNotFoundMessageTemplate = "Не существует {0} с Id='{1}'.";
         public const string DefaultErrorMessage = "Во время выполнения операции возникла ошибка";
+        public const string ModeMethodologyCategoryHint1 = "Внимание!";
+        public const string ModeMethodologyCategoryHint2 = "Установка режима для источника автоматически устанавливает категорию процесса и методику в соответствии с выбранным значением.";
+        public const string ModeMethodologyCategoryHint3 = "Установка методики или категории процесса автоматически блокирует выбор режима.";
+        public const string ModeMethodologyCategoryHint4 = "Используйте очистку поля для отмены.";
+        public const string AutoSetByMode = "Будет установлено в соответствии с режимом";
 
         public const string AuthUserNotFoundErrorMessageTemplate = "Пользователь {0} не найден.";
         public const string SignInFailedErrorMessage = "Не удалось выполнить вход. Проверьте введённые логин и пароль и повторите попытку снова!";
 
         public const string PasswordHint = "Пароль должен иметь минимум 6 символов, среди которых должна быть\nхотя бы одна заглавная и одна прописная буквы, одна цифра,\nа также не буквенно-цифровой символ.";
+
+        public const string EitherMethodologyAndModeMustBeSet = "Необходимо выбрать либо режим, либо методику";
 
         // Названия сущностей
 

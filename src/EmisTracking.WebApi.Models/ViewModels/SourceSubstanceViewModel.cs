@@ -9,12 +9,14 @@ namespace EmisTracking.WebApi.Models.ViewModels
     public class SourceSubstanceViewModel : BaseViewModel
     {
         [Display(Name = LangResources.Fields.EmissionSource)]
+        [Required(ErrorMessage = LangResources.MustBeChosen)]
         public string EmissionSourceId { get; set; }
         public EmissionSourceViewModel EmissionSource { get; set; }
         public IEnumerable<DropdownItemModel> EmissionSources { get; set; }
 
 
         [Display(Name = LangResources.Fields.Pollutant)]
+        [Required(ErrorMessage = LangResources.MustBeChosen)]
         public string PollutantId { get; set; }
         public PollutantViewModel Pollutant { get; set; }
         public IEnumerable<DropdownItemModel> Pollutants { get; set; }
@@ -25,6 +27,7 @@ namespace EmisTracking.WebApi.Models.ViewModels
 
 
         [Display(Name = LangResources.Fields.GasCleaningUnit)]
+        [Required(ErrorMessage = LangResources.MustBeChosen)]
         public GasCleaningUnitType GasCleaningUnit { get; set; }
 
 
@@ -33,6 +36,7 @@ namespace EmisTracking.WebApi.Models.ViewModels
 
 
         [Display(Name = LangResources.Fields.AnnualAmount)]
+        [Required(ErrorMessage = LangResources.MustBeFilledMessage)]
         public double AnnualAmount { get; set; }
     }
 }

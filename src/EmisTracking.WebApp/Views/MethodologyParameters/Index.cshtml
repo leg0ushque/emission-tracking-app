@@ -1,10 +1,12 @@
 ﻿@model List<EmisTracking.WebApi.Models.ViewModels.MethodologyParameterViewModel>
 @using EmisTracking.Localization
+@using EmisTracking.WebApp.Helpers
 @{
     ViewData[Constants.GenerateBreadcrumb] = new();
     ViewData["Title"] = LangResources.Titles.MethodologyParametersIndex;
 
     var isAdmin = (ViewData[Constants.ViewDataConstants.IsAdmin] as bool?).GetValueOrDefault();
+    var parameterTypes = EnumHelper.ParameterTypes;
 }
 
 @section Breadcrumb
@@ -22,6 +24,8 @@
         <tr>
             <th scope="col">№</th>
             <th scope="col">@LangResources.Fields.Methodology</th>
+            <th scope="col">@LangResources.Fields.Name</th>
+            <th scope="col">@LangResources.Fields.FormulaName</th>
             <th scope="col">@LangResources.Fields.ParameterType</th>
 
             @if (isAdmin)
@@ -38,7 +42,9 @@
                 <tr>
                     <td></td>
                     <td>@item.Methodology.Name</td>
-                    <td>@item.ParameterType</td>
+                    <td>@item.Name</td>
+                    <td>@item.FormulaName</td>
+                    <td>@parameterTypes[item.ParameterType]</td>
 
                     @if (isAdmin)
                     {
@@ -68,7 +74,7 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
         await Html.RenderPartialAsync("_JqueryDatatable");
 
-        var columnWidths = new Queue<string>(new[] { "50%", "50%" });
+        var columnWidths = new Queue<string>(new[] { "25%", "25%", "25%", "25%" });
         if (isAdmin)
         {
             columnWidths.Enqueue(Constants.DefaultEditDeleteButtonsWidth);

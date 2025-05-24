@@ -68,7 +68,7 @@ namespace EmisTracking.WebApp.Controllers
 
             if (response.Success)
             {
-                return RedirectToAction("Item", "Areas  ", new { id = existingItemResponse.Data.AreaId });
+                return RedirectToAction("Item", "Areas", new { id = existingItemResponse.Data.AreaId });
             }
             else
             {

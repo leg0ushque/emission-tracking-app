@@ -14,7 +14,6 @@ namespace EmisTracking.WebApp.Controllers
     public class ParameterValuesController : BaseDropdownViewController<ParameterValueViewModel>
     {
         private readonly IBaseApiService<MethodologyParameterViewModel> _methodologyParameterService;
-        private readonly IBaseApiService<GrossEmissionViewModel> _grossEmissionService;
 
         public ParameterValuesController(
             IBaseApiService<ParameterValueViewModel> parameterValueService,
@@ -23,7 +22,6 @@ namespace EmisTracking.WebApp.Controllers
         {
             _apiService = parameterValueService;
             _methodologyParameterService = methodologyParameterService;
-            _grossEmissionService = grossEmissionService;
         }
 
         protected override string CreationTitle => LangResources.Titles.ParameterValuesCreate;
@@ -32,16 +30,11 @@ namespace EmisTracking.WebApp.Controllers
         public override async Task LoadDropdownsValuesAsync(ParameterValueViewModel model)
         {
             var methodologyParametersResponse = await _methodologyParameterService.GetAllAsync();
-            var grossEmissionsResponse = await _grossEmissionService.GetAllAsync();
 
-            if (methodologyParametersResponse.Success && grossEmissionsResponse.Success)
+            if (methodologyParametersResponse.Success)
             {
                 model.MethodologyParameters = methodologyParametersResponse.Data
                     .Select(mp => new DropdownItemModel { Value = mp.Id, Name = mp.Name })
-                    .ToList();
-
-                model.GrossEmissions = grossEmissionsResponse.Data
-                    .Select(ge => new DropdownItemModel { Value = ge.Id, Name = $"{ge.Mass} kg - {ge.Month}/{ge.Year}" })
                     .ToList();
             }
         }

@@ -6,9 +6,11 @@ namespace EmisTracking.WebApi.Models.ViewModels
     public class AreaViewModel : BaseViewModel
     {
         [Display(Name = LangResources.Fields.Number)]
+        [Required(ErrorMessage = LangResources.MustBeFilledMessage)]
         public int Number { get; set; }
 
         [Display(Name = LangResources.Fields.Name)]
+        [Required(ErrorMessage = LangResources.MustBeFilledMessage)]
         public string Name { get; set; }
     }
 }

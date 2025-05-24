@@ -43,16 +43,46 @@
         </div>
     </div>
 
+    <div class="alert alert-secondary">
+        <span><strong>@LangResources.ModeMethodologyCategoryHint1</strong></span><br />
+        <span>@LangResources.ModeMethodologyCategoryHint2</span><br>
+        <span>@LangResources.ModeMethodologyCategoryHint3</span><br>
+        <span>@LangResources.ModeMethodologyCategoryHint4</span>
+    </div>
+
+    <div class="row mb-3">
+        <label asp-for="ModeId" class="col-md-2 control-form-label"></label>
+        <div class="col-sm-6">
+            <div class="input-group">
+                <select asp-for="ModeId" class="form-select">
+                    <option value="" disabled selected>@LangResources.ChooseSomething</option>
+                    @if (Model.Modes?.Any() ?? false)
+                    {
+                        @foreach (var item in Model.Modes)
+                        {
+                            <option value="@item.Value">@item.Name</option>
+                        }
+                    }
+                </select>
+                <button type="button" class="btn btn-outline-secondary clear-selection" data-target="ModeId"><i class="fas fa-times"></i></button>
+            </div>
+            <span asp-validation-for="ModeId" class="text-danger"></span>
+        </div>
+    </div>
+
     <div class="row mb-3">
         <label asp-for="ProcessCategory" class="col-md-2 control-form-label"></label>
         <div class="col-sm-6">
-            <select asp-for="ProcessCategory" class="form-select">
-                <option value="" disabled selected>@LangResources.ChooseSomething</option>
-                @foreach (var item in EnumHelper.GetProcessCategoriesDropdownValues())
-                {
-                    <option value="@item.Value">@item.Name</option>
-                }
-            </select>
+            <div class="input-group">
+                <select asp-for="ProcessCategory" class="form-select">
+                    <option value="" disabled selected>@LangResources.ChooseSomething</option>
+                    @foreach (var item in EnumHelper.GetProcessCategoriesDropdownValues())
+                    {
+                        <option value="@item.Value">@item.Name</option>
+                    }
+                </select>
+                <button type="button" class="btn btn-outline-secondary clear-selection" data-target="ProcessCategory"><i class="fas fa-times"></i></button>
+            </div>
             <span asp-validation-for="ProcessCategory" class="text-danger"></span>
         </div>
     </div>
@@ -60,16 +90,19 @@
     <div class="row mb-3">
         <label asp-for="MethodologyId" class="col-md-2 control-form-label"></label>
         <div class="col-sm-6">
-            <select asp-for="MethodologyId" class="form-select">
-                <option value="" disabled selected>@LangResources.ChooseSomething</option>
-                @if (Model.Methodologies?.Any() ?? false)
-                {
-                    @foreach (var item in Model.Methodologies)
+            <div class="input-group">
+                <select asp-for="MethodologyId" class="form-select">
+                    <option value="" disabled selected>@LangResources.ChooseSomething</option>
+                    @if (Model.Methodologies?.Any() ?? false)
                     {
-                        <option value="@item.Value">@item.Name</option>
+                        @foreach (var item in Model.Methodologies)
+                        {
+                            <option value="@item.Value">@item.Name</option>
+                        }
                     }
-                }
-            </select>
+                </select>
+                <button type="button" class="btn btn-outline-secondary clear-selection" data-target="MethodologyId"><i class="fas fa-times"></i></button>
+            </div>
             <span asp-validation-for="MethodologyId" class="text-danger"></span>
         </div>
     </div>
@@ -90,4 +123,49 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+
+    <script>
+        @* Скрипты для динамического поведения режим-методика-категория *@
+        $(document).ready(function () {
+            // Блокировка или разблокировка поля и кнопки очистки
+            function toggleField(selector, buttonSelector, isEnabled) {
+                $(selector).prop('disabled', !isEnabled);
+                $(buttonSelector).prop('disabled', !isEnabled);
+            }
+
+            // Логика для изменения выбора "Режима"
+            $('select[name="ModeId"]').on('change', function () {
+                const modeIsSelected = !!$(this).val();
+                toggleField('select[name="MethodologyId"]', '[data-target="MethodologyId"]', !modeIsSelected);
+                toggleField('select[name="ProcessCategory"]', '[data-target="ProcessCategory"]', !modeIsSelected);
+
+                if (modeIsSelected) {
+                    $('select[name="MethodologyId"]').val('');
+                    $('select[name="ProcessCategory"]').val('');
+                }
+            });
+
+            // Логика для изменения выбора "Методики" и "Категории процесса"
+            $('select[name="MethodologyId"], select[name="ProcessCategory"]').on('change', function () {
+                const methodologyOrCategorySelected =
+                    !!$('select[name="MethodologyId"]').val() || !!$('select[name="ProcessCategory"]').val();
+
+                toggleField('select[name="ModeId"]', '[data-target="ModeId"]', !methodologyOrCategorySelected);
+
+                if (methodologyOrCategorySelected) {
+                    $('select[name="ModeId"]').val('');
+                }
+            });
+
+            // Логика для кнопок очистки рядом с каждым select
+            $('.clear-selection').on('click', function () {
+                const target = $(this).data('target');
+                $(`select[name="${target}"]`).val('').trigger('change');
+            });
+
+            // Инициализация значений на странице
+            $('select[name="ModeId"]').trigger('change');
+            $('select[name="MethodologyId"], select[name="ProcessCategory"]').trigger('change');
+        });
+    </script>
 }

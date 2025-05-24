@@ -22,7 +22,7 @@
 <br />
 <span><strong>@LangResources.Fields.ProcessCategory:</strong> @Model.ProcessCategory.ToString()</span>
 <br />
-<span><strong>@LangResources.Fields.Methodology:</strong> @Model.Methodology.Name</span>
+<span><strong>@LangResources.Fields.Methodology:</strong> @(Model.Methodology?.Name ?? LangResources.NoValue)</span>
 <br />
 <br />
 

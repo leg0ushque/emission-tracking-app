@@ -1,10 +1,13 @@
 ﻿@model List<EmisTracking.WebApi.Models.ViewModels.PollutantViewModel>
 @using EmisTracking.Localization
+@using EmisTracking.WebApp.Helpers
 @{
     ViewData[Constants.GenerateBreadcrumb] = new();
     ViewData["Title"] = LangResources.Titles.PollutantsIndex;
 
     var isAdmin = (ViewData[Constants.ViewDataConstants.IsAdmin] as bool?).GetValueOrDefault();
+    var hazardClasses = EnumHelper.HazardClasses;
+    var aggStates = EnumHelper.AggregateStates;
 }
 
 @section Breadcrumb
@@ -36,11 +39,12 @@
         @{
             foreach (var item in Model)
             {
+                var itemName = string.IsNullOrEmpty(item.Formula) ? item.Name : $"{item.Name} - {item.Formula}";
                 <tr>
                     <td></td>
-                    <td>@item.Name</td>
-                    <td>@item.HazardClass.ToString()</td>
-                    <td>@item.AggregateState.ToString()</td>
+                    <td>@itemName</td>
+                    <td>@hazardClasses[item.HazardClass]</td>
+                    <td>@aggStates[item.AggregateState]</td>
 
                     @if (isAdmin)
                     {

@@ -1,12 +1,16 @@
 ﻿@using EmisTracking.WebApi.Models.ViewModels
 @using EmisTracking.Localization
+@using EmisTracking.WebApp.Helpers
 @model ModelWithDependencies<SubdivisionViewModel,EmissionSourceViewModel>
 
 @{
+
     ViewData[Constants.GenerateBreadcrumb] = new();
     ViewData["Title"] = string.Format(LangResources.Titles.NameTemplate, Model.MainItem.Name);
 
     var isAdmin = (ViewData[Constants.ViewDataConstants.IsAdmin] as bool?).GetValueOrDefault();
+
+    var processCategories = EnumHelper.ProcessCategories;
 }
 
 @section Breadcrumb
@@ -63,10 +67,11 @@
         @{
             foreach (var item in @Model.Dependencies)
             {
+                var processCategory = item.ProcessCategory.HasValue ? processCategories[item.ProcessCategory.Value] : LangResources.NoValue;
                 <tr>
                     <td></td>
                     <td><a asp-action="Item" asp-controller="EmissionSources" asp-route-id="@item.Id">@item.Name</a></td>
-                    <td>@item.ProcessCategory.ToString()</td>
+                    <td>@processCategory</td>
                     <td>@(item.Methodology?.Name ?? @Constants.None)</td>
                 </tr>
             }

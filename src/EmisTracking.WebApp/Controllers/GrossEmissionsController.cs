@@ -15,7 +15,6 @@ namespace EmisTracking.WebApp.Controllers
     {
         private readonly IBaseApiService<SourceSubstanceViewModel> _sourceSubstanceService;
         private readonly IBaseApiService<MethodologyViewModel> _methodologyService;
-        private readonly IBaseApiService<TaxViewModel> _taxService;
 
         public GrossEmissionsController(
             IBaseApiService<GrossEmissionViewModel> grossEmissionService,
@@ -26,7 +25,6 @@ namespace EmisTracking.WebApp.Controllers
             _apiService = grossEmissionService;
             _sourceSubstanceService = sourceSubstanceService;
             _methodologyService = methodologyService;
-            _taxService = taxService;
         }
 
         protected override string CreationTitle => LangResources.Titles.GrossEmissionsCreate;
@@ -36,9 +34,8 @@ namespace EmisTracking.WebApp.Controllers
         {
             var sourceSubstancesResponse = await _sourceSubstanceService.GetAllAsync();
             var methodologiesResponse = await _methodologyService.GetAllAsync();
-            var taxesResponse = await _taxService.GetAllAsync();
 
-            if (sourceSubstancesResponse.Success && methodologiesResponse.Success && taxesResponse.Success)
+            if (sourceSubstancesResponse.Success && methodologiesResponse.Success)
             {
                 model.SourceSubstances = sourceSubstancesResponse.Data
                     .Select(ss => new DropdownItemModel { Value = ss.Id, Name = ss.EmissionSourceId })
@@ -46,10 +43,6 @@ namespace EmisTracking.WebApp.Controllers
 
                 model.Methodologies = methodologiesResponse.Data
                     .Select(m => new DropdownItemModel { Value = m.Id, Name = m.Name })
-                    .ToList();
-
-                model.Taxes = taxesResponse.Data
-                    .Select(t => new DropdownItemModel { Value = t.Id, Name = t.TotalAmount.ToString() })
                     .ToList();
             }
         }

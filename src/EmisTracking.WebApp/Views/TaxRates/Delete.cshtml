@@ -22,7 +22,7 @@
 <br />
 <span><strong>@LangResources.Fields.StartDate:</strong> @Model.StartDate.ToShortDateString()</span>
 <br />
-<span><strong>@LangResources.Fields.EndDate:</strong> @Model.EndDate.ToShortDateString()</span>
+<span><strong>@LangResources.Fields.EndDate:</strong> @(Model.EndDate.HasValue ? Model.EndDate.Value.ToShortDateString() : LangResources.NoValue)</span>
 <br />
 <br />
 

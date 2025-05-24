@@ -11,12 +11,13 @@ namespace EmisTracking.WebApi.Models.ViewModels
         public HazardClass HazardClass { get; set; }
 
         [Display(Name = LangResources.Fields.TaxRate)]
+        [Required(ErrorMessage = LangResources.MustBeFilledMessage)]
         public double Amount { get; set; }
 
         [Display(Name = LangResources.Fields.StartDate)]
-        public DateTime StartDate { get; set; }
+        public DateTime StartDate { get; set; } = DateTime.Now;
 
         [Display(Name = LangResources.Fields.EndDate)]
-        public DateTime EndDate { get; set; }
+        public DateTime? EndDate { get; set; }
     }
 }
