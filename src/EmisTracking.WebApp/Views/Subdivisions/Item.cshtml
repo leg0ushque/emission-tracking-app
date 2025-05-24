@@ -29,6 +29,6 @@
     <br />
 }
 <br />
-<a asp-action="Index" class="btn btn-outline-secondary">
-    <i class="fas fa-arrow-left"></i> @LangResources.ReturnButtonText
+<a asp-action="Item" asp-controller="Areas" asp-route-id="@Model.AreaId" class="btn btn-outline-secondary">
+    <i class="fas fa-arrow-left"></i> @LangResources.Entities.Area @string.Format(LangResources.Titles.NameTemplate, Model.Area.Name)
 </a>

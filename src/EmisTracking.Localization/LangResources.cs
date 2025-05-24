@@ -132,6 +132,30 @@
             ["descText"] = JqueryTableStrings.ActivateDescending,
         };
 
+        public static class EnumTranslations
+        {
+            public const string ProcessCategoryNone = "отсутствует";
+            public const string ProcessCategoryBurningFuel = "Сжигание топлива";
+            public const string ProcessCategoryWasteProcessing = "Использование отходов";
+            public const string ProcessCategoryAgriculturalObject = "Сельскохозяйственный объект";
+            public const string ProcessCategoryTechnologicalProcess = "Технологический объект";
+
+            public const string ParameterTypeNumeric = "Числовой";
+            public const string ParameterTypeGasCleaningUnitPercent = "Процент очистки ГОУ";
+            public const string ParameterTypeConsumptionMass = "Расход материала";
+            public const string ParameterTypeOperatingTime = "Время работы источника";
+            public const string ParameterTypeSpecificIndicator = "Удельный показатель";
+
+            public const string GasCleaningUnitTypeYes = "Да";
+            public const string GasCleaningUnitTypeNo = "Нет";
+            public const string GasCleaningUnitTypeOther = "Иные устройства";
+
+            public const string HazardClassI = "I";
+            public const string HazardClassII = "II";
+            public const string HazardClassIII = "III";
+            public const string HazardClassIV = "IV";
+        }
+
         public static class JqueryTableStrings
         {
             public static string ActivateAscending => ": активируйте для сортировки по возр.";

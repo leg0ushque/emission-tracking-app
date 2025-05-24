@@ -1,12 +1,10 @@
 ﻿using EmisTracking.Localization;
 using EmisTracking.WebApi.Models.ViewModels;
-using EmisTracking.WebApp.Filters;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
 namespace EmisTracking.WebApp.Controllers
 {
-    [LoadLayoutDataFilter]
     public abstract class BaseDropdownViewController<TEntityViewModel> : BaseViewController<TEntityViewModel>
         where TEntityViewModel : class, IViewModel, new()
     {
@@ -61,7 +59,7 @@ namespace EmisTracking.WebApp.Controllers
                 return View(Constants.ErrorView, (LangResources.EmptyIdText, controller: string.Empty, action: nameof(Index)));
             }
 
-            var response = await _apiService.GetByIdAsync(id);
+            var response = await _apiService.GetByIdAsync(id, loadDependencies: true);
 
             ViewData[AspAction] = nameof(Update);
             ViewData[Title] = UpdateTitle;
@@ -95,7 +93,7 @@ namespace EmisTracking.WebApp.Controllers
 
             if (response.Success)
             {
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Item), new { id });
             }
             else
             {

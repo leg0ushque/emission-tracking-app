@@ -35,7 +35,7 @@
     <div class="row mb-3">
         <label asp-for="ModeId" class="col-md-2 control-form-label"></label>
         <div class="col-sm-6">
-            <select asp-for="ModeId" class="form-control">
+            <select asp-for="ModeId" class="form-select">
                 <option value="" disabled selected>@LangResources.ChooseSomething</option>
                 @if (Model.Modes?.Any() ?? false)
                 {

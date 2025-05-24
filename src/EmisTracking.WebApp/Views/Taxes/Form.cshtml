@@ -36,7 +36,7 @@
     <div class="row mb-3">
         <label asp-for="HazardClass" class="col-md-2 control-form-label"></label>
         <div class="col-sm-6">
-            <select asp-for="HazardClass" class="form-control">
+            <select asp-for="HazardClass" class="form-select">
                 <option value="" disabled selected>@LangResources.ChooseSomething</option>
                 @foreach (var hazard in Enum.GetValues(typeof(HazardClass)))
                 {

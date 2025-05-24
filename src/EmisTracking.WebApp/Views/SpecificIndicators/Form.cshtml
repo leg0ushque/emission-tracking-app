@@ -19,7 +19,7 @@
     <div class="row mb-3">
         <label asp-for="ConsumptionGroupId" class="col-md-2 control-form-label"></label>
         <div class="col-sm-6">
-            <select asp-for="ConsumptionGroupId" class="form-control">
+            <select asp-for="ConsumptionGroupId" class="form-select">
                 <option value="" disabled selected>@LangResources.ChooseSomething</option>
                 @if (Model.ConsumptionGroups?.Any() ?? false)
                 {
@@ -36,7 +36,7 @@
     <div class="row mb-3">
         <label asp-for="PollutantId" class="col-md-2 control-form-label"></label>
         <div class="col-sm-6">
-            <select asp-for="PollutantId" class="form-control">
+            <select asp-for="PollutantId" class="form-select">
                 <option value="" disabled selected>@LangResources.ChooseSomething</option>
                 @if (Model.Pollutants?.Any() ?? false)
                 {

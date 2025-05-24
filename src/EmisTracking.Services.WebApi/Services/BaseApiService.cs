@@ -1,9 +1,7 @@
 ﻿using EmisTracking.Services.WebApi.Helpers;
 using System;
-using System.Linq;
 using System.Net.Http;
 using System.Net;
-using System.Text;
 using System.Threading.Tasks;
 using EmisTracking.WebApi.Models.Models;
 using EmisTracking.Localization;

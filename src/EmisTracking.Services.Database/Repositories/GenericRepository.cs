@@ -69,7 +69,7 @@ namespace EmisTracking.Services.Database.Repositories
             return query;
         }
 
-        public async Task UpdateAsync(TEntity entity)
+        public async Task<bool> UpdateAsync(TEntity entity)
         {
             ArgumentNullException.ThrowIfNull(entity);
 
@@ -78,22 +78,32 @@ namespace EmisTracking.Services.Database.Repositories
 
             if (!entityFound)
             {
-                throw new ArgumentException(null, nameof(entity));
+                return false;
             }
 
             _context.Update(entity);
             await _context.SaveChangesAsync();
             _context.Entry(entity).State = EntityState.Detached;
+
+            return true;
         }
 
-        public async Task DeleteAsync(string entityId)
+        public async Task<bool> DeleteAsync(string entityId)
         {
-            var entity = await GetByIdAsync(entityId)
-                ?? throw new ArgumentException(null, nameof(entityId));
+            ArgumentNullException.ThrowIfNull(entityId);
+
+            var entity = await GetByIdAsync(entityId);
+
+            if (entity == null)
+            {
+                return false;
+            }
 
             _context.Remove(entity);
             await _context.SaveChangesAsync();
             _context.Entry(entity).State = EntityState.Detached;
+
+            return true;
         }
     }
 }

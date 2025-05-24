@@ -2,10 +2,10 @@
 {
     public enum ParameterType
     {
-        Numeric,
-        GasCleaningUnitPercent,
-        ConsumptionMass,
-        OperatingTime,
-        SpecificIndicator
+        Numeric = 1,
+        GasCleaningUnitPercent = 2,
+        ConsumptionMass = 3,
+        OperatingTime = 4,
+        SpecificIndicator = 5,
     }
 }

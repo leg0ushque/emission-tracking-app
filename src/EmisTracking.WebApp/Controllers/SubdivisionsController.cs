@@ -1,8 +1,8 @@
 ﻿using EmisTracking.Localization;
-using EmisTracking.Services.Services;
 using EmisTracking.Services.WebApi.Services;
 using EmisTracking.WebApi.Models.Models;
 using EmisTracking.WebApi.Models.ViewModels;
+using EmisTracking.WebApp.Filters;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
@@ -14,6 +14,7 @@ namespace EmisTracking.WebApp.Controllers
     public class SubdivisionsController : BaseDropdownViewController<SubdivisionViewModel>
     {
         private readonly IBaseApiService<AreaViewModel> _areaApiService;
+        private readonly ISubdivisionApiService subdivisionsApiService;
 
         public SubdivisionsController(
             IBaseApiService<AreaViewModel> areaApiService,
@@ -22,6 +23,7 @@ namespace EmisTracking.WebApp.Controllers
         {
             _apiService = apiService;
             _areaApiService = areaApiService;
+            this.subdivisionsApiService = subdivisionsApiService;
         }
 
         protected override string CreationTitle => LangResources.Titles.SubdivisionsCreate;
@@ -31,27 +33,52 @@ namespace EmisTracking.WebApp.Controllers
         [HttpGet("createForArea/{id}")]
         public async Task<IActionResult> CreateForArea([FromRoute] string id)
         {
+            ViewData[AspAction] = nameof(Create);
+            ViewData[Title] = CreationTitle;
+
             var model = new SubdivisionViewModel();
 
-            var areaResponse = await _areaApiService.GetByIdAsync(id);
+            await LoadDropdownsValuesAsync(model);
 
-            if (areaResponse.Success)
+            model.AreaId = model.Areas.Any(a => a.Value == id) ? id : null;
+
+            return View(Constants.FormView, model);
+        }
+
+
+        [Authorize(Roles = Services.Constants.AdminRole)]
+        [LoadLayoutDataFilter]
+        [HttpGet("confirm-delete/{id}")]
+        public override async Task<IActionResult> ConfirmDelete([FromRoute] string id)
+        {
+            if (string.IsNullOrEmpty(id))
             {
-                model.AreaId = id;
-                model.Area = areaResponse.Data;
+                return View(Constants.ErrorView, (LangResources.EmptyIdText, controller: string.Empty, action: nameof(Index)));
+            }
 
-                ViewData[AspAction] = nameof(Create);
-                ViewData[Title] = CreationTitle;
-                return View(Constants.FormView, model);
+            var existingItemResponse = await _apiService.GetByIdAsync(id);
+
+            if(!existingItemResponse.Success)
+            {
+                return View(Constants.ErrorView, (existingItemResponse.ErrorMessage, controller: string.Empty, action: nameof(Index)));
+            }
+
+            var response = await _apiService.DeleteByIdAsync(id);
+
+            if (response.Success)
+            {
+                return RedirectToAction("Item", "Area", new { id = existingItemResponse.Data.AreaId });
             }
             else
             {
-                return View(Constants.ErrorView, (areaResponse.ErrorMessage, controller: string.Empty, action: nameof(Index)));
+                return View(Constants.ErrorView, (response.ErrorMessage, controller: string.Empty, action: nameof(Index)));
             }
         }
+
         public override async Task LoadDropdownsValuesAsync(SubdivisionViewModel model)
         {
             var areasResponse = await _areaApiService.GetAllAsync();
+
             if (areasResponse.Success)
             {
                 model.Areas = areasResponse.Data

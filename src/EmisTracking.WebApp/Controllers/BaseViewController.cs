@@ -142,7 +142,7 @@ namespace EmisTracking.WebApp.Controllers
 
             if (response.Success)
             {
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Item), new { id });
             }
             else
             {

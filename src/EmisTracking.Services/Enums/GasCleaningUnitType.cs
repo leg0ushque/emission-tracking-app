@@ -2,9 +2,8 @@
 {
     public enum GasCleaningUnitType
     {
-        Yes,
-        No,
-        Other
+        No = 0,
+        Yes = 1,
+        Other = 2
     }
-
 }

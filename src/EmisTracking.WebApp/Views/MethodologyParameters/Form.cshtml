@@ -20,7 +20,7 @@
     <div class="row mb-3">
         <label asp-for="MethodologyId" class="col-md-2 control-form-label"></label>
         <div class="col-sm-6">
-            <select asp-for="MethodologyId" class="form-control">
+            <select asp-for="MethodologyId" class="form-select">
                 <option value="" disabled selected>@LangResources.ChooseSomething</option>
                 @if (Model.Methodologies?.Any() ?? false)
                 {
@@ -37,7 +37,7 @@
     <div class="row mb-3">
         <label asp-for="ParameterType" class="col-md-2 control-form-label"></label>
         <div class="col-sm-6">
-            <select asp-for="ParameterType" class="form-control">
+            <select asp-for="ParameterType" class="form-select">
                 <option value="" disabled selected>@LangResources.ChooseSomething</option>
                 @foreach (var type in Enum.GetValues(typeof(ParameterType)))
                 {

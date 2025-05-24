@@ -1,10 +1,12 @@
 ﻿@model List<EmisTracking.WebApi.Models.ViewModels.ModeViewModel>
 @using EmisTracking.Localization
+@using EmisTracking.WebApp.Helpers
 @{
     ViewData[Constants.GenerateBreadcrumb] = new();
     ViewData["Title"] = LangResources.Titles.ModesIndex;
 
     var isAdmin = (ViewData[Constants.ViewDataConstants.IsAdmin] as bool?).GetValueOrDefault();
+    var items = EnumHelper.ProcessCategories;
 }
 
 @section Breadcrumb
@@ -26,8 +28,8 @@
 
             @if (isAdmin)
             {
-                <th scope="col" orderable="false"></th>
-                <th scope="col" orderable="false"></th>
+                <th scope="col" data-orderable="false" data-searchable="false"></th>
+                <th scope="col" data-orderable="false" data-searchable="false"></th>
             }
         </tr>
     </thead>
@@ -38,7 +40,7 @@
                 <tr>
                     <td></td>
                     <td>@item.Name</td>
-                    <td>@item.ProcessCategory.ToString()</td>
+                    <td>@items[item.ProcessCategory]</td>
 
                     @if (isAdmin)
                     {

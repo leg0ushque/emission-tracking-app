@@ -6,6 +6,7 @@
 
 @using EmisTracking.Localization
 @using EmisTracking.WebApi.Models.Enums
+@using EmisTracking.WebApp.Helpers
 
 @section Breadcrumb
 {
@@ -28,11 +29,11 @@
     <div class="row mb-3">
         <label asp-for="ProcessCategory" class="col-md-2 control-form-label"></label>
         <div class="col-sm-6">
-            <select asp-for="ProcessCategory" class="form-control">
+            <select asp-for="ProcessCategory" class="form-select">
                 <option value="" disabled selected>@LangResources.ChooseSomething</option>
-                @foreach (var category in Enum.GetValues(typeof(ProcessCategory)))
+                @foreach (var item in EnumHelper.GetProcessCategoriesDropdownValues())
                 {
-                    <option value="@category">@category</option>
+                    <option value="@item.Value">@item.Name</option>
                 }
             </select>
             <span asp-validation-for="ProcessCategory" class="text-danger"></span>

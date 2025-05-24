@@ -28,6 +28,9 @@
     <i class="fas fa-arrow-left"></i>
     @LangResources.ReturnToListButtonText
 </a>
+<a asp-action="Index" class="btn btn-outline-secondary">
+    <i class="fas fa-arrow-left"></i> @LangResources.Entities.Area @string.Format(LangResources.Titles.NameTemplate, Model.Area.Name)
+</a>
 <a asp-action="ConfirmDelete" asp-route-id="@Model.Id" class="btn btn-danger">
     <i class="fas fa-trash"></i>
     @LangResources.ConfirmDeleteButtonText

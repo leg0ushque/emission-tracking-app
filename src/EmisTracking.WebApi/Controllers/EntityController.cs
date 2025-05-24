@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using EmisTracking.Localization;
 using EmisTracking.Services.Interfaces;
 using EmisTracking.WebApi.Filters;
 using EmisTracking.WebApi.Models.Models;
@@ -33,11 +34,16 @@ namespace EmisTracking.WebApi.Controllers
             }
 
             var itemDto = _mapper.Map<TEntity>(item);
-            itemDto.Id = Guid.NewGuid().ToString(); // FIXME
+            itemDto.Id = Guid.NewGuid().ToString();
 
             var result = await _entityService.AddAsync(itemDto);
 
-            return Ok(new ApiResponseModel<string> { Success = true, Data = result });
+            return Ok(new ApiResponseModel<string>
+            {
+                Success = true,
+                StatusCode = System.Net.HttpStatusCode.Created,
+                Data = result
+            });
         }
 
         [Authorize]
@@ -51,7 +57,12 @@ namespace EmisTracking.WebApi.Controllers
             var items = await _entityService.GetAllAsync(loadDependencies: loadDependencies);
             var itemModelsList = _mapper.Map<List<TEntityModel>>(items);
 
-            return Ok(new ApiResponseModel<List<TEntityModel>> { Success = true, Data = itemModelsList });
+            return Ok(new ApiResponseModel<List<TEntityModel>>
+            {
+                Success = true,
+                StatusCode = System.Net.HttpStatusCode.OK,
+                Data = itemModelsList
+            });
         }
 
         [Authorize]
@@ -63,6 +74,17 @@ namespace EmisTracking.WebApi.Controllers
         public async Task<IActionResult> GetById([FromRoute] string id, [FromQuery] bool loadDependencies = false)
         {
             var item = await _entityService.GetByIdAsync(id, loadDependencies);
+
+            if(item == null)
+            {
+                return NotFound(new ApiResponseModel<object>
+                {
+                    Success = false,
+                    StatusCode = System.Net.HttpStatusCode.NotFound,
+                    ErrorMessage = string.Format(LangResources.ItemNotFoundMessageTemplate, nameof(TEntity), item.Id)
+                });
+            }
+
             var itemModel = _mapper.Map<TEntityModel>(item);
 
             return Ok(new ApiResponseModel<TEntityModel> { Success = true, Data = itemModel });
@@ -82,9 +104,16 @@ namespace EmisTracking.WebApi.Controllers
             }
 
             var itemDto = _mapper.Map<TEntity>(item);
-            await _entityService.UpdateAsync(itemDto);
+            var updateSuccessful = await _entityService.UpdateAsync(itemDto);
 
-            return Ok(new ApiResponseModel<object> { Success = true });
+            return updateSuccessful ?
+                Ok(new ApiResponseModel<object> { Success = true })
+                : NotFound(new ApiResponseModel<object>
+                {
+                    Success = false,
+                    StatusCode = System.Net.HttpStatusCode.NotFound,
+                    ErrorMessage = string.Format(LangResources.ItemNotFoundMessageTemplate, nameof(TEntity), item.Id)
+                });
         }
 
         [Authorize]
@@ -95,9 +124,16 @@ namespace EmisTracking.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> Delete([FromRoute] string id)
         {
-            await _entityService.DeleteAsync(id);
+            var deleteSuccessful = await _entityService.DeleteAsync(id);
 
-            return Ok(new ApiResponseModel<object> { Success = true });
+            return deleteSuccessful ?
+                Ok(new ApiResponseModel<object> { Success = true })
+                : NotFound(new ApiResponseModel<object>
+                {
+                    Success = false,
+                    StatusCode = System.Net.HttpStatusCode.NotFound,
+                    ErrorMessage = string.Format(LangResources.ItemNotFoundMessageTemplate, nameof(TEntity), id)
+                });
         }
     }
 }

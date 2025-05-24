@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using EmisTracking.Localization;
 using EmisTracking.Services.Exceptions;
 using EmisTracking.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -65,7 +64,7 @@ namespace EmisTracking.Services.Services
             }
         }
 
-        public async virtual Task UpdateAsync(TEntity entity)
+        public async virtual Task<bool> UpdateAsync(TEntity entity)
         {
             try
             {
@@ -73,25 +72,23 @@ namespace EmisTracking.Services.Services
 
                 var mappedEntity = _mapper.Map<TEntity>(entity);
 
-                await _repository.UpdateAsync(mappedEntity);
+                return await _repository.UpdateAsync(mappedEntity);
             }
-            catch (ArgumentException)
+            catch (ArgumentNullException ex)
             {
-                throw new BusinessLogicException(
-                    string.Format(LangResources.ItemNotFoundMessageTemplate, nameof(TEntity), entity.Id));
+                throw new BusinessLogicException(ex.Message, ex);
             }
         }
 
-        public Task DeleteAsync(string id)
+        public Task<bool> DeleteAsync(string id)
         {
             try
             {
                 return _repository.DeleteAsync(id);
             }
-            catch (ArgumentException)
+            catch (ArgumentNullException ex)
             {
-                throw new BusinessLogicException(
-                    string.Format(LangResources.ItemNotFoundMessageTemplate, nameof(TEntity), id));
+                throw new BusinessLogicException(ex.Message, ex);
             }
         }
 

@@ -47,8 +47,8 @@
 
             @if (isAdmin)
             {
-                <th scope="col" orderable="false"></th>
-                <th scope="col" orderable="false"></th>
+                <th scope="col" data-orderable="false" data-searchable="false"></th>
+                <th scope="col" data-orderable="false" data-searchable="false"></th>
             }
         </tr>
     </thead>
@@ -59,7 +59,7 @@
                 <tr>
                     <td scope="row"></td>
                     <td>
-                        <a asp-action="Item" asp-route-id="@item.Id">@item.Name</a>
+                        <a asp-action="Item" asp-controller="Subdivisions" asp-route-id="@item.Id">@item.Name</a>
                     </td>
 
                     @if (isAdmin)

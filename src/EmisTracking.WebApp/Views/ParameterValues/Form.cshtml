@@ -19,7 +19,7 @@
     <div class="row mb-3">
         <label asp-for="MethodologyParameterId" class="col-md-2 control-form-label"></label>
         <div class="col-sm-6">
-            <select asp-for="MethodologyParameterId" class="form-control">
+            <select asp-for="MethodologyParameterId" class="form-select">
                 <option value="" disabled selected>@LangResources.ChooseSomething</option>
                 @if (Model.MethodologyParameters?.Any() ?? false)
                 {

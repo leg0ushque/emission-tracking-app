@@ -16,8 +16,8 @@ namespace EmisTracking.Services.Interfaces
         Task<TEntity> GetByIdAsync(string entityId,
             params Expression<Func<TEntity, object>>[] includes);
 
-        Task UpdateAsync(TEntity entity);
+        Task<bool> UpdateAsync(TEntity entity);
 
-        Task DeleteAsync(string entityId);
+        Task<bool> DeleteAsync(string entityId);
     }
 }
