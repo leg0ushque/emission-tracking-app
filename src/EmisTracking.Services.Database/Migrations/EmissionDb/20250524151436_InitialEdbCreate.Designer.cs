@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EmisTracking.Services.Database.Migrations.EmissionDb
 {
     [DbContext(typeof(EmissionDbContext))]
-    [Migration("20250520222411_InitialEdbCreate")]
+    [Migration("20250524151436_InitialEdbCreate")]
     partial class InitialEdbCreate
     {
         /// <inheritdoc />
@@ -184,8 +184,14 @@ namespace EmisTracking.Services.Database.Migrations.EmissionDb
                         .HasMaxLength(36)
                         .HasColumnType("nvarchar(36)");
 
+                    b.Property<string>("FormulaName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("MethodologyId")
                         .HasColumnType("nvarchar(36)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ParameterType")
                         .HasColumnType("int");

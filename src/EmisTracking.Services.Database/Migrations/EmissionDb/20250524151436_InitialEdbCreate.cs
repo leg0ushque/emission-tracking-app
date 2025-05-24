@@ -193,7 +193,9 @@ namespace EmisTracking.Services.Database.Migrations.EmissionDb
                 {
                     Id = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: false),
                     MethodologyId = table.Column<string>(type: "nvarchar(36)", nullable: true),
-                    ParameterType = table.Column<int>(type: "int", nullable: false)
+                    ParameterType = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FormulaName = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {

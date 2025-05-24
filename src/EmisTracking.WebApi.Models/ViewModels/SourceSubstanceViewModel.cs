@@ -13,19 +13,24 @@ namespace EmisTracking.WebApi.Models.ViewModels
         public EmissionSourceViewModel EmissionSource { get; set; }
         public IEnumerable<DropdownItemModel> EmissionSources { get; set; }
 
+
         [Display(Name = LangResources.Fields.Pollutant)]
         public string PollutantId { get; set; }
         public PollutantViewModel Pollutant { get; set; }
         public IEnumerable<DropdownItemModel> Pollutants { get; set; }
 
+
         [Display(Name = LangResources.Fields.IsRegulated)]
         public bool IsRegulated { get; set; }
+
 
         [Display(Name = LangResources.Fields.GasCleaningUnit)]
         public GasCleaningUnitType GasCleaningUnit { get; set; }
 
+
         [Display(Name = LangResources.Fields.PurificationPercentage)]
         public double PurificationPercentage { get; set; }
+
 
         [Display(Name = LangResources.Fields.AnnualAmount)]
         public double AnnualAmount { get; set; }

@@ -4,6 +4,8 @@
     {
         public const string DefaultEditDeleteButtonsWidth = "7%";
         public const string GenerateBreadcrumb = "GenerateBreadcrumb";
+        public const string BySubdivision = "BySubdivision";
+        public const string None = "-";
 
         public const string Create = "Create";
         public const string FormView = "Form";

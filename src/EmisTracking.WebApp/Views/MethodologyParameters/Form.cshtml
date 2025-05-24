@@ -6,6 +6,7 @@
 
 @using EmisTracking.Localization
 @using EmisTracking.WebApi.Models.Enums
+@using EmisTracking.WebApp.Helpers
 
 @section Breadcrumb
 {
@@ -39,9 +40,9 @@
         <div class="col-sm-6">
             <select asp-for="ParameterType" class="form-select">
                 <option value="" disabled selected>@LangResources.ChooseSomething</option>
-                @foreach (var type in Enum.GetValues(typeof(ParameterType)))
+                @foreach (var item in EnumHelper.GetParameterTypeDropdownValues())
                 {
-                    <option value="@type">@type</option>
+                    <option value="@item.Value">@item.Name</option>
                 }
             </select>
             <span asp-validation-for="ParameterType" class="text-danger"></span>

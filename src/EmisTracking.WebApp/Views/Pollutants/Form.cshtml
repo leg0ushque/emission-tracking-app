@@ -6,6 +6,7 @@
 
 @using EmisTracking.Localization
 @using EmisTracking.WebApi.Models.Enums
+@using EmisTracking.WebApp.Helpers
 
 @section Breadcrumb
 {
@@ -30,9 +31,9 @@
         <div class="col-sm-6">
             <select asp-for="HazardClass" class="form-select">
                 <option value="" disabled selected>@LangResources.ChooseSomething</option>
-                @foreach (var hazardClass in Enum.GetValues(typeof(HazardClass)))
+                @foreach (var item in EnumHelper.GetHazardClassDropdownValues())
                 {
-                    <option value="@hazardClass">@hazardClass</option>
+                    <option value="@item.Value">@item.Name</option>
                 }
             </select>
             <span asp-validation-for="HazardClass" class="text-danger"></span>
@@ -44,9 +45,9 @@
         <div class="col-sm-6">
             <select asp-for="AggregateState" class="form-select">
                 <option value="" disabled selected>@LangResources.ChooseSomething</option>
-                @foreach (var state in Enum.GetValues(typeof(AggregateState)))
+                @foreach (var item in EnumHelper.GetAggregateStatesDropdownValues())
                 {
-                    <option value="@state">@state</option>
+                    <option value="@item.Value">@item.Name</option>
                 }
             </select>
             <span asp-validation-for="AggregateState" class="text-danger"></span>

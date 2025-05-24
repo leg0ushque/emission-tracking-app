@@ -5,6 +5,7 @@
 }
 
 @using EmisTracking.Localization
+@using EmisTracking.WebApp.Helpers
 
 @section Breadcrumb
 {
@@ -47,6 +48,44 @@
                 }
             </select>
             <span asp-validation-for="PollutantId" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label asp-for="IsRegulated" class="col-md-2 control-form-label"></label>
+        <div class="col-sm-6">
+            <input type="checkbox" class="form-input" asp-for="IsRegulated" />
+            <span asp-validation-for="IsRegulated" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label asp-for="GasCleaningUnit" class="col-md-2 control-form-label"></label>
+        <div class="col-sm-6">
+            <select asp-for="GasCleaningUnit" class="form-select">
+                <option value="" disabled selected>@LangResources.ChooseSomething</option>
+                @foreach (var item in EnumHelper.GetGasCleaningUnitTypeDropdownValues())
+                {
+                    <option value="@item.Value">@item.Name</option>
+                }
+            </select>
+            <span asp-validation-for="GasCleaningUnit" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label asp-for="PurificationPercentage" class="col-md-2 control-form-label"></label>
+        <div class="col-sm-6">
+            <input type="number" min="1" max="100" step="0.01" class="form-input" asp-for="PurificationPercentage" />
+            <span asp-validation-for="PurificationPercentage" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label asp-for="AnnualAmount" class="col-md-2 control-form-label"></label>
+        <div class="col-sm-6">
+            <input type="number" min="0.0001" class="form-input" asp-for="AnnualAmount" />
+            <span asp-validation-for="AnnualAmount" class="text-danger"></span>
         </div>
     </div>
 

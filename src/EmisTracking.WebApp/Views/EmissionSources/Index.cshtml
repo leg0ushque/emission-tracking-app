@@ -39,8 +39,8 @@
             {
                 <tr>
                     <td></td>
-                    <td>@item.Subdivision.Name</td>
-                    <td>@item.Name</td>
+                    <td><a asp-action="Item" asp-controller="Subdivisions" asp-route-id="@item.Subdivision.Id">@item.Subdivision.Name</a></td>
+                    <td><a asp-action="Item" asp-controller="EmissionSources" asp-route-id="@item.Id">@item.Name</a></td>
                     <td>@item.ProcessCategory.ToString()</td>
                     <td>@item.Methodology.Name</td>
 

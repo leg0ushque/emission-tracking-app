@@ -9,16 +9,17 @@
 
 @section Breadcrumb
 {
-    <li class="breadcrumb-item"><a asp-action="Index">@LangResources.Titles.SubdivisionsIndex</a></li>
+    <li class="breadcrumb-item"><a asp-action="Index">@LangResources.Titles.AreasIndex</a></li>
+    <li class="breadcrumb-item"><a asp-action="Item" asp-controller="Areas" asp-route-id="@Model.AreaId">@string.Format(LangResources.Titles.NameTemplate, Model.Area.Name)</a></li>
     <li class="breadcrumb-item active">@ViewData["Title"]</li>
 }
 
 <h4 class="text-danger">@LangResources.ConfirmDeleteText:</h4>
 
 <p><b><u>@LangResources.Entities.Subdivision</u></b></p>
-<span><strong>@LangResources.Fields.Area:</strong> @Model.Area.Name</span>
-<br />
 <span><strong>@LangResources.Fields.Name:</strong> @Model.Name</span>
+<br />
+<span><strong>@LangResources.Fields.Area:</strong> @Model.Area.Name</span>
 <br />
 <br />
 
@@ -28,7 +29,7 @@
     <i class="fas fa-arrow-left"></i>
     @LangResources.ReturnToListButtonText
 </a>
-<a asp-action="Index" class="btn btn-outline-secondary">
+<a asp-action="Item" asp-controller="Areas" asp-route-id="@Model.AreaId" class="btn btn-outline-secondary">
     <i class="fas fa-arrow-left"></i> @LangResources.Entities.Area @string.Format(LangResources.Titles.NameTemplate, Model.Area.Name)
 </a>
 <a asp-action="ConfirmDelete" asp-route-id="@Model.Id" class="btn btn-danger">

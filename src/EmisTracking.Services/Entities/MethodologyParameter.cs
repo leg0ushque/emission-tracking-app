@@ -8,5 +8,9 @@ namespace EmisTracking.Services.Entities
         public virtual Methodology Methodology { get; set; }
 
         public ParameterType ParameterType { get; set; }
+
+        public string Name { get; set; }
+
+        public string FormulaName { get; set; }
     }
 }

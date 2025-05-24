@@ -8,6 +8,14 @@ namespace EmisTracking.WebApp.Helpers
 {
     public static class EnumHelper
     {
+        public static Dictionary<AggregateState, string> AggregateStates
+             => new()
+             {
+                 [AggregateState.Solid] = Lang.AggregateStateSolid,
+                 [AggregateState.Liquid] = Lang.AggregateStateLiquid,
+                 [AggregateState.Gas] = Lang.AggregateStateGas,
+             };
+
         public static Dictionary<ProcessCategory, string> ProcessCategories
              => new()
              {
@@ -44,6 +52,9 @@ namespace EmisTracking.WebApp.Helpers
                 [ParameterType.OperatingTime] = Lang.ParameterTypeOperatingTime,
                 [ParameterType.SpecificIndicator] = Lang.ParameterTypeSpecificIndicator,
             };
+
+        public static List<DropdownItemModel> GetAggregateStatesDropdownValues()
+             => [.. AggregateStates.Select(x => new DropdownItemModel(x.Key.ToString(), x.Value))];
 
         public static List<DropdownItemModel> GetProcessCategoriesDropdownValues()
              => [.. ProcessCategories.Select(x => new DropdownItemModel(x.Key.ToString(), x.Value))];

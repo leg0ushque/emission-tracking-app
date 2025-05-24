@@ -3,6 +3,7 @@ using EmisTracking.Services.WebApi.Services;
 using EmisTracking.WebApi.Models.Models;
 using EmisTracking.WebApi.Models.ViewModels;
 using EmisTracking.WebApp.Filters;
+using EmisTracking.WebApp.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
@@ -14,16 +15,16 @@ namespace EmisTracking.WebApp.Controllers
     public class SubdivisionsController : BaseDropdownViewController<SubdivisionViewModel>
     {
         private readonly IBaseApiService<AreaViewModel> _areaApiService;
-        private readonly ISubdivisionApiService subdivisionsApiService;
+        private readonly IEmissionSourceApiService _emissionSourceApiService;
 
         public SubdivisionsController(
             IBaseApiService<AreaViewModel> areaApiService,
             IBaseApiService<SubdivisionViewModel> apiService,
-            ISubdivisionApiService subdivisionsApiService)
+            IEmissionSourceApiService emissionSourceApiService)
         {
             _apiService = apiService;
             _areaApiService = areaApiService;
-            this.subdivisionsApiService = subdivisionsApiService;
+            _emissionSourceApiService = emissionSourceApiService;
         }
 
         protected override string CreationTitle => LangResources.Titles.SubdivisionsCreate;
@@ -67,11 +68,41 @@ namespace EmisTracking.WebApp.Controllers
 
             if (response.Success)
             {
-                return RedirectToAction("Item", "Area", new { id = existingItemResponse.Data.AreaId });
+                return RedirectToAction("Item", "Areas  ", new { id = existingItemResponse.Data.AreaId });
             }
             else
             {
                 return View(Constants.ErrorView, (response.ErrorMessage, controller: string.Empty, action: nameof(Index)));
+            }
+        }
+
+        [Authorize]
+        [LoadLayoutDataFilter]
+        [HttpGet("{id}")]
+        public override async Task<IActionResult> Item([FromRoute] string id)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                return View(Constants.ErrorView, (LangResources.EmptyIdText, controller: string.Empty, action: nameof(Index)));
+            }
+
+            var response = await _apiService.GetByIdAsync(id, loadDependencies: true);
+
+            if (response.Success)
+            {
+                var sourcesResponse = await _emissionSourceApiService.GetAllBySubdivisionAsync(id);
+
+                var model = new ModelWithDependencies<SubdivisionViewModel, EmissionSourceViewModel>()
+                {
+                    MainItem = response.Data,
+                    Dependencies = sourcesResponse.Success ? sourcesResponse.Data : Enumerable.Empty<EmissionSourceViewModel>()
+                };
+
+                return View(model);
+            }
+            else
+            {
+                return View(Constants.ErrorView, (errorMessage: response.ErrorMessage, controller: string.Empty, action: nameof(Index)));
             }
         }
 

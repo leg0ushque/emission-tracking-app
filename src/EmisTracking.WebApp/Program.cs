@@ -2,6 +2,7 @@ using EmisTracking.Services.WebApi.Handlers;
 using EmisTracking.Services.WebApi.Services;
 using EmisTracking.WebApi.Models.ViewModels;
 using EmisTracking.WebApp.JwtAuth;
+using EmisTracking.WebApp.Middleware;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -59,6 +60,8 @@ namespace EmisTracking.WebApp
 
             app.UseRouting();
 
+            app.UseMiddleware<CustomUnauthorizedMiddleware>();
+
             app.UseAuthentication();
             app.UseAuthorization();
 
@@ -81,6 +84,7 @@ namespace EmisTracking.WebApp
             services.AddTransient<IBaseApiService<ModeViewModel>, ModeApiService>();
             services.AddTransient<IBaseApiService<MethodologyViewModel>, MethodologyApiService>();
             services.AddTransient<IBaseApiService<EmissionSourceViewModel>, EmissionSourceApiService>();
+            services.AddTransient<IEmissionSourceApiService, EmissionSourceApiService>();
             services.AddTransient<IBaseApiService<OperatingTimeViewModel>, OperatingTimeApiService>();
             services.AddTransient<IBaseApiService<PollutantViewModel>, PollutantApiService>();
             services.AddTransient<IBaseApiService<SourceSubstanceViewModel>, SourceSubstanceApiService>();

@@ -22,7 +22,6 @@ namespace EmisTracking.WebApp.Controllers
         protected abstract string UpdateTitle { get; }
 
         [Authorize]
-        [Authorize]
         [LoadLayoutDataFilter]
         [HttpGet("")]
         public virtual async Task<IActionResult> Index()

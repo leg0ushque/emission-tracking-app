@@ -181,8 +181,14 @@ namespace EmisTracking.Services.Database.Migrations.EmissionDb
                         .HasMaxLength(36)
                         .HasColumnType("nvarchar(36)");
 
+                    b.Property<string>("FormulaName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("MethodologyId")
                         .HasColumnType("nvarchar(36)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ParameterType")
                         .HasColumnType("int");

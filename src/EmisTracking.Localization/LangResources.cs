@@ -77,6 +77,7 @@
 
             public const string Number = "Номер";
             public const string Name = "Название";
+            public const string FormulaName = "Название в формуле";
             public const string ShortName = "Короткое название";
             public const string FullName = "Полное название";
             public const string ProcessCategory = "Категория процесса";
@@ -154,6 +155,10 @@
             public const string HazardClassII = "II";
             public const string HazardClassIII = "III";
             public const string HazardClassIV = "IV";
+
+            public const string AggregateStateSolid = "Твёрдое";
+            public const string AggregateStateLiquid = "Жидкое";
+            public const string AggregateStateGas = "Газообразное";
         }
 
         public static class JqueryTableStrings
@@ -218,6 +223,7 @@
             // Emission Sources
             public const string EmissionSourcesList = "Список источников выбросов";
             public const string EmissionSourcesIndex = "Источники выбросов";
+            public const string EmissionSourcesBySubdivision = "Источники выбросов подразделения";
             public const string EmissionSourcesCreate = "Добавление источника выбросов";
             public const string EmissionSourcesUpdate = "Изменение источника выбросов";
 

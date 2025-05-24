@@ -1,34 +1,86 @@
 ﻿@using EmisTracking.WebApi.Models.ViewModels
 @using EmisTracking.Localization
-@model SubdivisionViewModel
+@model ModelWithDependencies<SubdivisionViewModel,EmissionSourceViewModel>
 
 @{
     ViewData[Constants.GenerateBreadcrumb] = new();
-    ViewData["Title"] = string.Format(LangResources.Titles.NameTemplate, Model.Name);
+    ViewData["Title"] = string.Format(LangResources.Titles.NameTemplate, Model.MainItem.Name);
 
     var isAdmin = (ViewData[Constants.ViewDataConstants.IsAdmin] as bool?).GetValueOrDefault();
 }
 
 @section Breadcrumb
 {
-    <li class="breadcrumb-item"><a asp-action="Index">@LangResources.Titles.SubdivisionsIndex</a></li>
+    <li class="breadcrumb-item"><a asp-action="Index">@LangResources.Titles.AreasIndex</a></li>
+    <li class="breadcrumb-item">
+        <a asp-action="Item" asp-controller="Areas" asp-route-id="@Model.MainItem.AreaId">
+            @string.Format(LangResources.Titles.NameTemplate, Model.MainItem.Area.Name)
+        </a>
+    </li>
     <li class="breadcrumb-item active">@ViewData["Title"]</li>
 }
 
-<p><strong>@LangResources.Fields.Area:</strong> @Model.Area.Name</p>
-<p><strong>@LangResources.Fields.Name:</strong> @Model.Name</p>
+<p>
+    <a asp-action="Item" asp-controller="Areas" asp-route-id="@Model.MainItem.AreaId" class="btn btn-outline-secondary">
+        <i class="fas fa-arrow-left"></i> @LangResources.Entities.Area @string.Format(LangResources.Titles.NameTemplate, Model.MainItem.Area.Name)
+    </a>
+</p>
+
+<p><strong>@LangResources.Fields.Area:</strong> @Model.MainItem.Area.Name</p>
+<p><strong>@LangResources.Fields.Name:</strong> @Model.MainItem.Name</p>
 
 @if (isAdmin)
 {
-    <a class="btn btn-outline-primary" asp-controller="Subdivisions" asp-action="Update" asp-route-id="@Model.Id" name="@LangResources.UpdateButtonText">
-        <i class="fas fa-pen"></i> @LangResources.UpdateButtonText
-    </a>
-    <a class="btn btn-outline-danger" asp-controller="Subdivisions" asp-action="Delete" asp-route-id="@Model.Id" name="@LangResources.DeleteButtonText">
-        <i class="fas fa-trash"></i> @LangResources.DeleteButtonText
-    </a>
-    <br />
+    <p>
+        <a class="btn btn-outline-primary" asp-controller="Subdivisions" asp-action="Update" asp-route-id="@Model.MainItem.Id" name="@LangResources.UpdateButtonText">
+            <i class="fas fa-pen"></i> @LangResources.UpdateButtonText
+        </a>
+        <a class="btn btn-outline-danger" asp-controller="Subdivisions" asp-action="Delete" asp-route-id="@Model.MainItem.Id" name="@LangResources.DeleteButtonText">
+            <i class="fas fa-trash"></i> @LangResources.DeleteButtonText
+        </a>
+    </p>
 }
-<br />
-<a asp-action="Item" asp-controller="Areas" asp-route-id="@Model.AreaId" class="btn btn-outline-secondary">
-    <i class="fas fa-arrow-left"></i> @LangResources.Entities.Area @string.Format(LangResources.Titles.NameTemplate, Model.Area.Name)
-</a>
+
+<h4>@LangResources.Titles.EmissionSourcesList</h4>
+
+<p>
+    <a class="btn btn-primary" asp-action="CreateForSubdivision" asp-controller="EmissionSources" asp-route-id="@Model.MainItem.Id">
+        <i class="fas fa-plus"></i>
+        @LangResources.CreateButtonText
+    </a>
+</p>
+
+<table class="table-striped table-bordered" id="mainItemsTable">
+    <thead>
+        <tr>
+            <th scope="col">№</th>
+            <th scope="col">@LangResources.Fields.Name</th>
+            <th scope="col">@LangResources.Fields.ProcessCategory</th>
+            <th scope="col">@LangResources.Fields.Methodology</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            foreach (var item in @Model.Dependencies)
+            {
+                <tr>
+                    <td></td>
+                    <td><a asp-action="Item" asp-controller="EmissionSources" asp-route-id="@item.Id">@item.Name</a></td>
+                    <td>@item.ProcessCategory.ToString()</td>
+                    <td>@(item.Methodology?.Name ?? @Constants.None)</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        await Html.RenderPartialAsync("_JqueryDatatable");
+
+        var columnWidths = new Queue<string>(new[] { "25%", "25%", "25%" });
+
+        await Html.RenderPartialAsync("_DataTableInitialization", columnWidths);
+    }
+}

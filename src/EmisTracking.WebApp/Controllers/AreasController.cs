@@ -36,11 +36,11 @@ namespace EmisTracking.WebApp.Controllers
 
             if (response.Success)
             {
-                var model = new AreaSubdivisionsViewModel { Area = response.Data };
+                var model = new ModelWithDependencies<AreaViewModel,SubdivisionViewModel> { MainItem = response.Data };
 
                 var subdivisionsResponse = await _subdivisionsApiService.GetAllByAreaIdAsync(id);
 
-                model.Subdivisions = subdivisionsResponse.Success ?
+                model.Dependencies = subdivisionsResponse.Success ?
                     subdivisionsResponse.Data : new List<SubdivisionViewModel>();
 
                 return View(model);

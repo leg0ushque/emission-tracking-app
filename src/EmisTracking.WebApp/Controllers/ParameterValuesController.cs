@@ -37,7 +37,7 @@ namespace EmisTracking.WebApp.Controllers
             if (methodologyParametersResponse.Success && grossEmissionsResponse.Success)
             {
                 model.MethodologyParameters = methodologyParametersResponse.Data
-                    .Select(mp => new DropdownItemModel { Value = mp.Id, Name = mp.ParameterType })
+                    .Select(mp => new DropdownItemModel { Value = mp.Id, Name = mp.Name })
                     .ToList();
 
                 model.GrossEmissions = grossEmissionsResponse.Data
