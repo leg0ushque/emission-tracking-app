@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using EmisTracking.Localization;
 using EmisTracking.Services.Entities;
 using EmisTracking.Services.Interfaces;
 using EmisTracking.WebApi.Models.ViewModels;
@@ -15,5 +16,7 @@ namespace EmisTracking.WebApi.Controllers
             _entityService = service;
             _mapper = mapper;
         }
+
+        protected override string EntityName => LangResources.Entities.Area;
     }
 }

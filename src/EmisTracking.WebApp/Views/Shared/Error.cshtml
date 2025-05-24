@@ -2,32 +2,32 @@
 @using EmisTracking.Localization
 @model (string errorMessage, string controller, string action)
 
+<h3 class="text-danger">@LangResources.ErrorTitle</h3>
+
 <div class="alert alert-danger">
-    <h3>@LangResources.ErrorTitle</h3>
-    <p>@Model.errorMessage</p>
-    <br />
-    @if(string.IsNullOrEmpty(Model.controller))
+    <span>@Model.errorMessage</span>
+</div>
+@if (string.IsNullOrEmpty(Model.controller))
+{
+    @if (string.IsNullOrEmpty(Model.action))
     {
-        @if(string.IsNullOrEmpty(Model.action))
-        {
-            <a class="btn btn-outline-secondary" asp-controller="Home" asp-action="Index">
-                <i class="fas fa-arrow-left"></i>
-                @LangResources.ToHomePageButtonText
-            </a>
-        }
-        else
-        {
-            <a class="btn btn-outline-secondary" asp-action="@Model.action">
-                <i class="fas fa-arrow-left"></i>
-                @LangResources.ReturnButtonText
-            </a>
-        }
+        <a class="btn btn-outline-secondary" asp-controller="Home" asp-action="Index">
+            <i class="fas fa-arrow-left"></i>
+            @LangResources.ToHomePageButtonText
+        </a>
     }
     else
     {
-        <a class="btn btn-outline-secondary" asp-controller="@Model.controller" asp-action="@Model.action">
+        <a class="btn btn-outline-secondary" asp-action="@Model.action">
             <i class="fas fa-arrow-left"></i>
             @LangResources.ReturnButtonText
         </a>
     }
-</div>
+}
+else
+{
+    <a class="btn btn-outline-secondary" asp-controller="@Model.controller" asp-action="@Model.action">
+        <i class="fas fa-arrow-left"></i>
+        @LangResources.ReturnButtonText
+    </a>
+}

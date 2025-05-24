@@ -20,6 +20,8 @@ namespace EmisTracking.WebApi.Controllers
         protected IEntityService<TEntity> _entityService;
         protected IMapper _mapper;
 
+        protected abstract string EntityName { get; }
+
         [Authorize]
         [HttpPost("")]
         [BusinessLogicExceptionFilter]
@@ -81,7 +83,7 @@ namespace EmisTracking.WebApi.Controllers
                 {
                     Success = false,
                     StatusCode = System.Net.HttpStatusCode.NotFound,
-                    ErrorMessage = string.Format(LangResources.ItemNotFoundMessageTemplate, nameof(TEntity), item.Id)
+                    ErrorMessage = string.Format(LangResources.ItemNotFoundMessageTemplate, EntityName, id)
                 });
             }
 
@@ -112,7 +114,7 @@ namespace EmisTracking.WebApi.Controllers
                 {
                     Success = false,
                     StatusCode = System.Net.HttpStatusCode.NotFound,
-                    ErrorMessage = string.Format(LangResources.ItemNotFoundMessageTemplate, nameof(TEntity), item.Id)
+                    ErrorMessage = string.Format(LangResources.ItemNotFoundMessageTemplate, EntityName, item.Id)
                 });
         }
 
@@ -132,7 +134,7 @@ namespace EmisTracking.WebApi.Controllers
                 {
                     Success = false,
                     StatusCode = System.Net.HttpStatusCode.NotFound,
-                    ErrorMessage = string.Format(LangResources.ItemNotFoundMessageTemplate, nameof(TEntity), id)
+                    ErrorMessage = string.Format(LangResources.ItemNotFoundMessageTemplate, EntityName, id)
                 });
         }
     }

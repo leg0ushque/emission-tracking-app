@@ -23,6 +23,8 @@ namespace EmisTracking.WebApi.Controllers
             _mapper = mapper;
         }
 
+        protected override string EntityName => LangResources.Entities.Subdivision;
+
         [Authorize]
         [HttpGet("ofArea")]
         [BusinessLogicExceptionFilter]
