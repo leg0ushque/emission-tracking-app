@@ -17,7 +17,7 @@
 
 <p><strong>@LangResources.Fields.ShortName:</strong> @Model.ShortName</p>
 <p><strong>@LangResources.Fields.Name:</strong> @Model.Name</p>
-<p><strong>@LangResources.Fields.Mode:</strong> @Model.Mode.Name</p>
+<p><strong>@LangResources.Fields.Mode:</strong> @(Model.Mode?.Name ?? LangResources.NoValue)</p>
 <p><strong>@LangResources.Fields.Formula:</strong> @Model.Formula</p>
 
 @if (isAdmin)

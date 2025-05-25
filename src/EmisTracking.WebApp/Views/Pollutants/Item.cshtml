@@ -1,5 +1,6 @@
 ﻿@using EmisTracking.WebApi.Models.ViewModels
 @using EmisTracking.Localization
+@using EmisTracking.WebApp.Helpers
 @model PollutantViewModel
 
 @{
@@ -7,6 +8,7 @@
     ViewData["Title"] = string.Format(LangResources.Titles.NameTemplate, Model.Name);
 
     var isAdmin = (ViewData[Constants.ViewDataConstants.IsAdmin] as bool?).GetValueOrDefault();
+    var aggregateState = EnumHelper.AggregateStates;
 }
 
 @section Breadcrumb
@@ -17,7 +19,7 @@
 
 <p class="text-large"><strong>@LangResources.Fields.Name:</strong> @Model.Name - @Model.Formula</p>
 <p><strong>@LangResources.Fields.HazardClass:</strong> @Model.HazardClass</p>
-<p><strong>@LangResources.Fields.AggregateState:</strong> @Model.AggregateState</p>
+<p><strong>@LangResources.Fields.AggregateState:</strong> @aggregateState[Model.AggregateState]</p>
 
 @if (isAdmin)
 {
@@ -31,5 +33,5 @@
 }
 <br />
 <a asp-action="Index" class="btn btn-outline-secondary">
-    <i class="fas fa-arrow-left"></i> @LangResources.ReturnButtonText
+    <i class="fas fa-arrow-left"></i> @LangResources.Titles.PollutantsIndex
 </a>

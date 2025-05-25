@@ -6,6 +6,11 @@ using System.Threading.Tasks;
 
 namespace EmisTracking.Services.WebApi.Services
 {
+    public interface IEmissionSourceApiService : IBaseApiService<EmissionSourceViewModel>
+    {
+        Task<ApiResponseModel<List<EmissionSourceViewModel>>> GetAllBySubdivisionAsync(string subdivisionId, bool loadDependencies = false);
+    }
+
     public class EmissionSourceApiService : BaseEntityApiService<EmissionSourceViewModel>, IEmissionSourceApiService
     {
         protected override string ControllerPath => "emissionsources";

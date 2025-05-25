@@ -25,7 +25,7 @@
             <th scope="col">№</th>
             <th scope="col">@LangResources.Fields.EmissionSource</th>
             <th scope="col">@LangResources.Fields.Pollutant</th>
-            <th scope="col">@LangResources.Fields.GasCleaningUnit</th>
+            <th scope="col">@LangResources.Fields.GasCleaningUnitType</th>
             <th scope="col">@LangResources.Fields.PurificationPercentage</th>
 
             @if (isAdmin)
@@ -41,9 +41,13 @@
             {
                 <tr>
                     <td></td>
-                    <td>@item.EmissionSource.Name</td>
+                    <td>
+                        <a asp-controller="EmissionSources" asp-action="Item" asp-route-id="@item.EmissionSourceId">
+                            @item.EmissionSource.Name
+                        </a>
+                    </td>
                     <td>@item.Pollutant.Name</td>
-                    <td>@gasCleaningUnitTypes[item.GasCleaningUnit]</td>
+                    <td>@gasCleaningUnitTypes[item.GasCleaningUnitType]</td>
                     <td>@item.PurificationPercentage</td>
 
                     @if (isAdmin)

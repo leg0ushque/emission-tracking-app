@@ -1,5 +1,8 @@
-﻿using EmisTracking.WebApi.Models.ViewModels;
+﻿using EmisTracking.WebApi.Models.Models;
+using EmisTracking.WebApi.Models.ViewModels;
+using System.Collections.Generic;
 using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace EmisTracking.Services.WebApi.Services
 {

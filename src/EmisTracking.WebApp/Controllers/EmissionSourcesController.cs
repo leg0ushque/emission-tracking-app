@@ -18,22 +18,23 @@ namespace EmisTracking.WebApp.Controllers
     {
         private readonly IBaseApiService<SubdivisionViewModel> _subdivisionService;
         private readonly IBaseApiService<MethodologyViewModel> _methodologyService;
-        private readonly IBaseApiService<ModeViewModel> _modeService;
-        private readonly IBaseApiService<PollutantViewModel> _pollutantService;
+        private readonly IModeApiService _modeService;
+        private readonly ISourceSubstanceApiService _sourceSubstanceApiService;
 
         public EmissionSourcesController(
             IBaseApiService<EmissionSourceViewModel> emissionSourceService,
             IBaseApiService<SubdivisionViewModel> subdivisionService,
             IBaseApiService<MethodologyViewModel> methodologyService,
             IBaseApiService<PollutantViewModel> pollutantService,
-            IBaseApiService<ModeViewModel> modeService)
+            IModeApiService modeService,
+            ISourceSubstanceApiService sourceSubstanceApiService)
         {
             _apiService = emissionSourceService;
             _apiService = emissionSourceService;
             _subdivisionService = subdivisionService;
             _methodologyService = methodologyService;
-            _pollutantService = pollutantService;
             _modeService = modeService;
+            _sourceSubstanceApiService = sourceSubstanceApiService;
         }
 
         protected override string CreationTitle => LangResources.Titles.EmissionSourcesCreate;
@@ -67,12 +68,15 @@ namespace EmisTracking.WebApp.Controllers
 
             if (response.Success)
             {
-                var pollutantsResponse = await _pollutantService.GetAllAsync();
+                var sourceSubstancesResponse = await _sourceSubstanceApiService.GetAllByEmissionSourceIdAsync(
+                    response.Data.Id, loadDependencies: true);
 
-                var model = new ModelWithDependencies<EmissionSourceViewModel, PollutantViewModel>
+                var model = new ModelWithDependencies<EmissionSourceViewModel, SourceSubstanceViewModel>
                 {
                     MainItem = response.Data,
-                    Dependencies = pollutantsResponse.Success ? pollutantsResponse.Data : Enumerable.Empty<PollutantViewModel>(),
+                    Dependencies = sourceSubstancesResponse.Success ?
+                        sourceSubstancesResponse.Data
+                        : Enumerable.Empty<SourceSubstanceViewModel>(),
                 };
 
                 return View(model);
@@ -146,33 +150,6 @@ namespace EmisTracking.WebApp.Controllers
             }
         }
 
-        [HttpGet("update/{id}")]
-        public override async Task<IActionResult> Update([FromRoute] string id)
-        {
-            if (string.IsNullOrEmpty(id))
-            {
-                return View(Constants.ErrorView, (LangResources.EmptyIdText, controller: string.Empty, action: nameof(Index)));
-            }
-
-            var response = await _apiService.GetByIdAsync(id, loadDependencies: true);
-
-            ViewData[AspAction] = nameof(Update);
-            ViewData[Title] = UpdateTitle;
-
-            if (response.Success)
-            {
-                var model = response.Data;
-
-                await LoadDropdownsValuesAsync(model);
-
-                return View(Constants.FormView, response.Data);
-            }
-            else
-            {
-                return View(Constants.ErrorView, (response.ErrorMessage, controller: string.Empty, action: nameof(Index)));
-            }
-        }
-
         [HttpPost("update/{id}")]
         public override async Task<IActionResult> Update([FromRoute] string id, [FromForm] EmissionSourceViewModel model)
         {
@@ -204,7 +181,7 @@ namespace EmisTracking.WebApp.Controllers
         {
             var subdivisionsResponse = await _subdivisionService.GetAllAsync();
             var methodologiesResponse = await _methodologyService.GetAllAsync();
-            var modesResponse = await _modeService.GetAllAsync();
+            var modesResponse = await _modeService.GetAllWithMethodologiesAsync();
 
             if (subdivisionsResponse.Success && methodologiesResponse.Success && modesResponse.Success)
             {

@@ -1,24 +1,31 @@
 ﻿@using EmisTracking.WebApi.Models.ViewModels
 @using EmisTracking.Localization
+@using EmisTracking.WebApp.Helpers
 @model SourceSubstanceViewModel
 
 @{
     ViewData[Constants.GenerateBreadcrumb] = new();
-    ViewData["Title"] = string.Format(LangResources.Titles.NameTemplate, Model.EmissionSource.Name);
+    ViewData["Title"] = Model.Pollutant.Name;
 
     var isAdmin = (ViewData[Constants.ViewDataConstants.IsAdmin] as bool?).GetValueOrDefault();
+    var gasCleaningUnits = EnumHelper.GasCleaningUnitTypes;
 }
 
 @section Breadcrumb
 {
     <li class="breadcrumb-item"><a asp-action="Index">@LangResources.Titles.SourceSubstancesIndex</a></li>
+    <li class="breadcrumb-item">
+        <a asp-action="Item" asp-controller="EmissionSources" asp-route-id="@Model.EmissionSourceId">
+            @string.Format(LangResources.Titles.NameTemplate, Model.EmissionSource.Name)
+        </a>
+    </li>
     <li class="breadcrumb-item active">@ViewData["Title"]</li>
 }
 
 <p><strong>@LangResources.Fields.EmissionSource:</strong> @Model.EmissionSource.Name</p>
 <p><strong>@LangResources.Fields.Pollutant:</strong> @Model.Pollutant.Name</p>
-<p><strong>@LangResources.Fields.IsRegulated:</strong> @Model.IsRegulated.ToString()</p>
-<p><strong>@LangResources.Fields.GasCleaningUnit:</strong> @Model.GasCleaningUnit.ToString()</p>
+<p><strong>@LangResources.Fields.IsRegulated:</strong> @await Html.PartialAsync("_Boolean", Model.IsRegulated)</p>
+<p><strong>@LangResources.Fields.GasCleaningUnitType:</strong> @gasCleaningUnits[Model.GasCleaningUnitType]</p>
 <p><strong>@LangResources.Fields.PurificationPercentage:</strong> @Model.PurificationPercentage</p>
 <p><strong>@LangResources.Fields.AnnualAmount:</strong> @Model.AnnualAmount</p>
 
@@ -33,6 +40,7 @@
     <br />
 }
 <br />
-<a asp-action="Index" class="btn btn-outline-secondary">
-    <i class="fas fa-arrow-left"></i> @LangResources.ReturnButtonText
+
+<a asp-action="Item" asp-controller="EmissionSources" asp-route-id="@Model.EmissionSourceId" class="btn btn-outline-secondary">
+    <i class="fas fa-arrow-left"></i> @string.Format(LangResources.Titles.NameTemplate, Model.EmissionSource.Name)
 </a>

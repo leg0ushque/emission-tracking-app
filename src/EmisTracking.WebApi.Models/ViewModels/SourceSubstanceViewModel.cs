@@ -26,9 +26,9 @@ namespace EmisTracking.WebApi.Models.ViewModels
         public bool IsRegulated { get; set; }
 
 
-        [Display(Name = LangResources.Fields.GasCleaningUnit)]
+        [Display(Name = LangResources.Fields.GasCleaningUnitType)]
         [Required(ErrorMessage = LangResources.MustBeChosen)]
-        public GasCleaningUnitType GasCleaningUnit { get; set; }
+        public GasCleaningUnitType GasCleaningUnitType { get; set; }
 
 
         [Display(Name = LangResources.Fields.PurificationPercentage)]

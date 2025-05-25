@@ -46,7 +46,7 @@
                     <td>@item.Year</td>
                     <td>@hazClasses[item.HazardClass]</td>
                     <td>@item.TotalAmount</td>
-                    <td>@(item.IsPaid ? LangResources.True : LangResources.False)</td>
+                    <td>@await Html.PartialAsync("_Boolean", item.IsPaid)</td>
 
                     @if (isAdmin)
                     {

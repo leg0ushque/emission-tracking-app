@@ -1,7 +1,8 @@
-﻿@using EmisTracking.WebApi.Models.ViewModels
+﻿@using EmisTracking.WebApi.Models.Enums
+@using EmisTracking.WebApi.Models.ViewModels
 @using EmisTracking.Localization
 @using EmisTracking.WebApp.Helpers
-@model ModelWithDependencies<EmissionSourceViewModel,PollutantViewModel>
+@model ModelWithDependencies<EmissionSourceViewModel, SourceSubstanceViewModel>
 
 @{
     ViewData[Constants.GenerateBreadcrumb] = new();
@@ -9,6 +10,7 @@
 
     var isAdmin = (ViewData[Constants.ViewDataConstants.IsAdmin] as bool?).GetValueOrDefault();
     var processCategories = EnumHelper.ProcessCategories;
+    var gasCleaningUnitTypes = EnumHelper.GasCleaningUnitTypes;
     var processCategory = Model.MainItem.ProcessCategory.HasValue ? processCategories[Model.MainItem.ProcessCategory.Value] : LangResources.NoValue;
 }
 
@@ -32,7 +34,7 @@
 <p><strong>@LangResources.Fields.Name:</strong> @Model.MainItem.Name</p>
 <p><strong>@LangResources.Fields.ProcessCategory:</strong> @processCategory</p>
 <p><strong>@LangResources.Fields.Methodology:</strong> @(Model.MainItem.Methodology?.Name ?? LangResources.NoValue)</p>
-<p><strong>@LangResources.Fields.Mode:</strong> @Model.MainItem.Mode.Name</p>
+<p><strong>@LangResources.Fields.Mode:</strong> @(Model.MainItem.Mode?.Name ?? LangResources.NoValue)</p>
 
 @if (isAdmin)
 {
@@ -45,6 +47,57 @@
     <br />
 }
 <br />
-<a asp-action="Index" class="btn btn-outline-secondary">
-    <i class="fas fa-arrow-left"></i> @LangResources.ReturnButtonText
+
+<h4>@LangResources.Titles.SourceSubstancesList</h4>
+
+<a class="btn btn-primary"
+   asp-controller="SourceSubstances"
+   asp-action="CreateForEmissionSource"
+   asp-route-id="@Model.MainItem.Id">
+    <i class="fas fa-plus"></i>
+    @LangResources.CreateButtonText
 </a>
+
+<table class="table-striped table-bordered" id="mainItemsTable">
+    <thead>
+        <tr>
+            <th scope="col">№</th>
+            <th scope="col">@LangResources.Fields.Pollutant</th>
+            <th scope="col">@LangResources.Fields.IsRegulated</th>
+            <th scope="col">@LangResources.Fields.GasCleaningUnitType</th>
+            <th scope="col">@LangResources.Fields.PurificationPercentage</th>
+            <th scope="col">@LangResources.Fields.AnnualAmount</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            foreach (var item in Model.Dependencies)
+            {
+                <tr>
+                    <td></td>
+                    <td>
+                        <a asp-controller="SourceSubstances" asp-action="Item" asp-route-id="@item.Id">@item.Pollutant.Name</a>
+                        <a asp-controller="Pollutants" asp-action="Item" asp-route-id="@item.PollutantId" class="btn btn-outline-primary btn-sm">
+                            <i class="fas fa-eye"></i> @LangResources.InPollutantsList
+                        </a>
+                    </td>
+                    <td>@await Html.PartialAsync("_Boolean", item.IsRegulated)</td>
+                    <td>@gasCleaningUnitTypes[item.GasCleaningUnitType]</td>
+                    <td>@(item.GasCleaningUnitType  == GasCleaningUnitType.Yes ? item.PurificationPercentage : "-")</td>
+                    <td>@item.AnnualAmount</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        await Html.RenderPartialAsync("_JqueryDatatable");
+
+        var columnWidths = new Queue<string>(new[] { "35%", "10%", "10%", "10%", "10%" });
+
+        await Html.RenderPartialAsync("_DataTableInitialization", columnWidths);
+    }
+}

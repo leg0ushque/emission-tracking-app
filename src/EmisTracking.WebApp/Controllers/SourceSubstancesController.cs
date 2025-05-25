@@ -45,5 +45,24 @@ namespace EmisTracking.WebApp.Controllers
                     .ToList();
             }
         }
+
+        [HttpGet("createForEmissionSource/{emissionSourceId}")]
+        public async Task<IActionResult> CreateForEmissionSource([FromRoute] string emissionSourceId)
+        {
+            var model = new SourceSubstanceViewModel();
+
+            await LoadDropdownsValuesAsync(model);
+
+            var selectedSource = model.EmissionSources.FirstOrDefault(e => e.Value == emissionSourceId);
+            if (selectedSource != null)
+            {
+                model.EmissionSourceId = emissionSourceId;
+            }
+
+            ViewData[AspAction] = nameof(Create);
+            ViewData[Title] = CreationTitle;
+
+            return View(Constants.FormView, model);
+        }
     }
 }

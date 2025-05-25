@@ -34,8 +34,9 @@
         public const string ModeMethodologyCategoryHint1 = "Внимание!";
         public const string ModeMethodologyCategoryHint2 = "Установка режима для источника автоматически устанавливает категорию процесса и методику в соответствии с выбранным значением.";
         public const string ModeMethodologyCategoryHint3 = "Установка методики или категории процесса автоматически блокирует выбор режима.";
-        public const string ModeMethodologyCategoryHint4 = "Используйте очистку поля для отмены.";
-        public const string AutoSetByMode = "Будет установлено в соответствии с режимом";
+        public const string ModeMethodologyCategoryHint4 = "Если нужный режим отсутствует в списке, это значит, что ему не соответствует ни одна методика. Необходимо создать хотя бы одну.";
+        public const string ModeMethodologyCategoryHint5 = "Используйте очистку поля для отмены.";
+        public const string InPollutantsList = "в перечне";
 
         public const string AuthUserNotFoundErrorMessageTemplate = "Пользователь {0} не найден.";
         public const string SignInFailedErrorMessage = "Не удалось выполнить вход. Проверьте введённые логин и пароль и повторите попытку снова!";
@@ -64,6 +65,22 @@
             public const string GrossEmission = "валовый выброс";
             public const string TaxRate = "ставка налога";
             public const string Tax = "налог";
+        }
+
+        public static class Months
+        {
+            public const string January = "Январь";
+            public const string February = "Февраль";
+            public const string March = "Март";
+            public const string April = "Апрель";
+            public const string May = "Май";
+            public const string June = "Июнь";
+            public const string July = "Июль";
+            public const string August = "Август";
+            public const string September = "Сентябрь";
+            public const string October = "Октябрь";
+            public const string November = "Ноябрь";
+            public const string December = "Декабрь";
         }
 
         // Названия полей
@@ -99,12 +116,12 @@
             public const string HazardClass = "Класс опасности";
             public const string AggregateState = "Агрегатное состояние";
             public const string IsRegulated = "Нормированность";
-            public const string GasCleaningUnit = "Газоочистная установка";
+            public const string GasCleaningUnitType = "Газоочистная установка";
             public const string PurificationPercentage = "Процент очистки ГОУ";
-            public const string AnnualAmount = "Годовое количество";
+            public const string AnnualAmount = "Годовое количество (кг)";
             public const string ParameterType = "Тип параметра";
             public const string Value = "Значение";
-            public const string Mass = "Масса";
+            public const string Mass = "Масса (кг)";
             public const string TaxAmount = "Сумма";
             public const string IsPaid = "Оплаченность";
             public const string StartDate = "Дата начала";
@@ -122,7 +139,6 @@
             public const string ConfirmPassword = "Повтор пароля";
             public const string OldPassword = "Старый пароль";
             public const string NewPassword = "Новый пароль";
-            public const string IsDisabled = "Деактивирован";
         }
 
         public static readonly Dictionary<string, string> JqueryDatatableLang = new()
@@ -251,7 +267,7 @@
             public const string PollutantsUpdate = "Изменение загрязняющего вещества";
 
             // Source Substances
-            public const string SourceSubstancesList = "Список веществ источников";
+            public const string SourceSubstancesList = "Список веществ";
             public const string SourceSubstancesIndex = "Вещества источников";
             public const string SourceSubstancesCreate = "Добавление вещества источника";
             public const string SourceSubstancesUpdate = "Изменение вещества источника";

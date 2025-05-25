@@ -6,6 +6,11 @@ using System.Threading.Tasks;
 
 namespace EmisTracking.Services.WebApi.Services
 {
+    public interface ISubdivisionApiService : IBaseApiService<SubdivisionViewModel>
+    {
+        public Task<ApiResponseModel<List<SubdivisionViewModel>>> GetAllByAreaIdAsync(string areaId);
+    }
+
     public class SubdivisionApiService : BaseEntityApiService<SubdivisionViewModel>, ISubdivisionApiService
     {
         protected override string ControllerPath => "subdivisions";

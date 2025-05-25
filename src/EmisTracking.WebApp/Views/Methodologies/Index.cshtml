@@ -40,7 +40,7 @@
                     <td></td>
                     <td>@item.ShortName</td>
                     <td>@item.Name</td>
-                    <td>@item.Mode.Name</td>
+                    <td>@(item.Mode?.Name ?? LangResources.NoValue)</td>
 
                     @if (isAdmin)
                     {
