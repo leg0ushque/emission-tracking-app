@@ -72,5 +72,20 @@ namespace EmisTracking.WebApp.Controllers
                 return View(Constants.ErrorView, (errorMessage: response.ErrorMessage, controller: string.Empty, action: nameof(Index)));
             }
         }
+
+        [Authorize]
+        [HttpGet("createForMethodology/{id}")]
+        public async Task<IActionResult> CreateForMethodology([FromRoute] string id)
+        {
+            ViewData[AspAction] = nameof(Create);
+            ViewData[Title] = CreationTitle;
+
+            var model = new ConsumptionGroupViewModel();
+            await LoadDropdownsValuesAsync(model);
+
+            model.MethodologyId = model.Methodologies.Any(s => s.Value == id) ? id : null;
+
+            return View(Constants.FormView, model);
+        }
     }
 }

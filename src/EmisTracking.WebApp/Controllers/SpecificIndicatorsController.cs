@@ -47,18 +47,13 @@ namespace EmisTracking.WebApp.Controllers
         }
 
         [HttpGet("createForConsumptionGroup/{consumptionGroupId}")]
-        public async Task<IActionResult> CreateForConsumptionGroup([FromRoute] string consumptionGroupId)
+        public async Task<IActionResult> CreateForConsumptionGroup([FromRoute] string id)
         {
             var model = new SpecificIndicatorViewModel();
 
             await LoadDropdownsValuesAsync(model);
 
-            var foundItem = model.ConsumptionGroups.FirstOrDefault(g => g.Value == consumptionGroupId);
-
-            if(foundItem != null)
-            {
-                model.ConsumptionGroupId = foundItem.Value;
-            }
+            model.ConsumptionGroupId = model.ConsumptionGroups.Any(g => g.Value == id) ? id : null;
 
             ViewData[AspAction] = nameof(Create);
             ViewData[Title] = CreationTitle;

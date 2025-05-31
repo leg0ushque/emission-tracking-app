@@ -40,8 +40,7 @@ namespace EmisTracking.WebApp.Controllers
 
                 var subdivisionsResponse = await _subdivisionsApiService.GetAllByAreaIdAsync(id);
 
-                model.Dependencies = subdivisionsResponse.Success ?
-                    subdivisionsResponse.Data : new List<SubdivisionViewModel>();
+                model.Dependencies = subdivisionsResponse.Success ? subdivisionsResponse.Data : [];
 
                 return View(model);
             }

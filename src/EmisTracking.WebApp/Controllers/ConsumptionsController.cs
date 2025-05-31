@@ -3,6 +3,7 @@ using EmisTracking.Services.WebApi.Services;
 using EmisTracking.WebApi.Models.Models;
 using EmisTracking.WebApi.Models.ViewModels;
 using EmisTracking.WebApp.Filters;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Threading.Tasks;
@@ -27,12 +28,28 @@ namespace EmisTracking.WebApp.Controllers
         public override async Task LoadDropdownsValuesAsync(ConsumptionViewModel model)
         {
             var consumptionGroupsResponse = await _consumptionGroupService.GetAllAsync();
+
             if (consumptionGroupsResponse.Success)
             {
                 model.ConsumptionGroups = consumptionGroupsResponse.Data
                     .Select(cg => new DropdownItemModel { Value = cg.Id, Name = cg.Name })
                     .ToList();
             }
+        }
+
+        [Authorize]
+        [HttpGet("createForConsumptionGroup/{id}")]
+        public async Task<IActionResult> CreateForConsumptionGroup([FromRoute] string id)
+        {
+            ViewData[AspAction] = nameof(Create);
+            ViewData[Title] = CreationTitle;
+
+            var model = new ConsumptionViewModel();
+            await LoadDropdownsValuesAsync(model);
+
+            model.ConsumptionGroupId = model.ConsumptionGroups.Any(s => s.Value == id) ? id : null;
+
+            return View(Constants.FormView, model);
         }
     }
 }

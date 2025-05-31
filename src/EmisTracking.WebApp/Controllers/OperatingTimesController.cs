@@ -3,6 +3,7 @@ using EmisTracking.Services.WebApi.Services;
 using EmisTracking.WebApi.Models.Models;
 using EmisTracking.WebApi.Models.ViewModels;
 using EmisTracking.WebApp.Filters;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Threading.Tasks;
@@ -34,6 +35,21 @@ namespace EmisTracking.WebApp.Controllers
                     .Select(e => new DropdownItemModel { Value = e.Id, Name = e.Name })
                     .ToList();
             }
+        }
+
+        [Authorize]
+        [HttpGet("createForEmissionSource/{id}")]
+        public async Task<IActionResult> CreateForEmissionSource([FromRoute] string id)
+        {
+            ViewData[AspAction] = nameof(Create);
+            ViewData[Title] = CreationTitle;
+
+            var model = new OperatingTimeViewModel();
+            await LoadDropdownsValuesAsync(model);
+
+            model.EmissionSourceId = model.EmissionSources.Any(s => s.Value == id) ? id : null;
+
+            return View(Constants.FormView, model);
         }
     }
 }
