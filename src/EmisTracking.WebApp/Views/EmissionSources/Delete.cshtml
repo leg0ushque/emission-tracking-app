@@ -1,10 +1,12 @@
 ﻿@using EmisTracking.WebApi.Models.ViewModels
 @using EmisTracking.Localization
+@using EmisTracking.WebApp.Helpers
 @model EmissionSourceViewModel
 
 @{
     ViewData[Constants.GenerateBreadcrumb] = new();
     ViewData["Title"] = string.Format(LangResources.Titles.NameTemplate, Model.Name);
+    var processCategories = EnumHelper.ProcessCategories;
 }
 
 @section Breadcrumb
@@ -20,7 +22,8 @@
 <br />
 <span><strong>@LangResources.Fields.Name:</strong> @Model.Name</span>
 <br />
-<span><strong>@LangResources.Fields.ProcessCategory:</strong> @Model.ProcessCategory.ToString()</span>
+<span><strong>@LangResources.Fields.ProcessCategory:</strong>
+    @(Model.ProcessCategory == null ? string.Empty : processCategories[Model.ProcessCategory.Value])</span>
 <br />
 <span><strong>@LangResources.Fields.Methodology:</strong> @(Model.Methodology?.Name ?? LangResources.NoValue)</span>
 <br />

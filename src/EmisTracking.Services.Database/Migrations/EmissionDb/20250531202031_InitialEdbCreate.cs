@@ -101,7 +101,7 @@ namespace EmisTracking.Services.Database.Migrations.EmissionDb
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: false),
-                    AreaId = table.Column<string>(type: "nvarchar(36)", nullable: true),
+                    AreaId = table.Column<string>(type: "nvarchar(36)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -158,7 +158,7 @@ namespace EmisTracking.Services.Database.Migrations.EmissionDb
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: false),
-                    SubdivisionId = table.Column<string>(type: "nvarchar(36)", nullable: true),
+                    SubdivisionId = table.Column<string>(type: "nvarchar(36)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ProcessCategory = table.Column<int>(type: "int", nullable: false),
                     MethodologyId = table.Column<string>(type: "nvarchar(36)", nullable: true),
@@ -192,7 +192,7 @@ namespace EmisTracking.Services.Database.Migrations.EmissionDb
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: false),
-                    MethodologyId = table.Column<string>(type: "nvarchar(36)", nullable: true),
+                    MethodologyId = table.Column<string>(type: "nvarchar(36)", nullable: false),
                     ParameterType = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     FormulaName = table.Column<string>(type: "nvarchar(max)", nullable: true)
@@ -213,7 +213,7 @@ namespace EmisTracking.Services.Database.Migrations.EmissionDb
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: false),
-                    ConsumptionGroupId = table.Column<string>(type: "nvarchar(36)", nullable: true),
+                    ConsumptionGroupId = table.Column<string>(type: "nvarchar(36)", nullable: false),
                     Mass = table.Column<double>(type: "float", nullable: false),
                     Month = table.Column<int>(type: "int", nullable: false),
                     Year = table.Column<int>(type: "int", nullable: false)
@@ -234,8 +234,9 @@ namespace EmisTracking.Services.Database.Migrations.EmissionDb
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: false),
-                    ConsumptionGroupId = table.Column<string>(type: "nvarchar(36)", nullable: true),
-                    PollutantId = table.Column<string>(type: "nvarchar(36)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ConsumptionGroupId = table.Column<string>(type: "nvarchar(36)", nullable: false),
+                    PollutantId = table.Column<string>(type: "nvarchar(36)", nullable: false),
                     Value = table.Column<double>(type: "float", nullable: false)
                 },
                 constraints: table =>
@@ -260,7 +261,7 @@ namespace EmisTracking.Services.Database.Migrations.EmissionDb
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: false),
-                    EmissionSourceId = table.Column<string>(type: "nvarchar(36)", nullable: true),
+                    EmissionSourceId = table.Column<string>(type: "nvarchar(36)", nullable: false),
                     Month = table.Column<int>(type: "int", nullable: false),
                     Year = table.Column<int>(type: "int", nullable: false),
                     Hours = table.Column<int>(type: "int", nullable: false)
@@ -281,8 +282,8 @@ namespace EmisTracking.Services.Database.Migrations.EmissionDb
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: false),
-                    EmissionSourceId = table.Column<string>(type: "nvarchar(36)", nullable: true),
-                    PollutantId = table.Column<string>(type: "nvarchar(36)", nullable: true),
+                    EmissionSourceId = table.Column<string>(type: "nvarchar(36)", nullable: false),
+                    PollutantId = table.Column<string>(type: "nvarchar(36)", nullable: false),
                     IsRegulated = table.Column<bool>(type: "bit", nullable: false),
                     GasCleaningUnitType = table.Column<int>(type: "int", nullable: false),
                     PurificationPercentage = table.Column<double>(type: "float", nullable: false),
@@ -310,8 +311,8 @@ namespace EmisTracking.Services.Database.Migrations.EmissionDb
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: false),
-                    SourceSubstanceId = table.Column<string>(type: "nvarchar(36)", nullable: true),
-                    MethodologyId = table.Column<string>(type: "nvarchar(36)", nullable: true),
+                    SourceSubstanceId = table.Column<string>(type: "nvarchar(36)", nullable: false),
+                    MethodologyId = table.Column<string>(type: "nvarchar(36)", nullable: false),
                     Mass = table.Column<double>(type: "float", nullable: false),
                     Month = table.Column<int>(type: "int", nullable: false),
                     Year = table.Column<int>(type: "int", nullable: false),
@@ -345,7 +346,7 @@ namespace EmisTracking.Services.Database.Migrations.EmissionDb
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: false),
-                    MethodologyParameterId = table.Column<string>(type: "nvarchar(36)", nullable: true),
+                    MethodologyParameterId = table.Column<string>(type: "nvarchar(36)", nullable: false),
                     Month = table.Column<int>(type: "int", nullable: false),
                     Year = table.Column<int>(type: "int", nullable: false),
                     Value = table.Column<double>(type: "float", nullable: false),

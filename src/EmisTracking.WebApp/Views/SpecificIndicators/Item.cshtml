@@ -15,6 +15,11 @@
     <li class="breadcrumb-item active">@ViewData["Title"]</li>
 }
 
+<a asp-action="Index" class="btn btn-outline-secondary">
+    <i class="fas fa-arrow-left"></i>
+    @string.Format(LangResources.Titles.NameTemplate, Model.ConsumptionGroup.Name);
+</a>
+
 <p><strong>@LangResources.Fields.ConsumptionGroup:</strong> @Model.ConsumptionGroup.Name</p>
 <p><strong>@LangResources.Fields.Pollutant:</strong> @Model.Pollutant.Name</p>
 <p><strong>@LangResources.Fields.Value:</strong> @Model.Value</p>
@@ -32,5 +37,5 @@
 <br />
 <a asp-action="Index" class="btn btn-outline-secondary">
     <i class="fas fa-arrow-left"></i>
-    @LangResources.ReturnButtonText
+    @LangResources.ReturnToListButtonText
 </a>

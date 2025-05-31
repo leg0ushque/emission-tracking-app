@@ -26,7 +26,7 @@ namespace EmisTracking.WebApi.Controllers
         protected override string EntityName => LangResources.Entities.SourceSubstance;
 
         [Authorize]
-        [HttpGet("byEmissionSourceId/{emissionSourceId}")]
+        [HttpGet("byEmissionSource/{emissionSourceId}")]
         [BusinessLogicExceptionFilter]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

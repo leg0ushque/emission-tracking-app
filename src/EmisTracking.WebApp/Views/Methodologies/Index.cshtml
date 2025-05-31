@@ -24,6 +24,7 @@
             <th scope="col">@LangResources.Fields.ShortName</th>
             <th scope="col">@LangResources.Fields.Name</th>
             <th scope="col">@LangResources.Fields.Mode</th>
+            <th scope="col">@LangResources.Fields.Formula</th>
 
             @if (isAdmin)
             {
@@ -38,9 +39,21 @@
             {
                 <tr>
                     <td></td>
-                    <td>@item.ShortName</td>
-                    <td>@item.Name</td>
+
+                    <td>
+                        <a asp-action="Item" asp-route-id="@item.Id">
+                            @item.ShortName
+                        </a>
+                    </td>
+                    <td>
+                        <a asp-action="Item" asp-route-id="@item.Id">
+                            @item.Name
+                        </a>
+                    </td>
                     <td>@(item.Mode?.Name ?? LangResources.NoValue)</td>
+                    <td>
+                        @item.Formula
+                    </td>
 
                     @if (isAdmin)
                     {
@@ -70,7 +83,7 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
         await Html.RenderPartialAsync("_JqueryDatatable");
 
-        var columnWidths = new Queue<string>(new[] { "20%", "30%", "30%" });
+        var columnWidths = new Queue<string>(new[] { "20%", "20%", "20%", "20%" });
         if (isAdmin)
         {
             columnWidths.Enqueue(Constants.DefaultEditDeleteButtonsWidth);

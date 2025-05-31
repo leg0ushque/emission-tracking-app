@@ -24,7 +24,7 @@ namespace EmisTracking.Services.WebApi.Services
         public Task<ApiResponseModel<List<SourceSubstanceViewModel>>> GetAllByEmissionSourceIdAsync(string emissionSourceId,
             bool loadDependencies = false)
         {
-            var path = $"{ControllerPath}/byEmissionSourceId/{emissionSourceId}";
+            var path = $"{ControllerPath}/byEmissionSource/{emissionSourceId}";
 
             if (loadDependencies)
                 path += "?loadDependencies=true";

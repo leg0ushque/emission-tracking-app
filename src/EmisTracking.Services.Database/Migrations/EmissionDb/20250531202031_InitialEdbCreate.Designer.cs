@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EmisTracking.Services.Database.Migrations.EmissionDb
 {
     [DbContext(typeof(EmissionDbContext))]
-    [Migration("20250524200450_InitialEdbCreate")]
+    [Migration("20250531202031_InitialEdbCreate")]
     partial class InitialEdbCreate
     {
         /// <inheritdoc />
@@ -49,6 +49,7 @@ namespace EmisTracking.Services.Database.Migrations.EmissionDb
                         .HasColumnType("nvarchar(36)");
 
                     b.Property<string>("ConsumptionGroupId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(36)");
 
                     b.Property<double>("Mass")
@@ -105,6 +106,7 @@ namespace EmisTracking.Services.Database.Migrations.EmissionDb
                         .HasColumnType("int");
 
                     b.Property<string>("SubdivisionId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(36)");
 
                     b.HasKey("Id");
@@ -128,12 +130,14 @@ namespace EmisTracking.Services.Database.Migrations.EmissionDb
                         .HasColumnType("float");
 
                     b.Property<string>("MethodologyId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(36)");
 
                     b.Property<int>("Month")
                         .HasColumnType("int");
 
                     b.Property<string>("SourceSubstanceId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(36)");
 
                     b.Property<string>("TaxId")
@@ -188,6 +192,7 @@ namespace EmisTracking.Services.Database.Migrations.EmissionDb
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MethodologyId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(36)");
 
                     b.Property<string>("Name")
@@ -227,6 +232,7 @@ namespace EmisTracking.Services.Database.Migrations.EmissionDb
                         .HasColumnType("nvarchar(36)");
 
                     b.Property<string>("EmissionSourceId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(36)");
 
                     b.Property<int>("Hours")
@@ -255,6 +261,7 @@ namespace EmisTracking.Services.Database.Migrations.EmissionDb
                         .HasColumnType("nvarchar(36)");
 
                     b.Property<string>("MethodologyParameterId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(36)");
 
                     b.Property<int>("Month")
@@ -308,6 +315,7 @@ namespace EmisTracking.Services.Database.Migrations.EmissionDb
                         .HasColumnType("float");
 
                     b.Property<string>("EmissionSourceId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(36)");
 
                     b.Property<int>("GasCleaningUnitType")
@@ -317,6 +325,7 @@ namespace EmisTracking.Services.Database.Migrations.EmissionDb
                         .HasColumnType("bit");
 
                     b.Property<string>("PollutantId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(36)");
 
                     b.Property<double>("PurificationPercentage")
@@ -338,9 +347,14 @@ namespace EmisTracking.Services.Database.Migrations.EmissionDb
                         .HasColumnType("nvarchar(36)");
 
                     b.Property<string>("ConsumptionGroupId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(36)");
 
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("PollutantId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(36)");
 
                     b.Property<double>("Value")
@@ -362,6 +376,7 @@ namespace EmisTracking.Services.Database.Migrations.EmissionDb
                         .HasColumnType("nvarchar(36)");
 
                     b.Property<string>("AreaId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(36)");
 
                     b.Property<string>("Name")
@@ -446,7 +461,8 @@ namespace EmisTracking.Services.Database.Migrations.EmissionDb
                     b.HasOne("EmisTracking.Services.Entities.ConsumptionGroup", "ConsumptionGroup")
                         .WithMany()
                         .HasForeignKey("ConsumptionGroupId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("ConsumptionGroup");
                 });
@@ -475,7 +491,8 @@ namespace EmisTracking.Services.Database.Migrations.EmissionDb
                     b.HasOne("EmisTracking.Services.Entities.Subdivision", "Subdivision")
                         .WithMany()
                         .HasForeignKey("SubdivisionId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("Methodology");
 
@@ -489,12 +506,14 @@ namespace EmisTracking.Services.Database.Migrations.EmissionDb
                     b.HasOne("EmisTracking.Services.Entities.Methodology", "Methodology")
                         .WithMany()
                         .HasForeignKey("MethodologyId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("EmisTracking.Services.Entities.SourceSubstance", "SourceSubstance")
                         .WithMany()
                         .HasForeignKey("SourceSubstanceId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("EmisTracking.Services.Entities.Tax", "Tax")
                         .WithMany()
@@ -522,7 +541,8 @@ namespace EmisTracking.Services.Database.Migrations.EmissionDb
                     b.HasOne("EmisTracking.Services.Entities.Methodology", "Methodology")
                         .WithMany()
                         .HasForeignKey("MethodologyId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("Methodology");
                 });
@@ -532,7 +552,8 @@ namespace EmisTracking.Services.Database.Migrations.EmissionDb
                     b.HasOne("EmisTracking.Services.Entities.EmissionSource", "EmissionSource")
                         .WithMany()
                         .HasForeignKey("EmissionSourceId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("EmissionSource");
                 });
@@ -547,7 +568,8 @@ namespace EmisTracking.Services.Database.Migrations.EmissionDb
                     b.HasOne("EmisTracking.Services.Entities.MethodologyParameter", "MethodologyParameter")
                         .WithMany()
                         .HasForeignKey("MethodologyParameterId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("GrossEmission");
 
@@ -559,12 +581,14 @@ namespace EmisTracking.Services.Database.Migrations.EmissionDb
                     b.HasOne("EmisTracking.Services.Entities.EmissionSource", "EmissionSource")
                         .WithMany()
                         .HasForeignKey("EmissionSourceId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("EmisTracking.Services.Entities.Pollutant", "Pollutant")
                         .WithMany()
                         .HasForeignKey("PollutantId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("EmissionSource");
 
@@ -576,12 +600,14 @@ namespace EmisTracking.Services.Database.Migrations.EmissionDb
                     b.HasOne("EmisTracking.Services.Entities.ConsumptionGroup", "ConsumptionGroup")
                         .WithMany()
                         .HasForeignKey("ConsumptionGroupId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("EmisTracking.Services.Entities.Pollutant", "Pollutant")
                         .WithMany()
                         .HasForeignKey("PollutantId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("ConsumptionGroup");
 
@@ -593,7 +619,8 @@ namespace EmisTracking.Services.Database.Migrations.EmissionDb
                     b.HasOne("EmisTracking.Services.Entities.Area", "Area")
                         .WithMany()
                         .HasForeignKey("AreaId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("Area");
                 });

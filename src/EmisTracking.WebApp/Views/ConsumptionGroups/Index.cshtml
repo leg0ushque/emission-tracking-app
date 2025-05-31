@@ -21,8 +21,8 @@
     <thead>
         <tr>
             <th scope="col">№</th>
-            <th scope="col">@LangResources.Fields.Methodology</th>
             <th scope="col">@LangResources.Fields.Name</th>
+            <th scope="col">@LangResources.Fields.Methodology</th>
 
             @if (isAdmin)
             {
@@ -37,8 +37,10 @@
             {
                 <tr>
                     <td></td>
+                    <td><a asp-action="Item" asp-route-id="@item.Id">
+                            @item.Name
+                    </a></td>
                     <td>@item.Methodology.Name</td>
-                    <td>@item.Name</td>
 
                     @if (isAdmin)
                     {

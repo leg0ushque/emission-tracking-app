@@ -45,5 +45,25 @@ namespace EmisTracking.WebApp.Controllers
                     .ToList();
             }
         }
+
+        [HttpGet("createForConsumptionGroup/{consumptionGroupId}")]
+        public async Task<IActionResult> CreateForConsumptionGroup([FromRoute] string consumptionGroupId)
+        {
+            var model = new SpecificIndicatorViewModel();
+
+            await LoadDropdownsValuesAsync(model);
+
+            var foundItem = model.ConsumptionGroups.FirstOrDefault(g => g.Value == consumptionGroupId);
+
+            if(foundItem != null)
+            {
+                model.ConsumptionGroupId = foundItem.Value;
+            }
+
+            ViewData[AspAction] = nameof(Create);
+            ViewData[Title] = CreationTitle;
+
+            return View(Constants.FormView, model);
+        }
     }
 }

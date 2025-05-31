@@ -3,6 +3,8 @@ using EmisTracking.Services.WebApi.Services;
 using EmisTracking.WebApi.Models.Models;
 using EmisTracking.WebApi.Models.ViewModels;
 using EmisTracking.WebApp.Filters;
+using EmisTracking.WebApp.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Threading.Tasks;
@@ -33,6 +35,35 @@ namespace EmisTracking.WebApp.Controllers
                 model.Modes = modesResponse.Data
                     .Select(m => new DropdownItemModel { Value = m.Id, Name = m.Name })
                     .ToList();
+            }
+        }
+
+        [Authorize]
+        [LoadLayoutDataFilter]
+        [HttpGet("{id}")]
+        public override async Task<IActionResult> Item([FromRoute] string id)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                return View(Constants.ErrorView, (LangResources.EmptyIdText, controller: string.Empty, action: nameof(Index)));
+            }
+
+            var response = await _apiService.GetByIdAsync(id, loadDependencies: true);
+
+            if (response.Success)
+            {
+                var parameters =
+
+                var model = new ModelWithDependencies<MethodologyViewModel, MethodologyParameterViewModel>()
+                {
+                    MainItem = response.Data,
+                };
+
+                return View(response.Data);
+            }
+            else
+            {
+                return View(Constants.ErrorView, (errorMessage: response.ErrorMessage, controller: string.Empty, action: nameof(Index)));
             }
         }
     }

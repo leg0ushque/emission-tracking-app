@@ -36,6 +36,8 @@ namespace EmisTracking.Services.Services
         {
             try
             {
+                ArgumentNullException.ThrowIfNull(id);
+
                 return loadDependencies ?
                     _repository.GetByIdAsync(id, DependenciesIncludes)
                     : _repository.GetByIdAsync(id);
@@ -84,6 +86,8 @@ namespace EmisTracking.Services.Services
         {
             try
             {
+                ArgumentNullException.ThrowIfNull(id);
+
                 return _repository.DeleteAsync(id);
             }
             catch (ArgumentNullException ex)

@@ -6,7 +6,13 @@ using System.Threading.Tasks;
 
 namespace EmisTracking.Services.WebApi.Services
 {
-    public class OperatingTimeApiService : BaseEntityApiService<OperatingTimeViewModel>
+    public interface IOperatingTimeApiService : IBaseApiService<OperatingTimeViewModel>
+    {
+        public Task<ApiResponseModel<List<OperatingTimeViewModel>>> GetByEmissionSourceIdAsync(
+            string id, bool loadDependencies = false);
+    }
+
+    public class OperatingTimeApiService : BaseEntityApiService<OperatingTimeViewModel>, IOperatingTimeApiService
     {
         protected override string ControllerPath => "operatingtimes";
 
@@ -15,14 +21,13 @@ namespace EmisTracking.Services.WebApi.Services
             _httpClient = httpClientFactory.CreateClient(Constants.HttpClientName);
         }
 
-        public Task<ApiResponseModel<List<EmissionSourceViewModel>>> GetAllByEmissionSourceAsync(string emissionSourceId, bool loadDependencies = false)
+        public Task<ApiResponseModel<List<OperatingTimeViewModel>>> GetByEmissionSourceIdAsync(string id, bool loadDependencies = false)
         {
-            var path = $"{ControllerPath}/byEmissionSource/{emissionSourceId}";
-
+            var path = $"{ControllerPath}/bySource/{id}";
             if (loadDependencies)
                 path += "?loadDependencies=true";
 
-            return SendRequestAsync<List<EmissionSourceViewModel>>(HttpMethod.Get, path);
+            return SendRequestAsync<List<OperatingTimeViewModel>>(HttpMethod.Get, path);
         }
     }
 }

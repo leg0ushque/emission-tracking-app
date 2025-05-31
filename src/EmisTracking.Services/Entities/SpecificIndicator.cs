@@ -2,6 +2,8 @@
 {
     public class SpecificIndicator : BaseEntity
     {
+        public string Name { get; set; }
+
         public string ConsumptionGroupId { get; set; }
         public virtual ConsumptionGroup ConsumptionGroup { get; set; }
 
