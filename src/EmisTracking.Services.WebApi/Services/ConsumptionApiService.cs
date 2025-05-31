@@ -9,7 +9,7 @@ namespace EmisTracking.Services.WebApi.Services
     public interface IConsumptionApiService : IBaseApiService<ConsumptionViewModel>
     {
         public Task<ApiResponseModel<List<ConsumptionViewModel>>> GetByConsumptionGroupIdAsync(string id,
-            bool loadDependencies = false)
+            bool loadDependencies = false);
     }
 
     public class ConsumptionApiService : BaseEntityApiService<ConsumptionViewModel>, IConsumptionApiService

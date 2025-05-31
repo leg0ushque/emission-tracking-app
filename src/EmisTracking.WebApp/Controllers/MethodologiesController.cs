@@ -16,11 +16,16 @@ namespace EmisTracking.WebApp.Controllers
     public class MethodologiesController : BaseDropdownViewController<MethodologyViewModel>
     {
         private readonly IBaseApiService<ModeViewModel> _modeService;
+        private readonly IMethodologyParameterApiService _methodologyParameterApiService;
 
-        public MethodologiesController(IBaseApiService<MethodologyViewModel> methodologyService, IBaseApiService<ModeViewModel> modeService)
+        public MethodologiesController(
+            IBaseApiService<MethodologyViewModel> methodologyService,
+            IBaseApiService<ModeViewModel> modeService,
+            IMethodologyParameterApiService methodologyParameterApiService)
         {
             _apiService = methodologyService;
             _modeService = modeService;
+            _methodologyParameterApiService = methodologyParameterApiService;
         }
 
         protected override string CreationTitle => LangResources.Titles.MethodologiesCreate;
@@ -52,14 +57,15 @@ namespace EmisTracking.WebApp.Controllers
 
             if (response.Success)
             {
-                var parameters =
+                var parametersResponse = await _methodologyParameterApiService.GetByMethodologyIdAsync(response.Data.Id);
 
                 var model = new ModelWithDependencies<MethodologyViewModel, MethodologyParameterViewModel>()
                 {
                     MainItem = response.Data,
+                    Dependencies = parametersResponse.Success ? parametersResponse.Data : []
                 };
 
-                return View(response.Data);
+                return View(model);
             }
             else
             {
