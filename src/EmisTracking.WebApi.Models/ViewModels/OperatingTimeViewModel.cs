@@ -23,6 +23,6 @@ namespace EmisTracking.WebApi.Models.ViewModels
 
         [Display(Name = LangResources.Fields.Hours)]
         [Required(ErrorMessage = LangResources.MustBeFilledMessage)]
-        public int Hours { get; set; }
+        public double Hours { get; set; }
     }
 }

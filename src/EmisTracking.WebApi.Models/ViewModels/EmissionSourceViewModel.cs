@@ -8,6 +8,10 @@ namespace EmisTracking.WebApi.Models.ViewModels
 {
     public class EmissionSourceViewModel : BaseViewModel
     {
+        [Display(Name = LangResources.Fields.Number)]
+        [Required(ErrorMessage = LangResources.MustBeFilledMessage)]
+        public string Number { get; set; }
+
         [Display(Name = LangResources.Fields.Subdivision)]
         [Required(ErrorMessage = LangResources.MustBeChosen)]
         public string SubdivisionId { get; set; }

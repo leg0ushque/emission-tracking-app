@@ -18,7 +18,7 @@
 {
     @if (sourceId != null)
     {
-
+        <li class="breadcrumb-item active">@ViewData["Title"]</li>
     }
     else
     {
@@ -41,59 +41,61 @@ else
     </a>
 }
 
-<table class="table-striped table-bordered" id="mainItemsTable">
-    <thead>
-        <tr>
-            <th scope="col">№</th>
-            @if (sourceId == null)
-            {
-                <th scope="col">@LangResources.Fields.EmissionSource</th>
-            }
-            <th scope="col">@LangResources.Fields.Period</th>
-            <th scope="col">@LangResources.Fields.Hours</th>
+<div class="col-sm-5">
+    <table class="table-striped table-bordered" id="mainItemsTable">
+        <thead>
+            <tr>
+                <th scope="col">№</th>
+                @if (sourceId == null)
+                {
+                    <th scope="col">@LangResources.Fields.EmissionSource</th>
+                }
+                <th scope="col">@LangResources.Fields.Period</th>
+                <th scope="col">@LangResources.Fields.Hours</th>
 
-            @if (isAdmin)
-            {
-                <th scope="col" data-orderable="false" data-searchable="false"></th>
-                <th scope="col" data-orderable="false" data-searchable="false"></th>
-            }
-        </tr>
-    </thead>
-    <tbody>
-        @{
-            foreach (var item in Model)
-            {
-                <tr>
-                    <td></td>
-                    @if (sourceId == null)
-                    {
-                        <td>@sourceInfo</td>
-                    }
-                    <td>@months[item.Month] @item.Year</td>
-                    <td>@item.Hours</td>
+                @if (isAdmin)
+                {
+                    <th scope="col" data-orderable="false" data-searchable="false"></th>
+                    <th scope="col" data-orderable="false" data-searchable="false"></th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td></td>
+                        @if (sourceId == null)
+                        {
+                            <td>@sourceInfo</td>
+                        }
+                        <td>@months[item.Month] @item.Year</td>
+                        <td>@item.Hours</td>
 
-                    @if (isAdmin)
-                    {
-                        <td>
-                            <a class="btn btn-outline-primary"
-                               asp-controller="OperatingTimes" asp-action="Update" asp-route-id="@item.Id"
-                               name="@LangResources.UpdateButtonText">
-                                <i class="fas fa-pen"></i>
-                            </a>
-                        </td>
-                        <td>
-                            <a class="btn btn-outline-danger"
-                               asp-controller="OperatingTimes" asp-action="Delete" asp-route-id="@item.Id"
-                               name="@LangResources.DeleteButtonText">
-                                <i class="fas fa-trash"></i>
-                            </a>
-                        </td>
-                    }
-                </tr>
+                        @if (isAdmin)
+                        {
+                            <td>
+                                <a class="btn btn-outline-primary"
+                                   asp-controller="OperatingTimes" asp-action="Update" asp-route-id="@item.Id"
+                                   name="@LangResources.UpdateButtonText">
+                                    <i class="fas fa-pen"></i>
+                                </a>
+                            </td>
+                            <td>
+                                <a class="btn btn-outline-danger"
+                                   asp-controller="OperatingTimes" asp-action="Delete" asp-route-id="@item.Id"
+                                   name="@LangResources.DeleteButtonText">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </td>
+                        }
+                    </tr>
+                }
             }
-        }
-    </tbody>
-</table>
+        </tbody>
+    </table>
+</div>
 
 @section Scripts {
     @{

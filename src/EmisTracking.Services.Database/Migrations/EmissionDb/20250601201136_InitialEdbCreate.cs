@@ -158,6 +158,7 @@ namespace EmisTracking.Services.Database.Migrations.EmissionDb
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: false),
+                    Number = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SubdivisionId = table.Column<string>(type: "nvarchar(36)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ProcessCategory = table.Column<int>(type: "int", nullable: false),
@@ -264,7 +265,7 @@ namespace EmisTracking.Services.Database.Migrations.EmissionDb
                     EmissionSourceId = table.Column<string>(type: "nvarchar(36)", nullable: false),
                     Month = table.Column<int>(type: "int", nullable: false),
                     Year = table.Column<int>(type: "int", nullable: false),
-                    Hours = table.Column<int>(type: "int", nullable: false)
+                    Hours = table.Column<double>(type: "float", nullable: false)
                 },
                 constraints: table =>
                 {

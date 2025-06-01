@@ -4,6 +4,8 @@ namespace EmisTracking.Services.Entities
 {
     public class EmissionSource : BaseEntity
     {
+        public string Number { get; set; }
+
         public string SubdivisionId { get; set; }
         public virtual Subdivision Subdivision { get; set; }
 

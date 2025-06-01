@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using NLog.Extensions.Logging;
 using System;
 
 namespace EmisTracking.WebApp
@@ -46,6 +48,17 @@ namespace EmisTracking.WebApp
 
             builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddLogging(lb =>
+            {
+                lb.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Information);
+                lb.AddNLog(new NLogProviderOptions
+                {
+                    CaptureMessageTemplates = true,
+                    CaptureMessageProperties = true,
+                    LoggingConfigurationSectionName = "NLog",
+                });
+            });
 
             var app = builder.Build();
 

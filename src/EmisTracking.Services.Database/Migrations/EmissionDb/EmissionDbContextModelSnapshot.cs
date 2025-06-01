@@ -99,6 +99,9 @@ namespace EmisTracking.Services.Database.Migrations.EmissionDb
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Number")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("ProcessCategory")
                         .HasColumnType("int");
 
@@ -232,8 +235,8 @@ namespace EmisTracking.Services.Database.Migrations.EmissionDb
                         .IsRequired()
                         .HasColumnType("nvarchar(36)");
 
-                    b.Property<int>("Hours")
-                        .HasColumnType("int");
+                    b.Property<double>("Hours")
+                        .HasColumnType("float");
 
                     b.Property<int>("Month")
                         .HasColumnType("int");

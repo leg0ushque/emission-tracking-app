@@ -13,8 +13,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using NLog.Extensions.Logging;
 using System;
 using System.Text;
 
@@ -50,6 +52,17 @@ namespace EmisTracking.WebApi
                 options.AddProfile<AutomapperProfile>());
 
             builder.Services.AddControllers();
+
+            builder.Services.AddLogging(lb =>
+            {
+                lb.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Information);
+                lb.AddNLog(new NLogProviderOptions
+                {
+                    CaptureMessageTemplates = true,
+                    CaptureMessageProperties = true,
+                    LoggingConfigurationSectionName = "NLog",
+                });
+            });
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(options =>

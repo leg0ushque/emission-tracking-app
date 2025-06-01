@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EmisTracking.Services.Database.Migrations.EmissionDb
 {
     [DbContext(typeof(EmissionDbContext))]
-    [Migration("20250531202031_InitialEdbCreate")]
+    [Migration("20250601201136_InitialEdbCreate")]
     partial class InitialEdbCreate
     {
         /// <inheritdoc />
@@ -100,6 +100,9 @@ namespace EmisTracking.Services.Database.Migrations.EmissionDb
                         .HasColumnType("nvarchar(36)");
 
                     b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Number")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ProcessCategory")
@@ -235,8 +238,8 @@ namespace EmisTracking.Services.Database.Migrations.EmissionDb
                         .IsRequired()
                         .HasColumnType("nvarchar(36)");
 
-                    b.Property<int>("Hours")
-                        .HasColumnType("int");
+                    b.Property<double>("Hours")
+                        .HasColumnType("float");
 
                     b.Property<int>("Month")
                         .HasColumnType("int");
