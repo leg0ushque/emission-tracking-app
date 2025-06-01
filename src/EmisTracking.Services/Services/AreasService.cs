@@ -1,7 +1,11 @@
 ﻿using AutoMapper;
 using EmisTracking.Services.Entities;
+using EmisTracking.Services.Exceptions;
 using EmisTracking.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
@@ -75,6 +79,24 @@ namespace EmisTracking.Services.Services
         [
             x => x.EmissionSource,
         ];
+
+        public override Task<List<OperatingTime>> GetAllAsync(
+            Expression<Func<OperatingTime, bool>> predicate = null, bool loadDependencies = false)
+        {
+            try
+            {
+                return (loadDependencies ?
+                    _repository.GetAll(predicate, DependenciesIncludes)
+                    : _repository.GetAll(predicate))
+                        .OrderByDescending(x => x.Year)
+                        .ThenByDescending(x => x.Month)
+                        .ToListAsync();
+            }
+            catch (InvalidOperationException ex)
+            {
+                throw new BusinessLogicException(ex.Message, ex);
+            }
+        }
 
         protected override Task ValidateAsync(OperatingTime item)
         {
@@ -157,6 +179,24 @@ namespace EmisTracking.Services.Services
         {
             return Task.CompletedTask;
         }
+
+        public override Task<List<Consumption>> GetAllAsync(
+            Expression<Func<Consumption, bool>> predicate = null, bool loadDependencies = false)
+        {
+            try
+            {
+                return (loadDependencies ?
+                    _repository.GetAll(predicate, DependenciesIncludes)
+                    : _repository.GetAll(predicate))
+                        .OrderByDescending(x => x.Year)
+                        .ThenByDescending(x => x.Month)
+                        .ToListAsync();
+            }
+            catch (InvalidOperationException ex)
+            {
+                throw new BusinessLogicException(ex.Message, ex);
+            }
+        }
     }
 
     public class ParameterValuesService(IRepository<ParameterValue> repository, IMapper mapper) : GenericEntityService<ParameterValue>(repository, mapper)
@@ -170,6 +210,24 @@ namespace EmisTracking.Services.Services
         protected override Task ValidateAsync(ParameterValue item)
         {
             return Task.CompletedTask;
+        }
+
+        public override Task<List<ParameterValue>> GetAllAsync(
+            Expression<Func<ParameterValue, bool>> predicate = null, bool loadDependencies = false)
+        {
+            try
+            {
+                return (loadDependencies ?
+                    _repository.GetAll(predicate, DependenciesIncludes)
+                    : _repository.GetAll(predicate))
+                        .OrderByDescending(x => x.Year)
+                        .ThenByDescending(x => x.Month)
+                        .ToListAsync();
+            }
+            catch (InvalidOperationException ex)
+            {
+                throw new BusinessLogicException(ex.Message, ex);
+            }
         }
     }
 
@@ -186,6 +244,24 @@ namespace EmisTracking.Services.Services
         {
             return Task.CompletedTask;
         }
+
+        public override Task<List<GrossEmission>> GetAllAsync(
+            Expression<Func<GrossEmission, bool>> predicate = null, bool loadDependencies = false)
+        {
+            try
+            {
+                return (loadDependencies ?
+                    _repository.GetAll(predicate, DependenciesIncludes)
+                    : _repository.GetAll(predicate))
+                        .OrderByDescending(x => x.Year)
+                        .ThenByDescending(x => x.Month)
+                        .ToListAsync();
+            }
+            catch (InvalidOperationException ex)
+            {
+                throw new BusinessLogicException(ex.Message, ex);
+            }
+        }
     }
 
     public class TaxRatesService(IRepository<TaxRate> repository, IMapper mapper) : GenericEntityService<TaxRate>(repository, mapper)
@@ -196,6 +272,23 @@ namespace EmisTracking.Services.Services
         {
             return Task.CompletedTask;
         }
+
+        public override Task<List<TaxRate>> GetAllAsync(
+            Expression<Func<TaxRate, bool>> predicate = null, bool loadDependencies = false)
+        {
+            try
+            {
+                return (loadDependencies ?
+                    _repository.GetAll(predicate, DependenciesIncludes)
+                    : _repository.GetAll(predicate))
+                        .OrderByDescending(x => x.StartDate)
+                        .ToListAsync();
+            }
+            catch (InvalidOperationException ex)
+            {
+                throw new BusinessLogicException(ex.Message, ex);
+            }
+        }
     }
 
     public class TaxesService(IRepository<Tax> repository, IMapper mapper) : GenericEntityService<Tax>(repository, mapper)
@@ -205,6 +298,24 @@ namespace EmisTracking.Services.Services
         protected override Task ValidateAsync(Tax item)
         {
             return Task.CompletedTask;
+        }
+
+        public override Task<List<Tax>> GetAllAsync(
+            Expression<Func<Tax, bool>> predicate = null, bool loadDependencies = false)
+        {
+            try
+            {
+                return (loadDependencies ?
+                    _repository.GetAll(predicate, DependenciesIncludes)
+                    : _repository.GetAll(predicate))
+                        .OrderByDescending(x => x.Year)
+                        .ThenByDescending(x => x.Month)
+                        .ToListAsync();
+            }
+            catch (InvalidOperationException ex)
+            {
+                throw new BusinessLogicException(ex.Message, ex);
+            }
         }
     }
 }
