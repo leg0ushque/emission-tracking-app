@@ -11,7 +11,6 @@ namespace EmisTracking.WebApi.Models.ViewModels
         public string Name { get; set; }
 
         [Display(Name = LangResources.Fields.Formula)]
-        [Required(ErrorMessage = LangResources.MustBeFilledMessage)]
         public string Formula { get; set; }
 
         [Display(Name = LangResources.Fields.HazardClass)]

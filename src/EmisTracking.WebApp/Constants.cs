@@ -2,10 +2,13 @@
 {
     public static class Constants
     {
+        public const string Title = "Title";
         public const string DefaultEditDeleteButtonsWidth = "7%";
         public const string GenerateBreadcrumb = "GenerateBreadcrumb";
         public const string BySubdivision = "BySubdivision";
         public const string None = "-";
+        public const string MissingParameters = "MissingParameters";
+        public const string ExtraParameters = "ExtraParameters";
 
         public const string Create = "Create";
         public const string FormView = "Form";

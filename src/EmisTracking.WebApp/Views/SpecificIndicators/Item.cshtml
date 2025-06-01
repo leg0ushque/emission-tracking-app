@@ -11,15 +11,15 @@
 
 @section Breadcrumb
 {
-    <li class="breadcrumb-item"><a asp-action="Index">@LangResources.Titles.SpecificIndicatorsIndex</a></li>
+    <li class="breadcrumb-item">
+        <a asp-controller="ConsumptionGroup" asp-action="Item" asp-route-id="@Model.ConsumptionGroupId">
+            @string.Format(LangResources.Titles.NameTemplate, Model.ConsumptionGroup.Name)
+        </a>
+    </li>
     <li class="breadcrumb-item active">@ViewData["Title"]</li>
 }
 
-<a asp-action="Index" class="btn btn-outline-secondary">
-    <i class="fas fa-arrow-left"></i>
-    @string.Format(LangResources.Titles.NameTemplate, Model.ConsumptionGroup.Name);
-</a>
-
+<p><strong>@LangResources.Fields.Name:</strong> @Model.Name</p>
 <p><strong>@LangResources.Fields.ConsumptionGroup:</strong> @Model.ConsumptionGroup.Name</p>
 <p><strong>@LangResources.Fields.Pollutant:</strong> @Model.Pollutant.Name</p>
 <p><strong>@LangResources.Fields.Value:</strong> @Model.Value</p>
@@ -35,7 +35,8 @@
     <br />
 }
 <br />
+
 <a asp-action="Index" class="btn btn-outline-secondary">
     <i class="fas fa-arrow-left"></i>
-    @LangResources.ReturnToListButtonText
+    @string.Format(LangResources.Titles.NameTemplate, Model.ConsumptionGroup.Name)
 </a>

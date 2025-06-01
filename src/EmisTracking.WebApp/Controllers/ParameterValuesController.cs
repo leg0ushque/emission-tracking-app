@@ -41,6 +41,7 @@ namespace EmisTracking.WebApp.Controllers
         }
 
         [Authorize]
+        [LoadLayoutDataFilter]
         [HttpGet("createForParameter/{id}")]
         public async Task<IActionResult> CreateForEmissionSource([FromRoute] string id)
         {

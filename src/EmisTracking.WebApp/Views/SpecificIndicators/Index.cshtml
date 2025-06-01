@@ -38,8 +38,16 @@
             {
                 <tr>
                     <td></td>
-                    <td>@item.ConsumptionGroup.Name</td>
-                    <td>@item.Pollutant.Name</td>
+                    <td>
+                        <a asp-controller="ConsumptionGroups" asp-action="Item" asp-route-id="@item.ConsumptionGroupId">
+                            @item.ConsumptionGroup.Name
+                        </a>
+                    </td>
+                    <td>
+                        <a asp-controller="Pollutants" asp-action="Item" asp-route-id="@item.PollutantId">
+                            @item.Pollutant.Name
+                        </a>
+                    </td>
                     <td>@item.Value</td>
 
                     @if (isAdmin)

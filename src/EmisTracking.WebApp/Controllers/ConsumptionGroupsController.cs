@@ -6,7 +6,6 @@ using EmisTracking.WebApp.Filters;
 using EmisTracking.WebApp.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -74,6 +73,7 @@ namespace EmisTracking.WebApp.Controllers
         }
 
         [Authorize]
+        [LoadLayoutDataFilter]
         [HttpGet("createForMethodology/{id}")]
         public async Task<IActionResult> CreateForMethodology([FromRoute] string id)
         {

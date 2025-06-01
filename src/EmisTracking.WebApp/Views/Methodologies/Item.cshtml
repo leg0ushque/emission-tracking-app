@@ -1,5 +1,6 @@
 ﻿@using EmisTracking.Localization
 @using EmisTracking.WebApi.Models.ViewModels
+@using EmisTracking.WebApp.Helpers
 @model ModelWithDependencies<MethodologyViewModel, MethodologyParameterViewModel>
 
 @{
@@ -7,6 +8,10 @@
     ViewData["Title"] = string.Format(LangResources.Titles.NameTemplate, Model.MainItem.Name);
 
     var isAdmin = (ViewData[Constants.ViewDataConstants.IsAdmin] as bool?).GetValueOrDefault();
+    var parameterTypes = EnumHelper.ParameterTypes;
+
+    var missingParametersList = ViewData[Constants.MissingParameters] as List<string>;
+    var extraParametersList = ViewData[Constants.ExtraParameters] as List<(string, string)>;
 }
 
 @section Breadcrumb
@@ -22,15 +27,101 @@
 
 @if (isAdmin)
 {
-    <a class="btn btn-outline-primary" asp-controller="Methodologies" asp-action="Update" asp-route-id="@Model.MainItem.Id" name="@LangResources.UpdateButtonText">
-        <i class="fas fa-pen"></i> @LangResources.UpdateButtonText
-    </a>
-    <a class="btn btn-outline-danger" asp-controller="Methodologies" asp-action="Delete" asp-route-id="@Model.MainItem.Id" name="@LangResources.DeleteButtonText">
-        <i class="fas fa-trash"></i> @LangResources.DeleteButtonText
-    </a>
-    <br />
+    <p>
+        <a class="btn btn-outline-primary" asp-controller="Methodologies" asp-action="Update" asp-route-id="@Model.MainItem.Id" name="@LangResources.UpdateButtonText">
+            <i class="fas fa-pen"></i> @LangResources.UpdateButtonText
+        </a>
+        <a class="btn btn-outline-danger" asp-controller="Methodologies" asp-action="Delete" asp-route-id="@Model.MainItem.Id" name="@LangResources.DeleteButtonText">
+            <i class="fas fa-trash"></i> @LangResources.DeleteButtonText
+        </a>
+    </p>
 }
-<br />
-<a asp-action="Index" class="btn btn-outline-secondary">
-    <i class="fas fa-arrow-left"></i> @LangResources.ReturnButtonText
+
+<h4>@LangResources.Titles.MethodologyParametersList</h4>
+
+@if (missingParametersList != null && missingParametersList.Count != 0)
+{
+    <div class="alert alert-danger">
+        <p><b>@LangResources.Warning</b></p>
+        <span>@LangResources.MissingParametersHint</span>
+
+        <ul class="mb-0">
+            @foreach (var one in missingParametersList)
+            {
+                <li>
+                    <a asp-action="CreateForMethodology"
+                       asp-route-id="@Model.MainItem.Id"
+                       asp-route-formulaName="@one"
+                        asp-controller="MethodologyParameters">
+                        @one <span>[ <i class="fas fa-plus"></i> @LangResources.CreateButtonText ]</span>
+                    </a>
+                </li>
+            }
+        </ul>
+    </div>
+}
+
+@if (extraParametersList != null && extraParametersList.Count != 0)
+{
+    <div class="alert alert-warning">
+        <p><b>@LangResources.Warning</b></p>
+        <span>@LangResources.ExtraParametersHint</span>
+
+        <ul class="mb-0">
+            @foreach (var one in extraParametersList)
+            {
+                <li>
+                    <a asp-action="Item"
+                       asp-route-id="@one.Item1"
+                       asp-controller="MethodologyParameters">
+                        @one.Item2
+                    </a>
+                </li>
+            }
+        </ul>
+    </div>
+}
+
+<a class="btn btn-primary" asp-action="CreateForMethodology" asp-route-id="@Model.MainItem.Id" asp-controller="MethodologyParameters">
+    <i class="fas fa-plus"></i>
+    @LangResources.CreateButtonText
 </a>
+
+<table class="table-striped table-bordered" id="mainItemsTable">
+    <thead>
+        <tr>
+            <th scope="col">№</th>
+            <th scope="col">@LangResources.Fields.Name</th>
+            <th scope="col">@LangResources.Fields.ParameterType</th>
+            <th scope="col">@LangResources.Fields.FormulaName</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            foreach (var item in Model.Dependencies)
+            {
+                <tr>
+                    <td></td>
+                    <td>
+                        <a asp-controller="MethodologyParameters"
+                           asp-action="Item"
+                           asp-route-id="@item.Id">@item.Name</a>
+                    </td>
+                    <td>@parameterTypes[item.ParameterType]</td>
+                    <td>@item.FormulaName</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        await Html.RenderPartialAsync("_JqueryDatatable");
+
+        var columnWidths = new Queue<string>(new[] { "35%", "15%", "15%" });
+
+        await Html.RenderPartialAsync("_DataTableInitialization", columnWidths);
+    }
+}

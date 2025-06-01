@@ -28,10 +28,14 @@
 
 <h5 class="text-danger">@LangResources.CannotBeUndoneText</h5>
 
-<a asp-action="Index" class="btn btn-secondary">
+<a class="btn btn-outline-secondary"
+   asp-action="GetBySource"
+   asp-controller="OperatingTimes"
+   asp-route-id="@Model.EmissionSourceId">
     <i class="fas fa-arrow-left"></i>
-    @LangResources.ReturnToListButtonText
+    @LangResources.ReturnButtonText
 </a>
+
 <a asp-action="ConfirmDelete" asp-route-id="@Model.Id" class="btn btn-danger">
     <i class="fas fa-trash"></i>
     @LangResources.ConfirmDeleteButtonText

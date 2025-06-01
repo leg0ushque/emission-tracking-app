@@ -5,6 +5,7 @@ using EmisTracking.WebApi.Models.ViewModels;
 using EmisTracking.WebApp.Filters;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,11 +16,15 @@ namespace EmisTracking.WebApp.Controllers
     public class OperatingTimesController : BaseDropdownViewController<OperatingTimeViewModel>
     {
         private readonly IBaseApiService<EmissionSourceViewModel> _emissionSourceService;
+        private readonly IOperatingTimeApiService _operatingTimeService;
 
-        public OperatingTimesController(IBaseApiService<OperatingTimeViewModel> operatingTimeService, IBaseApiService<EmissionSourceViewModel> emissionSourceService)
+        public OperatingTimesController(
+            IOperatingTimeApiService operatingTimeService,
+            IBaseApiService<EmissionSourceViewModel> emissionSourceService)
         {
             _apiService = operatingTimeService;
             _emissionSourceService = emissionSourceService;
+            _operatingTimeService = operatingTimeService;
         }
 
         protected override string CreationTitle => LangResources.Titles.OperatingTimesCreate;
@@ -38,6 +43,29 @@ namespace EmisTracking.WebApp.Controllers
         }
 
         [Authorize]
+        [LoadLayoutDataFilter]
+        [HttpGet("bySource/{id}")]
+        public async Task<IActionResult> GetBySource([FromRoute] string id)
+        {
+            var response = await _operatingTimeService.GetByEmissionSourceIdAsync(id, loadDependencies: false);
+
+            if (response.Success)
+            {
+                ViewData["SourceId"] = id;
+
+                var sourceResponse = await _emissionSourceService.GetByIdAsync(id);
+                ViewData["SourceInfo"] = sourceResponse.Success ? sourceResponse.Data.Name : string.Empty;
+
+                return View("Index", response.Data);
+            }
+            else
+            {
+                return View(Constants.ErrorView, (errorMessage: response.ErrorMessage, controller: string.Empty, action: nameof(Index)));
+            }
+        }
+
+        [Authorize]
+        [LoadLayoutDataFilter]
         [HttpGet("createForEmissionSource/{id}")]
         public async Task<IActionResult> CreateForEmissionSource([FromRoute] string id)
         {
@@ -48,6 +76,11 @@ namespace EmisTracking.WebApp.Controllers
             await LoadDropdownsValuesAsync(model);
 
             model.EmissionSourceId = model.EmissionSources.Any(s => s.Value == id) ? id : null;
+
+            var currentDate = DateTime.Now;
+
+            model.Month = currentDate.Month;
+            model.Year = currentDate.Year;
 
             return View(Constants.FormView, model);
         }

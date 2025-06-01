@@ -41,8 +41,16 @@
             {
                 <tr>
                     <td></td>
-                    <td>@item.Methodology.Name</td>
-                    <td>@item.Name</td>
+                    <td>
+                        <a asp-controller="Methodologies" asp-action="Item" asp-route-id="@item.MethodologyId">
+                            @item.Methodology.Name
+                        </a>
+                    </td>
+                    <td>
+                        <a asp-controller="MethodologyParameters" asp-action="Item" asp-route-id="@item.Id">
+                            @item.Name
+                        </a>
+                    </td>
                     <td>@item.FormulaName</td>
                     <td>@parameterTypes[item.ParameterType]</td>
 

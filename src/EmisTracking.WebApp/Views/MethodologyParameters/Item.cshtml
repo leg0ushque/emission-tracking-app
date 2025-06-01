@@ -1,22 +1,31 @@
 ﻿@using EmisTracking.WebApi.Models.ViewModels
 @using EmisTracking.Localization
+@using EmisTracking.WebApp.Helpers
 @model MethodologyParameterViewModel
 
 @{
     ViewData[Constants.GenerateBreadcrumb] = new();
-    ViewData["Title"] = LangResources.Titles.MethodologyParametersIndex;
+
+    var methodology = string.Format(LangResources.Titles.NameTemplate, Model.Methodology.ShortName);
+
+    ViewData["Title"] = $"{LangResources.Fields.MethodologyParameter} {string.Format(LangResources.Titles.NameTemplate, Model.Name)}";
 
     var isAdmin = (ViewData[Constants.ViewDataConstants.IsAdmin] as bool?).GetValueOrDefault();
+    var parameterTypes = EnumHelper.ParameterTypes;
 }
 
 @section Breadcrumb
 {
-    <li class="breadcrumb-item"><a asp-action="Index">@LangResources.Titles.MethodologyParametersIndex</a></li>
+    <li class="breadcrumb-item">
+        <a asp-action="Item" asp-controller="Methodologies" asp-route-id="@Model.MethodologyId">@methodology</a>
+    </li>
     <li class="breadcrumb-item active">@ViewData["Title"]</li>
 }
 
 <p><strong>@LangResources.Fields.Methodology:</strong> @Model.Methodology.Name</p>
-<p><strong>@LangResources.Fields.ParameterType:</strong> @Model.ParameterType</p>
+<p><strong>@LangResources.Fields.Name:</strong> @Model.Name</p>
+<p><strong>@LangResources.Fields.FormulaName:</strong> @Model.FormulaName</p>
+<p><strong>@LangResources.Fields.ParameterType:</strong> @parameterTypes[Model.ParameterType]</p>
 
 @if (isAdmin)
 {
@@ -29,7 +38,8 @@
     <br />
 }
 <br />
-<a asp-action="Index" class="btn btn-outline-secondary">
+
+<a asp-action="Item" asp-controller="Methodologies" asp-route-id="@Model.MethodologyId" class="btn btn-outline-secondary">
     <i class="fas fa-arrow-left"></i>
-    @LangResources.ReturnButtonText
+    @methodology
 </a>

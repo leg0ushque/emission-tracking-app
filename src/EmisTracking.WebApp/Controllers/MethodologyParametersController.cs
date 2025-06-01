@@ -1,8 +1,8 @@
 ﻿using EmisTracking.Localization;
-using EmisTracking.Services.Services;
 using EmisTracking.Services.WebApi.Services;
 using EmisTracking.WebApi.Models.Models;
 using EmisTracking.WebApi.Models.ViewModels;
+using EmisTracking.WebApp.Filters;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
@@ -39,8 +39,9 @@ namespace EmisTracking.WebApp.Controllers
         protected override string UpdateTitle => LangResources.Titles.MethodologyParametersUpdate;
 
         [Authorize]
+        [LoadLayoutDataFilter]
         [HttpGet("createForMethodology/{id}")]
-        public async Task<IActionResult> CreateForMethodology([FromRoute] string id)
+        public async Task<IActionResult> CreateForMethodology([FromRoute] string id, [FromQuery] string formulaName)
         {
             ViewData[AspAction] = nameof(Create);
             ViewData[Title] = CreationTitle;
@@ -49,6 +50,8 @@ namespace EmisTracking.WebApp.Controllers
             await LoadDropdownsValuesAsync(model);
 
             model.MethodologyId = model.Methodologies.Any(s => s.Value == id) ? id : null;
+
+            model.FormulaName = formulaName;
 
             return View(Constants.FormView, model);
         }

@@ -65,6 +65,14 @@ namespace EmisTracking.WebApp.Controllers
                     Dependencies = parametersResponse.Success ? parametersResponse.Data : []
                 };
 
+                var formulaParameters = model.MainItem.GetFormulaParameters();
+
+                ViewData[Constants.MissingParameters] = formulaParameters
+                    .Except(model.Dependencies.Select(x => x.FormulaName)).ToList();
+                ViewData[Constants.ExtraParameters] = model.Dependencies
+                    .Where(d => !formulaParameters.Contains(d.FormulaName))
+                    .Select(x => (x.Id, x.Name)).ToList();
+
                 return View(model);
             }
             else

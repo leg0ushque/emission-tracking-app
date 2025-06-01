@@ -1,4 +1,5 @@
-﻿using EmisTracking.WebApi.Models.Enums;
+﻿using EmisTracking.Localization;
+using EmisTracking.WebApi.Models.Enums;
 using EmisTracking.WebApi.Models.Models;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,23 @@ namespace EmisTracking.WebApp.Helpers
 {
     public static class EnumHelper
     {
+        public static Dictionary<int, string> Months
+             => new()
+             {
+                 [1] = LangResources.Months.January,
+                 [2] = LangResources.Months.February,
+                 [3] = LangResources.Months.March,
+                 [4] = LangResources.Months.April,
+                 [5] = LangResources.Months.May,
+                 [6] = LangResources.Months.June,
+                 [7] = LangResources.Months.July,
+                 [8] = LangResources.Months.August,
+                 [9] = LangResources.Months.September,
+                 [10] = LangResources.Months.October,
+                 [11] = LangResources.Months.November,
+                 [12] = LangResources.Months.December
+             };
+
         public static Dictionary<AggregateState, string> AggregateStates
              => new()
              {

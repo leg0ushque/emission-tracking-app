@@ -1,5 +1,6 @@
 ﻿@using EmisTracking.WebApi.Models.ViewModels
 @using EmisTracking.Localization
+@using EmisTracking.WebApp.Helpers
 @model OperatingTimeViewModel
 
 @{
@@ -7,6 +8,7 @@
     ViewData["Title"] = string.Format(LangResources.Titles.NameTemplate, Model.EmissionSource.Name);
 
     var isAdmin = (ViewData[Constants.ViewDataConstants.IsAdmin] as bool?).GetValueOrDefault();
+    var months = EnumHelper.Months;
 }
 
 @section Breadcrumb
@@ -16,8 +18,7 @@
 }
 
 <p><strong>@LangResources.Fields.EmissionSource:</strong> @Model.EmissionSource.Name</p>
-<p><strong>@LangResources.Fields.Month:</strong> @Model.Month</p>
-<p><strong>@LangResources.Fields.Year:</strong> @Model.Year</p>
+<p><strong>@LangResources.Fields.Period:</strong> @months[Model.Month] @Model.Year</p>
 <p><strong>@LangResources.Fields.Hours:</strong> @Model.Hours</p>
 
 @if (isAdmin)
@@ -31,7 +32,8 @@
     <br />
 }
 <br />
-<a asp-action="Index" class="btn btn-outline-secondary">
+
+<a asp-action="GetBySource" asp-route-id="@Model.EmissionSourceId" class="btn btn-outline-secondary">
     <i class="fas fa-arrow-left"></i>
-    @LangResources.ReturnButtonText
+    @string.Format(LangResources.Titles.NameTemplate, Model.EmissionSource.Name)
 </a>

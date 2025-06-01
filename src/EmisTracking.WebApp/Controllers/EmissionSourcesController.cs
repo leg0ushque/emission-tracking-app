@@ -6,7 +6,6 @@ using EmisTracking.WebApp.Filters;
 using EmisTracking.WebApp.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -41,6 +40,7 @@ namespace EmisTracking.WebApp.Controllers
         protected override string UpdateTitle => LangResources.Titles.EmissionSourcesUpdate;
 
         [Authorize(Roles = Services.Constants.AdminRole)]
+        [LoadLayoutDataFilter]
         [HttpGet("createForSubdivision/{id}")]
         public async Task<IActionResult> CreateForSubdivision([FromRoute] string id)
         {

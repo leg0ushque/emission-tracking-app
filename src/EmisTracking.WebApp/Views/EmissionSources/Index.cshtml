@@ -6,6 +6,8 @@
     ViewData["Title"] = LangResources.Titles.EmissionSourcesIndex;
 
     var isAdmin = (ViewData[Constants.ViewDataConstants.IsAdmin] as bool?).GetValueOrDefault();
+    var isEngineer = true; // FIXME
+
     var processCategories = EnumHelper.ProcessCategories;
 }
 
@@ -28,6 +30,11 @@
             <th scope="col">@LangResources.Fields.ProcessCategory</th>
             <th scope="col">@LangResources.Fields.Methodology</th>
 
+            @if (isEngineer)
+            {
+                <th scope="col" data-orderable="false" data-searchable="false"></th>
+            }
+
             @if (isAdmin)
             {
                 <th scope="col" data-orderable="false" data-searchable="false"></th>
@@ -45,6 +52,16 @@
                     <td><a asp-action="Item" asp-controller="EmissionSources" asp-route-id="@item.Id">@item.Name</a></td>
                     <td>@(processCategories.FirstOrDefault(x => x.Key == item.ProcessCategory).Value ?? LangResources.NoValue)</td>
                     <td>@(item.Methodology?.Name ?? LangResources.NoValue)</td>
+
+                    @if (isEngineer)
+                    {
+                        <td>
+                            <a class="btn btn-outline-primary"
+                               asp-controller="OperatingTimes" asp-action="GetBySource" asp-route-id="@item.Id">
+                                <i class="fas fa-clock"></i>
+                            </a>
+                        </td>
+                    }
 
                     @if (isAdmin)
                     {

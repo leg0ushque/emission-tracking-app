@@ -38,6 +38,7 @@ namespace EmisTracking.WebApp.Controllers
         }
 
         [Authorize]
+        [LoadLayoutDataFilter]
         [HttpGet("createForConsumptionGroup/{id}")]
         public async Task<IActionResult> CreateForConsumptionGroup([FromRoute] string id)
         {

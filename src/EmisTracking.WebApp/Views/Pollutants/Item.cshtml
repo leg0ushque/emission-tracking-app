@@ -9,6 +9,8 @@
 
     var isAdmin = (ViewData[Constants.ViewDataConstants.IsAdmin] as bool?).GetValueOrDefault();
     var aggregateState = EnumHelper.AggregateStates;
+
+    var itemName = string.IsNullOrEmpty(Model.Formula) ? Model.Name : $"{Model.Name} - {Model.Formula}";
 }
 
 @section Breadcrumb
@@ -17,7 +19,7 @@
     <li class="breadcrumb-item active">@ViewData["Title"]</li>
 }
 
-<p class="text-large"><strong>@LangResources.Fields.Name:</strong> @Model.Name - @Model.Formula</p>
+<p class="text-large"><strong>@LangResources.Fields.Name:</strong> @itemName</p>
 <p><strong>@LangResources.Fields.HazardClass:</strong> @Model.HazardClass</p>
 <p><strong>@LangResources.Fields.AggregateState:</strong> @aggregateState[Model.AggregateState]</p>
 

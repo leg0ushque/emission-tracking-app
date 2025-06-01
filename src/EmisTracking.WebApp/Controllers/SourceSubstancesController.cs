@@ -3,6 +3,7 @@ using EmisTracking.Services.WebApi.Services;
 using EmisTracking.WebApi.Models.Models;
 using EmisTracking.WebApi.Models.ViewModels;
 using EmisTracking.WebApp.Filters;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Threading.Tasks;
@@ -46,6 +47,8 @@ namespace EmisTracking.WebApp.Controllers
             }
         }
 
+        [Authorize]
+        [LoadLayoutDataFilter]
         [HttpGet("createForEmissionSource/{emissionSourceId}")]
         public async Task<IActionResult> CreateForEmissionSource([FromRoute] string emissionSourceId)
         {

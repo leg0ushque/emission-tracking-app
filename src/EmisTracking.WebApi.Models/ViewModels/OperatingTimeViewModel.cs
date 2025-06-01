@@ -14,7 +14,7 @@ namespace EmisTracking.WebApi.Models.ViewModels
         public IEnumerable<DropdownItemModel> EmissionSources { get; set; }
 
         [Display(Name = LangResources.Fields.Month)]
-        [Required(ErrorMessage = LangResources.MustBeFilledMessage)]
+        [Required(ErrorMessage = LangResources.MustBeChosen)]
         public int Month { get; set; }
 
         [Display(Name = LangResources.Fields.Year)]

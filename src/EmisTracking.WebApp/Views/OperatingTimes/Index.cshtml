@@ -1,29 +1,55 @@
 ﻿@model List<EmisTracking.WebApi.Models.ViewModels.OperatingTimeViewModel>
 @using EmisTracking.Localization
+@using EmisTracking.WebApp.Helpers
 @{
     ViewData[Constants.GenerateBreadcrumb] = new();
-    ViewData["Title"] = LangResources.Titles.OperatingTimesIndex;
+    var sourceId = ViewData["SourceId"] as string;
+    var sourceInfo = ViewData["SourceInfo"] as string;
+
+    ViewData["Title"] = sourceId != null ?
+        string.Format(LangResources.Titles.OperatingTimesBySourceIndex, sourceInfo)
+        : LangResources.Titles.OperatingTimesIndex;
 
     var isAdmin = (ViewData[Constants.ViewDataConstants.IsAdmin] as bool?).GetValueOrDefault();
+    var months = EnumHelper.Months;
 }
 
 @section Breadcrumb
 {
-    <li class="breadcrumb-item active">@ViewData["Title"]</li>
+    @if (sourceId != null)
+    {
+
+    }
+    else
+    {
+        <li class="breadcrumb-item active">@ViewData["Title"]</li>
+    }
 }
 
-<a class="btn btn-primary" asp-action="Create" asp-controller="OperatingTimes">
-    <i class="fas fa-plus"></i>
-    @LangResources.CreateButtonText
-</a>
+@if (sourceId != null)
+{
+    <a class="btn btn-primary" asp-action="CreateForEmissionSource" asp-controller="OperatingTimes" asp-route-id="@sourceId">
+        <i class="fas fa-plus"></i>
+        @LangResources.CreateButtonText
+    </a>
+}
+else
+{
+    <a class="btn btn-primary" asp-action="Create" asp-controller="OperatingTimes">
+        <i class="fas fa-plus"></i>
+        @LangResources.CreateButtonText
+    </a>
+}
 
 <table class="table-striped table-bordered" id="mainItemsTable">
     <thead>
         <tr>
             <th scope="col">№</th>
-            <th scope="col">@LangResources.Fields.EmissionSource</th>
-            <th scope="col">@LangResources.Fields.Month</th>
-            <th scope="col">@LangResources.Fields.Year</th>
+            @if (sourceId == null)
+            {
+                <th scope="col">@LangResources.Fields.EmissionSource</th>
+            }
+            <th scope="col">@LangResources.Fields.Period</th>
             <th scope="col">@LangResources.Fields.Hours</th>
 
             @if (isAdmin)
@@ -39,9 +65,11 @@
             {
                 <tr>
                     <td></td>
-                    <td>@item.EmissionSource.Name</td>
-                    <td>@item.Month</td>
-                    <td>@item.Year</td>
+                    @if (sourceId == null)
+                    {
+                        <td>@sourceInfo</td>
+                    }
+                    <td>@months[item.Month] @item.Year</td>
                     <td>@item.Hours</td>
 
                     @if (isAdmin)
@@ -72,9 +100,18 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
         await Html.RenderPartialAsync("_JqueryDatatable");
 
-        var columnWidths = new Queue<string>(new[] { "30%", "15%", "15%", "30%" });
+        var columnWidths = new Queue<string>(new[] { "30%" });
+        @if (sourceId == null)
+        {
+            columnWidths.Enqueue("15%");
+        }
+
+        columnWidths.Enqueue("15%");
+        //columnWidths.Enqueue("30%");
+
         if (isAdmin)
         {
+
             columnWidths.Enqueue(Constants.DefaultEditDeleteButtonsWidth);
             columnWidths.Enqueue(Constants.DefaultEditDeleteButtonsWidth);
         }

@@ -3,6 +3,7 @@
     public static class LangResources
     {
         public const string ErrorTitle = "Ошибка!";
+        public const string Warning = "Внимание!";
 
         public const string ReturnButtonText = "Вернуться";
         public const string ReturnToListButtonText = "Вернуться к списку";
@@ -37,6 +38,9 @@
         public const string ModeMethodologyCategoryHint4 = "Если нужный режим отсутствует в списке, это значит, что ему не соответствует ни одна методика. Необходимо создать хотя бы одну.";
         public const string ModeMethodologyCategoryHint5 = "Используйте очистку поля для отмены.";
         public const string InPollutantsList = "в перечне";
+        public const string ParametersNamesHint1 = "Название параметра произвольное, название в формуле - латиницей без скобок";
+        public const string ParametersNamesHint2 = "Например, параметр удельного показателя, в формуле \"A*B*[Spec]\" указан как Spec";
+        public const string FormulaHint = "Параметры в формуле следует записывать в квадратных скобках. Например [A]*[Mass]+[Spec1]";
 
         public const string AuthUserNotFoundErrorMessageTemplate = "Пользователь {0} не найден.";
         public const string SignInFailedErrorMessage = "Не удалось выполнить вход. Проверьте введённые логин и пароль и повторите попытку снова!";
@@ -44,6 +48,12 @@
         public const string PasswordHint = "Пароль должен иметь минимум 6 символов, среди которых должна быть\nхотя бы одна заглавная и одна прописная буквы, одна цифра,\nа также не буквенно-цифровой символ.";
 
         public const string EitherMethodologyAndModeMustBeSet = "Необходимо выбрать либо режим, либо методику";
+
+        public const string BracketsBalanceError = "Квадратные скобки должны быть корректно открыты и закрыты";
+        public const string DoubleOpenBracketError = "Недопустимо две открывающие скобки подряд без закрывающей между ними";
+
+        public const string MissingParametersHint = "Следующие параметры представлены в формуле, но отсутствуют в списке ниже. Их небходимо досоздать (кликните для перехода на страницу создания)!";
+        public const string ExtraParametersHint = "Следующие параметры избыточны и НЕ представлены в формуле. Они не влияют на работу системы, но возможно были упущены. Пожалуйста, проверьте список:";
 
         // Названия сущностей
 
@@ -113,6 +123,7 @@
             public const string Hours = "Количество часов";
             public const string Month = "Месяц";
             public const string Year = "Год";
+            public const string Period = "Период";
             public const string HazardClass = "Класс опасности";
             public const string AggregateState = "Агрегатное состояние";
             public const string IsRegulated = "Нормированность";
@@ -257,6 +268,7 @@
             // Operating Time
             public const string OperatingTimesList = "Список времени работы";
             public const string OperatingTimesIndex = "Время работы";
+            public const string OperatingTimesBySourceIndex = "Время работы источника \"{0}\"";
             public const string OperatingTimesCreate = "Учёт времени работы";
             public const string OperatingTimesUpdate = "Обновление времени работы";
 

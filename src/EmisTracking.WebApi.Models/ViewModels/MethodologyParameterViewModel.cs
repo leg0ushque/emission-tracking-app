@@ -9,11 +9,13 @@ namespace EmisTracking.WebApi.Models.ViewModels
     public class MethodologyParameterViewModel : BaseViewModel
     {
         [Display(Name = LangResources.Fields.Methodology)]
+        [Required(ErrorMessage = LangResources.MustBeChosen)]
         public string MethodologyId { get; set; }
         public MethodologyViewModel Methodology { get; set; }
         public IEnumerable<DropdownItemModel> Methodologies { get; set; }
 
         [Display(Name = LangResources.Fields.ParameterType)]
+        [Required(ErrorMessage = LangResources.MustBeChosen)]
         public ParameterType ParameterType { get; set; }
 
         [Display(Name = LangResources.Fields.Name)]

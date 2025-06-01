@@ -61,7 +61,20 @@
     <div class="row mb-3">
         <label asp-for="Month" class="col-md-2 control-form-label"></label>
         <div class="col-sm-6">
-            <input asp-for="Month" class="form-control" />
+            <select asp-for="Month" class="form-select">
+                <option value="1">@LangResources.Months.January</option>
+                <option value="2">@LangResources.Months.February</option>
+                <option value="3">@LangResources.Months.March</option>
+                <option value="4">@LangResources.Months.April</option>
+                <option value="5">@LangResources.Months.May</option>
+                <option value="6">@LangResources.Months.June</option>
+                <option value="7">@LangResources.Months.July</option>
+                <option value="8">@LangResources.Months.August</option>
+                <option value="9">@LangResources.Months.September</option>
+                <option value="10">@LangResources.Months.October</option>
+                <option value="11">@LangResources.Months.November</option>
+                <option value="12">@LangResources.Months.December</option>
+            </select>
             <span asp-validation-for="Month" class="text-danger"></span>
         </div>
     </div>
