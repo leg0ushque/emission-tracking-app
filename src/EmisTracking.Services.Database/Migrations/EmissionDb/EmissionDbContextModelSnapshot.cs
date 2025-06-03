@@ -398,6 +398,9 @@ namespace EmisTracking.Services.Database.Migrations.EmissionDb
                         .HasMaxLength(36)
                         .HasColumnType("nvarchar(36)");
 
+                    b.Property<DateTime>("CalculationDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("HazardClass")
                         .HasColumnType("int");
 

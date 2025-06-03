@@ -1,5 +1,6 @@
 ﻿using EmisTracking.Localization;
 using EmisTracking.WebApi.Models.Enums;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace EmisTracking.WebApi.Models.ViewModels
@@ -20,5 +21,8 @@ namespace EmisTracking.WebApi.Models.ViewModels
 
         [Display(Name = LangResources.Fields.IsPaid)]
         public bool IsPaid { get; set; }
+
+        [Display(Name = LangResources.Fields.CalculationDate)]
+        public DateTime CalculationDate { get; set; } = DateTime.Now;
     }
 }

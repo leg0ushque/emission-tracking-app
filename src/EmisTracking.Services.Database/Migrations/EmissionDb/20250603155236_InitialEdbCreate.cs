@@ -60,6 +60,7 @@ namespace EmisTracking.Services.Database.Migrations.EmissionDb
                     Month = table.Column<int>(type: "int", nullable: false),
                     Year = table.Column<int>(type: "int", nullable: false),
                     TotalAmount = table.Column<double>(type: "float", nullable: false),
+                    CalculationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     HazardClass = table.Column<int>(type: "int", nullable: false),
                     IsPaid = table.Column<bool>(type: "bit", nullable: false)
                 },

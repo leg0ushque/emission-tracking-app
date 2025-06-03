@@ -19,6 +19,6 @@ namespace EmisTracking.Services.Entities
         public string TaxId { get; set; }
         public virtual Tax Tax { get; set; }
 
-        public DateTime CalculationDate { get; set; }
+        public DateTime CalculationDate { get; set; } = DateTime.Now;
     }
 }

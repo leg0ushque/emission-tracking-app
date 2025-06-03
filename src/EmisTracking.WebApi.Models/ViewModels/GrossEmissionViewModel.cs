@@ -37,6 +37,6 @@ namespace EmisTracking.WebApi.Models.ViewModels
         public TaxViewModel Tax { get; set; }
 
         [Display(Name = LangResources.Fields.CalculationDate)]
-        public DateTime CalculationDate { get; set; }
+        public DateTime CalculationDate { get; set; } = DateTime.Now;
     }
 }

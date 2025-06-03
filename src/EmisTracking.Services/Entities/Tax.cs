@@ -1,4 +1,5 @@
 ﻿using EmisTracking.Services.Enums;
+using System;
 
 namespace EmisTracking.Services.Entities
 {
@@ -9,6 +10,8 @@ namespace EmisTracking.Services.Entities
         public int Year { get; set; }
 
         public double TotalAmount { get; set; }
+
+        public DateTime CalculationDate { get; set; } = DateTime.Now;
 
         public HazardClass HazardClass { get; set; }
 
