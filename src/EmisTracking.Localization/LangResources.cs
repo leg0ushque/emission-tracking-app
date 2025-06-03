@@ -137,6 +137,7 @@
             public const string IsPaid = "Оплаченность";
             public const string StartDate = "Дата начала";
             public const string EndDate = "Дата окончания";
+            public const string CalculationDate = "Дата подсчёта";
 
             // Auth & Accounts
             public const string Role = "Роль";

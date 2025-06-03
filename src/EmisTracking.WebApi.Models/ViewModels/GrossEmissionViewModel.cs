@@ -1,5 +1,6 @@
 ﻿using EmisTracking.Localization;
 using EmisTracking.WebApi.Models.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -34,5 +35,8 @@ namespace EmisTracking.WebApi.Models.ViewModels
         [Display(Name = LangResources.Fields.Tax)]
         public string TaxId { get; set; }
         public TaxViewModel Tax { get; set; }
+
+        [Display(Name = LangResources.Fields.CalculationDate)]
+        public DateTime CalculationDate { get; set; }
     }
 }

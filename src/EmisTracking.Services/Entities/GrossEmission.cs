@@ -1,4 +1,6 @@
-﻿namespace EmisTracking.Services.Entities
+﻿using System;
+
+namespace EmisTracking.Services.Entities
 {
     public class GrossEmission : BaseEntity
     {
@@ -16,5 +18,7 @@
 
         public string TaxId { get; set; }
         public virtual Tax Tax { get; set; }
+
+        public DateTime CalculationDate { get; set; }
     }
 }

@@ -317,7 +317,8 @@ namespace EmisTracking.Services.Database.Migrations.EmissionDb
                     Mass = table.Column<double>(type: "float", nullable: false),
                     Month = table.Column<int>(type: "int", nullable: false),
                     Year = table.Column<int>(type: "int", nullable: false),
-                    TaxId = table.Column<string>(type: "nvarchar(36)", nullable: true)
+                    TaxId = table.Column<string>(type: "nvarchar(36)", nullable: true),
+                    CalculationDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
