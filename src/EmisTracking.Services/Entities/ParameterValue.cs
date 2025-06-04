@@ -11,7 +11,7 @@
 
         public double Value { get; set; }
 
-        public string GrossEmissionId { get; set; }
-        public virtual GrossEmission GrossEmission { get; set; }
+        public string SourceSubstanceId { get; set; }
+        public virtual SourceSubstance SourceSubstance { get; set; }
     }
 }

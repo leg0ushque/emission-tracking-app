@@ -121,9 +121,9 @@ namespace EmisTracking.Services.Database.Contexts
                     .HasForeignKey(m => m.MethodologyParameterId)
                     .OnDelete(DeleteBehavior.Restrict);
 
-                entity.HasOne(p => p.GrossEmission)
+                entity.HasOne(p => p.SourceSubstance)
                     .WithMany()
-                    .HasForeignKey(m => m.GrossEmissionId)
+                    .HasForeignKey(m => m.SourceSubstanceId)
                     .OnDelete(DeleteBehavior.Restrict);
             });
 

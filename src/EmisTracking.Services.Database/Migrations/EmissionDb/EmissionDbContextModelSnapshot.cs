@@ -260,15 +260,15 @@ namespace EmisTracking.Services.Database.Migrations.EmissionDb
                         .HasMaxLength(36)
                         .HasColumnType("nvarchar(36)");
 
-                    b.Property<string>("GrossEmissionId")
-                        .HasColumnType("nvarchar(36)");
-
                     b.Property<string>("MethodologyParameterId")
                         .IsRequired()
                         .HasColumnType("nvarchar(36)");
 
                     b.Property<int>("Month")
                         .HasColumnType("int");
+
+                    b.Property<string>("SourceSubstanceId")
+                        .HasColumnType("nvarchar(36)");
 
                     b.Property<double>("Value")
                         .HasColumnType("float");
@@ -278,9 +278,9 @@ namespace EmisTracking.Services.Database.Migrations.EmissionDb
 
                     b.HasKey("Id");
 
-                    b.HasIndex("GrossEmissionId");
-
                     b.HasIndex("MethodologyParameterId");
+
+                    b.HasIndex("SourceSubstanceId");
 
                     b.ToTable("ParameterValues");
                 });
@@ -566,20 +566,20 @@ namespace EmisTracking.Services.Database.Migrations.EmissionDb
 
             modelBuilder.Entity("EmisTracking.Services.Entities.ParameterValue", b =>
                 {
-                    b.HasOne("EmisTracking.Services.Entities.GrossEmission", "GrossEmission")
-                        .WithMany()
-                        .HasForeignKey("GrossEmissionId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
                     b.HasOne("EmisTracking.Services.Entities.MethodologyParameter", "MethodologyParameter")
                         .WithMany()
                         .HasForeignKey("MethodologyParameterId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("GrossEmission");
+                    b.HasOne("EmisTracking.Services.Entities.SourceSubstance", "SourceSubstance")
+                        .WithMany()
+                        .HasForeignKey("SourceSubstanceId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("MethodologyParameter");
+
+                    b.Navigation("SourceSubstance");
                 });
 
             modelBuilder.Entity("EmisTracking.Services.Entities.SourceSubstance", b =>

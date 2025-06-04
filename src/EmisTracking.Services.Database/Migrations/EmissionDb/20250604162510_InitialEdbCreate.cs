@@ -353,21 +353,21 @@ namespace EmisTracking.Services.Database.Migrations.EmissionDb
                     Month = table.Column<int>(type: "int", nullable: false),
                     Year = table.Column<int>(type: "int", nullable: false),
                     Value = table.Column<double>(type: "float", nullable: false),
-                    GrossEmissionId = table.Column<string>(type: "nvarchar(36)", nullable: true)
+                    SourceSubstanceId = table.Column<string>(type: "nvarchar(36)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ParameterValues", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ParameterValues_GrossEmissions_GrossEmissionId",
-                        column: x => x.GrossEmissionId,
-                        principalTable: "GrossEmissions",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
                         name: "FK_ParameterValues_MethodologyParameters_MethodologyParameterId",
                         column: x => x.MethodologyParameterId,
                         principalTable: "MethodologyParameters",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_ParameterValues_SourceSubstances_SourceSubstanceId",
+                        column: x => x.SourceSubstanceId,
+                        principalTable: "SourceSubstances",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -428,14 +428,14 @@ namespace EmisTracking.Services.Database.Migrations.EmissionDb
                 column: "EmissionSourceId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ParameterValues_GrossEmissionId",
-                table: "ParameterValues",
-                column: "GrossEmissionId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_ParameterValues_MethodologyParameterId",
                 table: "ParameterValues",
                 column: "MethodologyParameterId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ParameterValues_SourceSubstanceId",
+                table: "ParameterValues",
+                column: "SourceSubstanceId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SourceSubstances_EmissionSourceId",
@@ -470,6 +470,9 @@ namespace EmisTracking.Services.Database.Migrations.EmissionDb
                 name: "Consumptions");
 
             migrationBuilder.DropTable(
+                name: "GrossEmissions");
+
+            migrationBuilder.DropTable(
                 name: "OperatingTimes");
 
             migrationBuilder.DropTable(
@@ -485,19 +488,16 @@ namespace EmisTracking.Services.Database.Migrations.EmissionDb
                 name: "Users");
 
             migrationBuilder.DropTable(
-                name: "GrossEmissions");
+                name: "Taxes");
 
             migrationBuilder.DropTable(
                 name: "MethodologyParameters");
 
             migrationBuilder.DropTable(
-                name: "ConsumptionGroups");
-
-            migrationBuilder.DropTable(
                 name: "SourceSubstances");
 
             migrationBuilder.DropTable(
-                name: "Taxes");
+                name: "ConsumptionGroups");
 
             migrationBuilder.DropTable(
                 name: "EmissionSources");

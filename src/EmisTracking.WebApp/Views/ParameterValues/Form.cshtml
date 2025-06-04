@@ -70,6 +70,24 @@
         </div>
     </div>
 
+    <div class="row mb-3">
+        <label asp-for="SourceSubstanceId" class="col-md-2 control-form-label"></label>
+        <div class="col-sm-6">
+            <select asp-for="SourceSubstanceId" class="form-select">
+                <option value="" disabled selected>@LangResources.ChooseSomething</option>
+                @if (Model.SourceSubstances?.Any() ?? false)
+                {
+                    @foreach (var item in Model.SourceSubstances)
+                    {
+                        <option value="@item.Value">@item.Name</option>
+                    }
+                }
+            </select>
+            <span asp-validation-for="SourceSubstanceId" class="text-danger"></span>
+        </div>
+    </div>
+
+
     <div class="form-group row">
         <div class="col-sm-6">
             <input type="submit" class="btn btn-primary" value="@LangResources.SaveButtonText" />

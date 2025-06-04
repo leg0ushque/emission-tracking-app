@@ -25,7 +25,9 @@ namespace EmisTracking.WebApi.Models.ViewModels
         [Required(ErrorMessage = LangResources.MustBeFilledMessage)]
         public double Value { get; set; }
 
-        [Display(Name = LangResources.Fields.GrossEmission)]
-        public string GrossEmissionId { get; set; }
+        [Display(Name = LangResources.Fields.SourceSubstance)]
+        public string SourceSubstanceId { get; set; }
+        public SourceSubstanceViewModel SourceSubstance { get; set; }
+        public IEnumerable<DropdownItemModel> SourceSubstances { get; set; }
     }
 }
