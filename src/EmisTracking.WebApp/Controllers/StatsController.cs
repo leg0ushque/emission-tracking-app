@@ -4,11 +4,12 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EmisTracking.WebApp.Controllers
 {
+    [LoadLayoutDataFilter]
+    [Route("[controller]")]
     public class StatsController : Controller
     {
-        [HttpGet("")]
         [Authorize]
-        [LoadLayoutDataFilter]
+        [HttpGet("")]
         public IActionResult Index()
         {
             return View();
