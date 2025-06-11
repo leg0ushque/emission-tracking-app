@@ -67,7 +67,7 @@ namespace EmisTracking.WebApp.Controllers
                 return View(model);
             }
 
-            var response = await authApiService.PostSignInAsync(model);
+            var response = await authApiService.PostSignIn(model);
 
             if (response.Success)
             {
@@ -104,7 +104,7 @@ namespace EmisTracking.WebApp.Controllers
                 return View(model);
             }
 
-            var response = await authApiService.PostChangePasswordAsync(model);
+            var response = await authApiService.PostChangePassword(model);
 
             if (response.Success)
             {
@@ -125,7 +125,7 @@ namespace EmisTracking.WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> LogOut()
         {
-            var response = await authApiService.GetAuthLogoutAsync();
+            var response = await authApiService.GetAuthLogout();
 
             if (response.Success)
             {

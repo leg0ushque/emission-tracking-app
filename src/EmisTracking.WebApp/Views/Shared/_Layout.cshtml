@@ -48,19 +48,19 @@
         </div>
 
         @*
-        <div class="search-bar">
-        <form class="search-form d-flex align-items-center" method="POST" action="#">
-        <input type="text" name="query" placeholder="Поиск" title="Введите фразу для поиска">
-        <button type="submit" title="Search"><i class="bi bi-search"></i></button>
-        </form>
-        </div> *@
+            <div class="search-bar">
+            <form class="search-form d-flex align-items-center" method="POST" action="#">
+            <input type="text" name="query" placeholder="Поиск" title="Введите фразу для поиска">
+            <button type="submit" title="Search"><i class="bi bi-search"></i></button>
+            </form>
+            </div>
+        *@
 
-        <nav class="header-nav ms-auto" aria-label="nav">
+        <nav id="headerRightButtons" class="header-nav ms-auto" aria-label="nav">
             <ul class="d-flex align-items-center">
                 @if (!isAuthenticated)
                 {
                     <li class="nav-item pe-3">
-
                         <a class="nav-link nav-profile d-flex align-items-center pe-0"
                            asp-controller="Auth" asp-action="Login">
                             <i class="fas fa-user" style="border-radius:5px"></i>

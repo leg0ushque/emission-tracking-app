@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EmisTracking.Services.Database.Migrations.EmissionDb
 {
     [DbContext(typeof(EmissionDbContext))]
-    [Migration("20250604162510_InitialEdbCreate")]
+    [Migration("20250604220603_InitialEdbCreate")]
     partial class InitialEdbCreate
     {
         /// <inheritdoc />

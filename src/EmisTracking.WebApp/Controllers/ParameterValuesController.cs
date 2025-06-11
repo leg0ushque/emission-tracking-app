@@ -14,14 +14,22 @@ namespace EmisTracking.WebApp.Controllers
     [Route("[controller]")]
     public class ParameterValuesController : BaseDropdownViewController<ParameterValueViewModel>
     {
+        private readonly ISourceSubstanceApiService _sourceSubstanceApiService;
+        private readonly IBaseApiService<MethodologyViewModel> _methodologyService;
+        private readonly IBaseApiService<EmissionSourceViewModel> _emissionSourceService;
         private readonly IBaseApiService<MethodologyParameterViewModel> _methodologyParameterService;
 
         public ParameterValuesController(
+            ISourceSubstanceApiService sourceSubstanceApiService,
+            IBaseApiService<MethodologyViewModel> methodologyService,
+            IBaseApiService<EmissionSourceViewModel> emissionSourceService,
             IBaseApiService<ParameterValueViewModel> parameterValueService,
-            IBaseApiService<MethodologyParameterViewModel> methodologyParameterService,
-            IBaseApiService<GrossEmissionViewModel> grossEmissionService)
+            IBaseApiService<MethodologyParameterViewModel> methodologyParameterService)
         {
             _apiService = parameterValueService;
+            _sourceSubstanceApiService = sourceSubstanceApiService;
+            _methodologyService = methodologyService;
+            _emissionSourceService = emissionSourceService;
             _methodologyParameterService = methodologyParameterService;
         }
 
@@ -32,12 +40,15 @@ namespace EmisTracking.WebApp.Controllers
         {
             var methodologyParametersResponse = await _methodologyParameterService.GetAllAsync();
 
-            if (methodologyParametersResponse.Success)
-            {
-                model.MethodologyParameters = methodologyParametersResponse.Data
-                    .Select(mp => new DropdownItemModel { Value = mp.Id, Name = mp.Name })
-                    .ToList();
-            }
+            var sourceSubstancesResponse = await _methodologyParameterService.GetAllAsync();
+
+            model.MethodologyParameters = methodologyParametersResponse.Success ? methodologyParametersResponse.Data
+                .Select(mp => new DropdownItemModel { Value = mp.Id, Name = mp.Name })
+                .ToList() : [];
+
+            model.SourceSubstances = sourceSubstancesResponse.Success ? sourceSubstancesResponse.Data
+                .Select(mp => new DropdownItemModel { Value = mp.Id, Name = mp.Name })
+                .ToList() : [];
         }
 
         [Authorize]

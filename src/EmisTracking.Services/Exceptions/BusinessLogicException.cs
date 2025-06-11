@@ -19,5 +19,7 @@ namespace EmisTracking.Services.Exceptions
         }
 
         public List<FieldError> FieldErrors { get; set; }
+
+        public string SerializedData { get; set; }
     }
 }

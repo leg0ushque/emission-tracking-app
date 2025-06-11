@@ -1,0 +1,733 @@
+Merged C# Files 
+---------------- 
+
+emission-tracking-app\src\EmisTracking.WebApi.Models\Models\ApiResponseModel.cs 
+ 
+﻿using System.Net;
+
+namespace EmisTracking.WebApi.Models.Models
+{
+    public class ApiResponseModel<TData>
+    {
+        public bool Success { get; set; }
+        public TData Data { get; set; }
+
+        public string ErrorMessage { get; set; }
+        public HttpStatusCode StatusCode { get; set; }
+        public FieldErrorModel[] Errors { get; set; }
+    }
+}
+ 
+emission-tracking-app\src\EmisTracking.WebApi.Models\Models\AuthModels.cs 
+ 
+﻿using EmisTracking.Localization;
+using System.ComponentModel.DataAnnotations;
+
+namespace EmisTracking.WebApi.Models.Models
+{
+    public class RegisterModel
+    {
+        [Display(Name = LangResources.Fields.Email)]
+        [Required(ErrorMessage = LangResources.MustBeFilledMessage)]
+        public string Email { get; set; }
+
+        [Display(Name = LangResources.Fields.FirstName)]
+        [Required(ErrorMessage = LangResources.MustBeFilledMessage)]
+        public string FirstName { get; set; }
+
+
+        [Display(Name = LangResources.Fields.MiddleName)]
+        [Required(ErrorMessage = LangResources.MustBeFilledMessage)]
+        public string MiddleName { get; set; }
+
+
+        [Display(Name = LangResources.Fields.LastName)]
+        [Required(ErrorMessage = LangResources.MustBeFilledMessage)]
+        public string LastName { get; set; }
+
+
+        [Display(Name = LangResources.Fields.Password)]
+        [Required(ErrorMessage = LangResources.MustBeFilledMessage)]
+        public string Password { get; set; }
+
+        [Display(Name = LangResources.Fields.ConfirmPassword)]
+        [Required(ErrorMessage = LangResources.MustBeFilledMessage)]
+        public string ConfirmPassword { get; set; }
+
+        [Display(Name = LangResources.Fields.Info)]
+        [Required(ErrorMessage = LangResources.MustBeFilledMessage)]
+        public string Info { get; set; }
+    }
+
+    public class ChangePasswordModel
+    {
+        [Display(Name = LangResources.Fields.OldPassword)]
+        [Required(ErrorMessage = LangResources.MustBeFilledMessage)]
+        public string OldPassword { get; set; }
+
+        [Display(Name = LangResources.Fields.NewPassword)]
+        [Required(ErrorMessage = LangResources.MustBeFilledMessage)]
+        public string NewPassword { get; set; }
+
+        [Display(Name = LangResources.Fields.ConfirmPassword)]
+        [Required(ErrorMessage = LangResources.MustBeFilledMessage)]
+        public string ConfirmPassword { get; set; }
+    }
+
+    public class LoginModel
+    {
+        [Display(Name = LangResources.Fields.Email)]
+        [Required(ErrorMessage = LangResources.MustBeFilledMessage)]
+        public string Email { get; set; }
+
+        [Display(Name = LangResources.Fields.Password)]
+        [Required(ErrorMessage = LangResources.MustBeFilledMessage)]
+        public string Password { get; set; }
+    }
+}
+ 
+emission-tracking-app\src\EmisTracking.WebApi.Models\Models\DropdownItemModel.cs 
+ 
+﻿namespace EmisTracking.WebApi.Models.Models
+{
+    public class DropdownItemModel
+    {
+        public DropdownItemModel()
+        { }
+
+        public DropdownItemModel(string value, string name)
+        {
+            Value = value;
+            Name = name;
+        }
+
+        public string Value { get; set; }
+        public string Name { get; set; }
+    }
+}
+ 
+emission-tracking-app\src\EmisTracking.WebApi.Models\Models\ErrorResponseModel.cs 
+ 
+﻿using System.Net;
+
+namespace EmisTracking.WebApi.Models.Models
+{
+    public class ErrorResponseModel
+    {
+        public bool Success { get; set; }
+        public string Message { get; set; }
+
+        public HttpStatusCode StatusCode { get; set; }
+        public FieldErrorModel[] Errors { get; set; }
+    }
+}
+ 
+emission-tracking-app\src\EmisTracking.WebApi.Models\Models\FieldErrorModel.cs 
+ 
+﻿namespace EmisTracking.WebApi.Models.Models
+{
+    public class FieldErrorModel
+    {
+        public string Field { get; set; }
+
+        public string Message { get; set; }
+    }
+}
+
+emission-tracking-app\src\EmisTracking.WebApi.Models\ViewModels\AreaViewModel.cs 
+ 
+﻿using EmisTracking.Localization;
+using System.ComponentModel.DataAnnotations;
+
+namespace EmisTracking.WebApi.Models.ViewModels
+{
+    public class AreaViewModel : BaseViewModel
+    {
+        [Display(Name = LangResources.Fields.Number)]
+        [Required(ErrorMessage = LangResources.MustBeFilledMessage)]
+        public int Number { get; set; }
+
+        [Display(Name = LangResources.Fields.Name)]
+        [Required(ErrorMessage = LangResources.MustBeFilledMessage)]
+        public string Name { get; set; }
+    }
+}
+ 
+emission-tracking-app\src\EmisTracking.WebApi.Models\ViewModels\BaseViewModel.cs 
+ 
+﻿namespace EmisTracking.WebApi.Models.ViewModels
+{
+    public abstract class BaseViewModel : IViewModel
+    {
+        public string Id { get; set; }
+    }
+}
+ 
+emission-tracking-app\src\EmisTracking.WebApi.Models\ViewModels\CalculationCheckResultViewModel.cs 
+ 
+﻿using System.Collections.Generic;
+
+namespace EmisTracking.WebApi.Models.ViewModels
+{
+    public class CalculationCheckResultViewModel : CalculationFormViewModel
+    {
+        public bool CanBeCalculated { get; set; }
+
+        public List<CalculationParameterViewModel> Parameters { get; set; }
+    }
+}
+ 
+emission-tracking-app\src\EmisTracking.WebApi.Models\ViewModels\CalculationFormViewModel.cs 
+ 
+﻿using EmisTracking.Localization;
+using EmisTracking.WebApi.Models.Models;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+
+namespace EmisTracking.WebApi.Models.ViewModels
+{
+    public class CalculationFormViewModel
+    {
+        [Display(Name = LangResources.Fields.Methodology)]
+        [Required(ErrorMessage = LangResources.MustBeChosen)]
+        public string MethodologyId { get; set; }
+        public string MethodologyName { get; set; }
+        public IEnumerable<DropdownItemModel> Methodologies { get; set; }
+
+        [Display(Name = LangResources.Fields.EmissionSource)]
+        [Required(ErrorMessage = LangResources.MustBeChosen)]
+        public string EmissionSourceId { get; set; }
+        public string EmissionSourceName { get; set; }
+        public IEnumerable<DropdownItemModel> EmissionSources { get; set; }
+
+        [Display(Name = LangResources.Fields.Month)]
+        [Required(ErrorMessage = LangResources.MustBeChosen)]
+        public int Month { get; set; }
+
+        [Display(Name = LangResources.Fields.Year)]
+        [Required(ErrorMessage = LangResources.MustBeFilledMessage)]
+        public int Year { get; set; }
+    }
+}
+ 
+emission-tracking-app\src\EmisTracking.WebApi.Models\ViewModels\CalculationParameterViewModel.cs 
+ 
+﻿using EmisTracking.WebApi.Models.Enums;
+
+namespace EmisTracking.WebApi.Models.ViewModels
+{
+    public class CalculationParameterViewModel
+    {
+        public string SourceSubstanceId { get; set; }
+        public string SourceSubstanceName { get; set; }
+        public string MethodologyParameterId { get; set; }
+        public string ParameterValueId { get; set; }
+        public ParameterType ParameterType { get; set; }
+        public string Name { get; set; }
+        public double Value { get; set; }
+        public bool IsFilled { get; set; }
+    }
+}
+ 
+emission-tracking-app\src\EmisTracking.WebApi.Models\ViewModels\ConsumptionGroupViewModel.cs 
+ 
+﻿using EmisTracking.Localization;
+using EmisTracking.WebApi.Models.Models;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+
+namespace EmisTracking.WebApi.Models.ViewModels
+{
+    public class ConsumptionGroupViewModel : BaseViewModel
+    {
+        [Display(Name = LangResources.Fields.Methodology)]
+        [Required(ErrorMessage = LangResources.MustBeChosen)]
+        public string MethodologyId { get; set; }
+        public MethodologyViewModel Methodology { get; set; }
+        public IEnumerable<DropdownItemModel> Methodologies { get; set; }
+
+
+        [Display(Name = LangResources.Fields.Name)]
+        [Required(ErrorMessage = LangResources.MustBeFilledMessage)]
+        public string Name { get; set; }
+    }
+}
+ 
+emission-tracking-app\src\EmisTracking.WebApi.Models\ViewModels\ConsumptionViewModel.cs 
+ 
+﻿using EmisTracking.Localization;
+using EmisTracking.WebApi.Models.Models;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+
+namespace EmisTracking.WebApi.Models.ViewModels
+{
+    public class ConsumptionViewModel : BaseViewModel
+    {
+        [Display(Name = LangResources.Fields.ConsumptionGroup)]
+        [Required(ErrorMessage = LangResources.MustBeChosen)]
+        public string ConsumptionGroupId { get; set; }
+        public ConsumptionGroupViewModel ConsumptionGroup { get; set; }
+        public IEnumerable<DropdownItemModel> ConsumptionGroups { get; set; }
+
+        [Display(Name = LangResources.Fields.Mass)]
+        [Required(ErrorMessage = LangResources.MustBeFilledMessage)]
+        public double Mass { get; set; }
+
+        [Display(Name = LangResources.Fields.Month)]
+        [Required(ErrorMessage = LangResources.MustBeFilledMessage)]
+        public int Month { get; set; }
+
+        [Display(Name = LangResources.Fields.Year)]
+        [Required(ErrorMessage = LangResources.MustBeFilledMessage)]
+        public int Year { get; set; }
+    }
+}
+ 
+emission-tracking-app\src\EmisTracking.WebApi.Models\ViewModels\EmissionSourceViewModel.cs 
+ 
+﻿using EmisTracking.Localization;
+using EmisTracking.WebApi.Models.Enums;
+using EmisTracking.WebApi.Models.Models;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+
+namespace EmisTracking.WebApi.Models.ViewModels
+{
+    public class EmissionSourceViewModel : BaseViewModel
+    {
+        [Display(Name = LangResources.Fields.Number)]
+        [Required(ErrorMessage = LangResources.MustBeFilledMessage)]
+        public string Number { get; set; }
+
+        [Display(Name = LangResources.Fields.Subdivision)]
+        [Required(ErrorMessage = LangResources.MustBeChosen)]
+        public string SubdivisionId { get; set; }
+        public SubdivisionViewModel Subdivision { get; set; }
+        public IEnumerable<DropdownItemModel> Subdivisions { get; set; }
+
+        [Display(Name = LangResources.Fields.Name)]
+        [Required(ErrorMessage = LangResources.MustBeFilledMessage)]
+        public string Name { get; set; }
+
+        [Display(Name = LangResources.Fields.ProcessCategory)]
+        public ProcessCategory? ProcessCategory { get; set; }
+
+        [Display(Name = LangResources.Fields.Methodology)]
+        public string MethodologyId { get; set; }
+        public MethodologyViewModel Methodology { get; set; }
+        public IEnumerable<DropdownItemModel> Methodologies { get; set; }
+
+        [Display(Name = LangResources.Fields.Mode)]
+        public string ModeId { get; set; }
+        public ModeViewModel Mode { get; set; }
+        public IEnumerable<DropdownItemModel> Modes { get; set; }
+    }
+}
+ 
+emission-tracking-app\src\EmisTracking.WebApi.Models\ViewModels\GrossEmissionViewModel.cs 
+ 
+﻿using EmisTracking.Localization;
+using EmisTracking.WebApi.Models.Models;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+
+namespace EmisTracking.WebApi.Models.ViewModels
+{
+    public class GrossEmissionViewModel : BaseViewModel
+    {
+        [Display(Name = LangResources.Fields.SourceSubstance)]
+        [Required(ErrorMessage = LangResources.MustBeChosen)]
+        public string SourceSubstanceId { get; set; }
+        public SourceSubstanceViewModel SourceSubstance { get; set; }
+        public IEnumerable<DropdownItemModel> SourceSubstances { get; set; }
+
+        [Display(Name = LangResources.Fields.Methodology)]
+        [Required(ErrorMessage = LangResources.MustBeChosen)]
+        public string MethodologyId { get; set; }
+        public MethodologyViewModel Methodology { get; set; }
+        public IEnumerable<DropdownItemModel> Methodologies { get; set; }
+
+        [Display(Name = LangResources.Fields.Mass)]
+        [Required(ErrorMessage = LangResources.MustBeFilledMessage)]
+        public double Mass { get; set; }
+
+        [Display(Name = LangResources.Fields.Month)]
+        [Required(ErrorMessage = LangResources.MustBeFilledMessage)]
+        public int Month { get; set; }
+
+        [Display(Name = LangResources.Fields.Year)]
+        [Required(ErrorMessage = LangResources.MustBeFilledMessage)]
+        public int Year { get; set; }
+
+        [Display(Name = LangResources.Fields.Tax)]
+        public string TaxId { get; set; }
+        public TaxViewModel Tax { get; set; }
+
+        [Display(Name = LangResources.Fields.CalculationDate)]
+        public DateTime CalculationDate { get; set; } = DateTime.Now;
+    }
+}
+ 
+emission-tracking-app\src\EmisTracking.WebApi.Models\ViewModels\IViewModel.cs 
+ 
+﻿namespace EmisTracking.WebApi.Models.ViewModels
+{
+    public interface IViewModel
+    {
+        public string Id { get; set; }
+    }
+}
+ 
+emission-tracking-app\src\EmisTracking.WebApi.Models\ViewModels\MethodologyParameterViewModel.cs 
+ 
+﻿using EmisTracking.Localization;
+using EmisTracking.WebApi.Models.Enums;
+using EmisTracking.WebApi.Models.Models;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+
+namespace EmisTracking.WebApi.Models.ViewModels
+{
+    public class MethodologyParameterViewModel : BaseViewModel
+    {
+        [Display(Name = LangResources.Fields.Methodology)]
+        [Required(ErrorMessage = LangResources.MustBeChosen)]
+        public string MethodologyId { get; set; }
+        public MethodologyViewModel Methodology { get; set; }
+        public IEnumerable<DropdownItemModel> Methodologies { get; set; }
+
+        [Display(Name = LangResources.Fields.ParameterType)]
+        [Required(ErrorMessage = LangResources.MustBeChosen)]
+        public ParameterType ParameterType { get; set; }
+
+        [Display(Name = LangResources.Fields.Name)]
+        [Required(ErrorMessage = LangResources.MustBeFilledMessage)]
+        public string Name { get; set; }
+
+        [Display(Name = LangResources.Fields.FormulaName)]
+        [Required(ErrorMessage = LangResources.MustBeFilledMessage)]
+        public string FormulaName { get; set; }
+    }
+}
+ 
+emission-tracking-app\src\EmisTracking.WebApi.Models\ViewModels\MethodologyViewModel.cs 
+ 
+﻿using EmisTracking.Localization;
+using EmisTracking.WebApi.Models.Models;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text.RegularExpressions;
+
+namespace EmisTracking.WebApi.Models.ViewModels
+{
+    public class MethodologyViewModel : BaseViewModel
+    {
+        // Для проверки парности квадратных скобок (без вложенности)
+        private const string BalancedBracketsPattern = @"^[^\[\]]*(\[[^\[\]]*\][^\[\]]*)*$";
+
+        // Для вывода списка параметров из формулы
+        private const string FormulaParametersPattern = @"(?<=\[)[^\]]+(?=\])";
+
+        [Display(Name = LangResources.Fields.ShortName)]
+        [Required(ErrorMessage = LangResources.MustBeFilledMessage)]
+        public string ShortName { get; set; }
+
+        [Display(Name = LangResources.Fields.Name)]
+        [Required(ErrorMessage = LangResources.MustBeFilledMessage)]
+        public string Name { get; set; }
+
+        [Display(Name = LangResources.Fields.Mode)]
+        public string ModeId { get; set; }
+        public ModeViewModel Mode { get; set; }
+        public IEnumerable<DropdownItemModel> Modes { get; set; }
+
+        [Display(Name = LangResources.Fields.Formula)]
+        [Required(ErrorMessage = LangResources.MustBeFilledMessage)]
+        [RegularExpression(BalancedBracketsPattern, ErrorMessage = LangResources.BracketsBalanceError)]
+        public string Formula { get; set; }
+
+        public List<string> GetFormulaParameters() =>
+            Regex.Matches(Formula, FormulaParametersPattern)
+                .Select(x => x.Value).Distinct().ToList();
+    }
+}
+ 
+emission-tracking-app\src\EmisTracking.WebApi.Models\ViewModels\ModeViewModel.cs 
+ 
+﻿using EmisTracking.Localization;
+using EmisTracking.WebApi.Models.Enums;
+using System.ComponentModel.DataAnnotations;
+
+namespace EmisTracking.WebApi.Models.ViewModels
+{
+    public class ModeViewModel : BaseViewModel
+    {
+        [Display(Name = LangResources.Fields.Name)]
+        [Required(ErrorMessage = LangResources.MustBeFilledMessage)]
+        public string Name { get; set; }
+
+        [Display(Name = LangResources.Fields.ProcessCategory)]
+        [Required(ErrorMessage = LangResources.MustBeChosen)]
+        public ProcessCategory ProcessCategory { get; set; }
+    }
+}
+ 
+emission-tracking-app\src\EmisTracking.WebApi.Models\ViewModels\OperatingTimeViewModel.cs 
+ 
+﻿using EmisTracking.Localization;
+using EmisTracking.WebApi.Models.Models;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+
+namespace EmisTracking.WebApi.Models.ViewModels
+{
+    public class OperatingTimeViewModel : BaseViewModel
+    {
+        [Display(Name = LangResources.Fields.EmissionSource)]
+        [Required(ErrorMessage = LangResources.MustBeChosen)]
+        public string EmissionSourceId { get; set; }
+        public EmissionSourceViewModel EmissionSource { get; set; }
+        public IEnumerable<DropdownItemModel> EmissionSources { get; set; }
+
+        [Display(Name = LangResources.Fields.Month)]
+        [Required(ErrorMessage = LangResources.MustBeChosen)]
+        public int Month { get; set; }
+
+        [Display(Name = LangResources.Fields.Year)]
+        [Required(ErrorMessage = LangResources.MustBeFilledMessage)]
+        public int Year { get; set; }
+
+        [Display(Name = LangResources.Fields.Hours)]
+        [Required(ErrorMessage = LangResources.MustBeFilledMessage)]
+        public double Hours { get; set; }
+    }
+}
+ 
+emission-tracking-app\src\EmisTracking.WebApi.Models\ViewModels\ParameterValueViewModel.cs 
+ 
+﻿using EmisTracking.Localization;
+using EmisTracking.WebApi.Models.Models;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+
+namespace EmisTracking.WebApi.Models.ViewModels
+{
+    public class ParameterValueViewModel : BaseViewModel
+    {
+        [Display(Name = LangResources.Fields.MethodologyParameter)]
+        [Required(ErrorMessage = LangResources.MustBeChosen)]
+        public string MethodologyParameterId { get; set; }
+        public MethodologyParameterViewModel MethodologyParameter { get; set; }
+        public IEnumerable<DropdownItemModel> MethodologyParameters { get; set; }
+
+        [Display(Name = LangResources.Fields.Month)]
+        [Required(ErrorMessage = LangResources.MustBeFilledMessage)]
+        public int Month { get; set; }
+
+        [Display(Name = LangResources.Fields.Year)]
+        [Required(ErrorMessage = LangResources.MustBeFilledMessage)]
+        public int Year { get; set; }
+
+        [Display(Name = LangResources.Fields.Value)]
+        [Required(ErrorMessage = LangResources.MustBeFilledMessage)]
+        public double Value { get; set; }
+
+        [Display(Name = LangResources.Fields.SourceSubstance)]
+        public string SourceSubstanceId { get; set; }
+        public SourceSubstanceViewModel SourceSubstance { get; set; }
+        public IEnumerable<DropdownItemModel> SourceSubstances { get; set; }
+    }
+}
+ 
+emission-tracking-app\src\EmisTracking.WebApi.Models\ViewModels\PollutantViewModel.cs 
+ 
+﻿using EmisTracking.Localization;
+using EmisTracking.WebApi.Models.Enums;
+using System.ComponentModel.DataAnnotations;
+
+namespace EmisTracking.WebApi.Models.ViewModels
+{
+    public class PollutantViewModel : BaseViewModel
+    {
+        [Display(Name = LangResources.Fields.Name)]
+        [Required(ErrorMessage = LangResources.MustBeFilledMessage)]
+        public string Name { get; set; }
+
+        [Display(Name = LangResources.Fields.Formula)]
+        public string Formula { get; set; }
+
+        [Display(Name = LangResources.Fields.HazardClass)]
+        [Required(ErrorMessage = LangResources.MustBeChosen)]
+        public HazardClass HazardClass { get; set; }
+
+        [Display(Name = LangResources.Fields.AggregateState)]
+        [Required(ErrorMessage = LangResources.MustBeChosen)]
+        public AggregateState AggregateState { get; set; }
+    }
+}
+ 
+emission-tracking-app\src\EmisTracking.WebApi.Models\ViewModels\SourceSubstanceViewModel.cs 
+ 
+﻿using EmisTracking.Localization;
+using EmisTracking.WebApi.Models.Enums;
+using EmisTracking.WebApi.Models.Models;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+
+namespace EmisTracking.WebApi.Models.ViewModels
+{
+    public class SourceSubstanceViewModel : BaseViewModel
+    {
+        [Display(Name = LangResources.Fields.EmissionSource)]
+        [Required(ErrorMessage = LangResources.MustBeChosen)]
+        public string EmissionSourceId { get; set; }
+        public EmissionSourceViewModel EmissionSource { get; set; }
+        public IEnumerable<DropdownItemModel> EmissionSources { get; set; }
+
+
+        [Display(Name = LangResources.Fields.Pollutant)]
+        [Required(ErrorMessage = LangResources.MustBeChosen)]
+        public string PollutantId { get; set; }
+        public PollutantViewModel Pollutant { get; set; }
+        public IEnumerable<DropdownItemModel> Pollutants { get; set; }
+
+
+        [Display(Name = LangResources.Fields.IsRegulated)]
+        public bool IsRegulated { get; set; }
+
+
+        [Display(Name = LangResources.Fields.GasCleaningUnitType)]
+        [Required(ErrorMessage = LangResources.MustBeChosen)]
+        public GasCleaningUnitType GasCleaningUnitType { get; set; }
+
+
+        [Display(Name = LangResources.Fields.PurificationPercentage)]
+        public double PurificationPercentage { get; set; }
+
+
+        [Display(Name = LangResources.Fields.AnnualAmount)]
+        [Required(ErrorMessage = LangResources.MustBeFilledMessage)]
+        public double AnnualAmount { get; set; }
+    }
+}
+ 
+emission-tracking-app\src\EmisTracking.WebApi.Models\ViewModels\SpecificIndicatorViewModel.cs 
+ 
+﻿using EmisTracking.Localization;
+using EmisTracking.WebApi.Models.Models;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+
+namespace EmisTracking.WebApi.Models.ViewModels
+{
+    public class SpecificIndicatorViewModel : BaseViewModel
+    {
+        [Display(Name = LangResources.Fields.Name)]
+        [Required(ErrorMessage = LangResources.MustBeFilledMessage)]
+        public string Name { get; set; }
+
+        [Display(Name = LangResources.Fields.ConsumptionGroup)]
+        [Required(ErrorMessage = LangResources.MustBeChosen)]
+        public string ConsumptionGroupId { get; set; }
+        public ConsumptionGroupViewModel ConsumptionGroup { get; set; }
+        public IEnumerable<DropdownItemModel> ConsumptionGroups { get; set; }
+
+
+        [Display(Name = LangResources.Fields.Pollutant)]
+        [Required(ErrorMessage = LangResources.MustBeChosen)]
+        public string PollutantId { get; set; }
+        public PollutantViewModel Pollutant { get; set; }
+        public IEnumerable<DropdownItemModel> Pollutants { get; set; }
+
+
+        [Display(Name = LangResources.Fields.Value)]
+        [Required(ErrorMessage = LangResources.MustBeFilledMessage)]
+        public double Value { get; set; }
+    }
+}
+ 
+emission-tracking-app\src\EmisTracking.WebApi.Models\ViewModels\SubdivisionViewModel.cs 
+ 
+﻿using EmisTracking.Localization;
+using EmisTracking.WebApi.Models.Models;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+
+namespace EmisTracking.WebApi.Models.ViewModels
+{
+    public class SubdivisionViewModel : BaseViewModel
+    {
+        [Display(Name = LangResources.Fields.Area)]
+        [Required(ErrorMessage = LangResources.MustBeChosen)]
+        public string AreaId { get; set; }
+        public AreaViewModel Area { get; set; }
+        public IEnumerable<DropdownItemModel> Areas { get; set; }
+
+        [Display(Name = LangResources.Fields.Name)]
+        [Required(ErrorMessage = LangResources.MustBeFilledMessage)]
+        public string Name { get; set; }
+    }
+}
+ 
+emission-tracking-app\src\EmisTracking.WebApi.Models\ViewModels\TaxRateViewModel.cs 
+ 
+﻿using EmisTracking.Localization;
+using EmisTracking.WebApi.Models.Enums;
+using System;
+using System.ComponentModel.DataAnnotations;
+
+namespace EmisTracking.WebApi.Models.ViewModels
+{
+    public class TaxRateViewModel : BaseViewModel
+    {
+        [Display(Name = LangResources.Fields.HazardClass)]
+        [Required(ErrorMessage = LangResources.MustBeChosen)]
+        public HazardClass HazardClass { get; set; }
+
+        [Display(Name = LangResources.Fields.TaxRate)]
+        [Required(ErrorMessage = LangResources.MustBeFilledMessage)]
+        public double Amount { get; set; }
+
+        [Display(Name = LangResources.Fields.StartDate)]
+        [Required(ErrorMessage = LangResources.MustBeFilledMessage)]
+        public DateTime StartDate { get; set; } = DateTime.Now;
+
+        [Display(Name = LangResources.Fields.EndDate)]
+        public DateTime? EndDate { get; set; }
+    }
+}
+ 
+emission-tracking-app\src\EmisTracking.WebApi.Models\ViewModels\TaxViewModel.cs 
+ 
+﻿using EmisTracking.Localization;
+using EmisTracking.WebApi.Models.Enums;
+using System;
+using System.ComponentModel.DataAnnotations;
+
+namespace EmisTracking.WebApi.Models.ViewModels
+{
+    public class TaxViewModel : BaseViewModel
+    {
+        [Display(Name = LangResources.Fields.HazardClass)]
+        public HazardClass HazardClass { get; set; }
+
+        [Display(Name = LangResources.Fields.Month)]
+        public int Month { get; set; }
+
+        [Display(Name = LangResources.Fields.Year)]
+        public int Year { get; set; }
+
+        [Display(Name = LangResources.Fields.TaxAmount)]
+        public double TotalAmount { get; set; }
+
+        [Display(Name = LangResources.Fields.IsPaid)]
+        public bool IsPaid { get; set; }
+
+        [Display(Name = LangResources.Fields.CalculationDate)]
+        public DateTime CalculationDate { get; set; } = DateTime.Now;
+    }
+}
+ 

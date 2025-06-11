@@ -4,6 +4,7 @@ using EmisTracking.WebApi.Models.Models;
 using EmisTracking.WebApi.Models.ViewModels;
 using EmisTracking.WebApp.Filters;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -13,18 +14,24 @@ namespace EmisTracking.WebApp.Controllers
     [Route("[controller]")]
     public class GrossEmissionsController : BaseDropdownViewController<GrossEmissionViewModel>
     {
+        private readonly IGrossEmissionApiService _grossEmissionService;
         private readonly IBaseApiService<SourceSubstanceViewModel> _sourceSubstanceService;
         private readonly IBaseApiService<MethodologyViewModel> _methodologyService;
+        private readonly IBaseApiService<EmissionSourceViewModel> _emissionSourceService;
 
         public GrossEmissionsController(
-            IBaseApiService<GrossEmissionViewModel> grossEmissionService,
+            IGrossEmissionApiService grossEmissionService,
             IBaseApiService<SourceSubstanceViewModel> sourceSubstanceService,
             IBaseApiService<MethodologyViewModel> methodologyService,
+            IBaseApiService<EmissionSourceViewModel> emissionSourceService,
             IBaseApiService<TaxViewModel> taxService)
         {
             _apiService = grossEmissionService;
+            _grossEmissionService = grossEmissionService;
+
             _sourceSubstanceService = sourceSubstanceService;
             _methodologyService = methodologyService;
+            _emissionSourceService = emissionSourceService;
         }
 
         protected override string CreationTitle => LangResources.Titles.GrossEmissionsCreate;
@@ -44,6 +51,66 @@ namespace EmisTracking.WebApp.Controllers
                 model.Methodologies = methodologiesResponse.Data
                     .Select(m => new DropdownItemModel { Value = m.Id, Name = m.Name })
                     .ToList();
+            }
+        }
+
+        [HttpGet("calculate/{emissionSourceId}")]
+        public async Task<IActionResult> Calculate([FromRoute] string emissionSourceId)
+        {
+            var emissionSourceResponse = await _emissionSourceService.GetByIdAsync(emissionSourceId);
+
+            if (emissionSourceResponse.Success)
+            {
+                var methodologiesResponse = await _methodologyService.GetAllAsync(loadDependencies: true);
+
+                var currentDate = DateTime.Now;
+
+                var model = new CalculationCheckResultViewModel
+                {
+                    EmissionSourceName = emissionSourceResponse.Data.Name,
+                    EmissionSourceId = emissionSourceId,
+                    Month = currentDate.Month,
+                    Year = currentDate.Year,
+                    MethodologyId = emissionSourceResponse.Data.MethodologyId,
+                    MethodologyName = methodologiesResponse.Data.FirstOrDefault(x => x.Id == emissionSourceResponse.Data.MethodologyId)?.ShortName,
+                    Methodologies = methodologiesResponse.Success ? methodologiesResponse.Data
+                        .Select(x => new DropdownItemModel(x.Id, x.ShortName)).ToList() : [],
+                };
+
+                return View(model);
+            }
+            else
+            {
+                return View(Constants.ErrorView, (errorMessage: emissionSourceResponse.ErrorMessage, controller: string.Empty, action: nameof(Index)));
+            }
+        }
+
+        [HttpPost("calculate")]
+        public async Task<IActionResult> CalculateHandler([FromForm] CalculationFormViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(nameof(Calculate), model);
+            }
+
+            var calculationResponse = await _grossEmissionService.СheckCalculation(model);
+
+            return View(nameof(Calculate), calculationResponse.Data); // Остаёмся на той же странице, обновляя данные
+        }
+
+        [HttpPost("finalize")]
+        public async Task<IActionResult> FinalizeHandler([FromForm] CalculationFormViewModel model)
+        {
+            var finalCalculationResponse = await _grossEmissionService.Calculate(model);
+
+            if (finalCalculationResponse.Success)
+            {
+                return View("CalculationResult", finalCalculationResponse.Data);
+            }
+            else
+            {
+                return View(Constants.ErrorView,
+                    (errorMessage: finalCalculationResponse.ErrorMessage, controller: "GrossEmissions", action: nameof(Calculate)));
             }
         }
     }

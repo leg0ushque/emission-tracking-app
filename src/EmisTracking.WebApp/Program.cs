@@ -78,9 +78,6 @@ namespace EmisTracking.WebApp
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseAuthentication();
-            app.UseAuthorization();
-
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
@@ -129,6 +126,7 @@ namespace EmisTracking.WebApp
             services.AddTransient<IParameterValueApiService, ParameterValueApiService>();
 
             services.AddTransient<IBaseApiService<GrossEmissionViewModel>, GrossEmissionApiService>();
+            services.AddTransient<IGrossEmissionApiService, GrossEmissionApiService>();
 
             services.AddTransient<IBaseApiService<TaxRateViewModel>, TaxRateApiService>();
 

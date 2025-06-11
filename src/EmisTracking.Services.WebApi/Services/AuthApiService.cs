@@ -8,10 +8,12 @@ namespace EmisTracking.Services.WebApi.Services
     {
         Task<ApiResponseModel<string>> PostRegister(RegisterModel model);
         Task<ApiResponseModel<object>> GetAuthValidateToken(string token);
-        Task<ApiResponseModel<string>> PostChangePasswordAsync(ChangePasswordModel model);
-        Task<ApiResponseModel<string>> PostSignInAsync(LoginModel model);
+        Task<ApiResponseModel<string>> PostChangePassword(ChangePasswordModel model);
+        Task<ApiResponseModel<string>> PostSignIn(LoginModel model);
 
-        Task<ApiResponseModel<object>> GetAuthLogoutAsync();
+        Task<ApiResponseModel<object>> GetAuthLogout();
+        Task<ApiResponseModel<object>> GetPing();
+
     }
 
     public class AuthApiService : BaseApiService, IAuthApiService
@@ -26,12 +28,12 @@ namespace EmisTracking.Services.WebApi.Services
             return SendRequestAsync<string>(HttpMethod.Post, $"auth/register", model);
         }
 
-        public Task<ApiResponseModel<string>> PostSignInAsync(LoginModel model)
+        public Task<ApiResponseModel<string>> PostSignIn(LoginModel model)
         {
             return SendRequestAsync<string>(HttpMethod.Post, $"auth/login", model);
         }
 
-        public Task<ApiResponseModel<string>> PostChangePasswordAsync(ChangePasswordModel model)
+        public Task<ApiResponseModel<string>> PostChangePassword(ChangePasswordModel model)
         {
             return SendRequestAsync<string>(HttpMethod.Post, $"auth/changepassword", model);
         }
@@ -41,9 +43,14 @@ namespace EmisTracking.Services.WebApi.Services
             return SendRequestAsync<object>(HttpMethod.Post, $"auth/validate", token);
         }
 
-        public Task<ApiResponseModel<object>> GetAuthLogoutAsync()
+        public Task<ApiResponseModel<object>> GetAuthLogout()
         {
             return SendRequestAsync<object>(HttpMethod.Get, $"auth/logout");
+        }
+
+        public Task<ApiResponseModel<object>> GetPing()
+        {
+            return SendRequestAsync<object>(HttpMethod.Get, $"auth/ping");
         }
     }
 }

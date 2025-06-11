@@ -1,0 +1,146 @@
+﻿@using EmisTracking.Localization
+@using EmisTracking.WebApi.Models.ViewModels
+@using EmisTracking.WebApp.Helpers
+@model CalculationCheckResultViewModel
+@{
+    ViewData["Title"] = "Подсчёт валового выброса"; // FIXME
+    var parameterTypes = EnumHelper.ParameterTypes;
+}
+
+<form asp-action="CalculateHandler" asp-controller="GrossEmissions" method="post">
+    <div class="row mb-3">
+        <label asp-for="MethodologyId" class="col-md-2 control-form-label"></label>
+        <div class="col-sm-6">
+            <select asp-for="MethodologyId" class="form-select">
+                <option value="" disabled selected>@LangResources.ChooseSomething</option>
+                @if (Model.Methodologies?.Any() ?? false)
+                {
+                    @foreach (var item in Model.Methodologies)
+                    {
+                        <option value="@item.Value">@item.Name</option>
+                    }
+                }
+            </select>
+            <span asp-validation-for="MethodologyId" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label asp-for="MethodologyId" class="col-md-2 control-form-label"></label>
+        <div class="col-sm-6">
+            <select asp-for="MethodologyId" class="form-select">
+                <option value="" disabled selected>@LangResources.ChooseSomething</option>
+                @if (Model.EmissionSources?.Any() ?? false)
+                {
+                    @foreach (var item in Model.Methodologies)
+                    {
+                        <option value="@item.Value">@item.Name</option>
+                    }
+                }
+            </select>
+            <span asp-validation-for="MethodologyId" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label asp-for="Month" class="col-md-2 control-form-label"></label>
+        <div class="col-sm-6">
+            <select asp-for="Month" class="form-select">
+                <option value="1">@LangResources.Months.January</option>
+                <option value="2">@LangResources.Months.February</option>
+                <option value="3">@LangResources.Months.March</option>
+                <option value="4">@LangResources.Months.April</option>
+                <option value="5">@LangResources.Months.May</option>
+                <option value="6">@LangResources.Months.June</option>
+                <option value="7">@LangResources.Months.July</option>
+                <option value="8">@LangResources.Months.August</option>
+                <option value="9">@LangResources.Months.September</option>
+                <option value="10">@LangResources.Months.October</option>
+                <option value="11">@LangResources.Months.November</option>
+                <option value="12">@LangResources.Months.December</option>
+            </select>
+            <span asp-validation-for="Month" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label asp-for="Year" class="col-md-2 control-form-label"></label>
+        <div class="col-sm-6">
+            <input asp-for="Year" class="form-control" />
+            <span asp-validation-for="Year" class="text-danger"></span>
+        </div>
+    </div>
+
+    @if (Model.Parameters != null && Model.Parameters.Count > 0)
+    {
+        <h3>@LangResources.Titles.ParameterValuesList</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>@LangResources.Fields.SourceSubstance</th>
+                    <th>@LangResources.Fields.MethodologyParameter</th>
+                    <th>@LangResources.Fields.IsFilled</th>
+                    <th>@LangResources.Fields.ParameterValue</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var param in Model.Parameters)
+                {
+                    <tr>
+                        <td><a asp-action="Item" asp-controller="SourceSubstances" asp-route-id="@param.SourceSubstanceId">@param.SourceSubstanceName</a></td>
+                        <td>
+                            <a asp-action="Item" asp-controller="MethodologyParameters" asp-route-id="@param.MethodologyParameterId">
+                                @param.Name (@parameterTypes[param.ParameterType])
+                            </a>
+                        </td>
+                        <td>@await Html.PartialAsync("_Boolean", param.IsFilled)</td>
+                        <td>
+                            @if (!param.IsFilled)
+                            {
+                                <span>ЗАПОЛНИТЬ?!</span>
+                                @* <a href="@Url.Action("FillParameter", "Parameter",
+                                    new { paramId = param.MethodologyParameterId, month = Model.Month, year = Model.Year })"
+                                   class="btn btn-warning">Заполнить</a> *@
+                            }
+                            else
+                            {
+                                @param.Value
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+    @if (Model.CanBeCalculated)
+    {
+        <p class="text-success">Все параметры заполнены, расчёты могут быть произведены</p>
+
+        <div class="form-group row">
+            <div class="col-sm-6">
+                <button formaction="@Url.Action("FinalizeHandler", "GrossEmissions")" formmethod="post" class="btn btn-success">
+                    Рассчитать
+                </button>
+            </div>
+        </div>
+    }
+    else
+    {
+        <p class="text-danger">Пожалуйста, заполните все параметры для продолжения и нажмите кнопку</p>
+
+        <div class="form-group row">
+            <div class="col-sm-6">
+                <input type="submit" class="btn btn-primary" value="@LangResources.CalculateButtonText" />
+            </div>
+        </div>
+    }
+</form>
+
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

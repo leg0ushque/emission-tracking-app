@@ -136,11 +136,14 @@ namespace EmisTracking.WebApi
             services.AddTransient<IEntityService<Consumption>, ConsumptionsService>();
             services.AddTransient<IEntityService<ParameterValue>, ParameterValuesService>();
             services.AddTransient<IEntityService<GrossEmission>, GrossEmissionsService>();
+            services.AddTransient<IGrossEmissionService, GrossEmissionsService>();
             services.AddTransient<IEntityService<TaxRate>, TaxRatesService>();
             services.AddTransient<IEntityService<Tax>, TaxesService>();
 
             services.AddTransient<IEntityService<User>, UsersService>();
             services.AddTransient<IUsersService, UsersService>();
+
+            services.AddTransient<ICalculationService, NcalcCalculationService>();
         }
 
         private static void ConfigureAuthentication(IServiceCollection services, IConfiguration configuration)

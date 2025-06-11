@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
+using EmisTracking.Localization;
 using EmisTracking.Services.Entities;
 using EmisTracking.Services.Exceptions;
 using EmisTracking.Services.Interfaces;
+using EmisTracking.Services.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -15,9 +17,36 @@ namespace EmisTracking.Services.Services
     {
         protected override Expression<Func<Area, object>>[] DependenciesIncludes => [];
 
-        protected override Task ValidateAsync(Area item)
+        protected override async Task ValidateAsync(Area item)
         {
-            return Task.CompletedTask;
+            var errors = new List<FieldError>();
+
+            if (string.IsNullOrEmpty(item.Name))
+            {
+                errors.Add(new FieldError
+                {
+                    Field = nameof(item.Name),
+                    Message = LangResources.MustBeFilledMessage
+                });
+            }
+
+            var existingArea = await _repository.GetAll(a =>
+                a.Id != item.Id && a.Name == item.Name)
+                .ToListAsync();
+
+            if (existingArea != null)
+            {
+                errors.Add(new FieldError
+                {
+                    Field = string.Empty,
+                    Message = "Уже существует площадка с тем же именем"
+                });
+            }
+
+            if (errors.Count != 0)
+            {
+                throw new BusinessLogicException { FieldErrors = errors };
+            }
         }
     }
 
@@ -141,19 +170,6 @@ namespace EmisTracking.Services.Services
         }
     }
 
-    public class ConsumptionGroupsService(IRepository<ConsumptionGroup> repository, IMapper mapper) : GenericEntityService<ConsumptionGroup>(repository, mapper)
-    {
-        protected override Expression<Func<ConsumptionGroup, object>>[] DependenciesIncludes =>
-        [
-            x => x.Methodology,
-        ];
-
-        protected override Task ValidateAsync(ConsumptionGroup item)
-        {
-            return Task.CompletedTask;
-        }
-    }
-
     public class SpecificIndicatorsService(IRepository<SpecificIndicator> repository, IMapper mapper) : GenericEntityService<SpecificIndicator>(repository, mapper)
     {
         protected override Expression<Func<SpecificIndicator, object>>[] DependenciesIncludes =>
@@ -168,43 +184,12 @@ namespace EmisTracking.Services.Services
         }
     }
 
-    public class ConsumptionsService(IRepository<Consumption> repository, IMapper mapper) : GenericEntityService<Consumption>(repository, mapper)
-    {
-        protected override Expression<Func<Consumption, object>>[] DependenciesIncludes =>
-        [
-            x => x.ConsumptionGroup
-        ];
-
-        protected override Task ValidateAsync(Consumption item)
-        {
-            return Task.CompletedTask;
-        }
-
-        public override Task<List<Consumption>> GetAllAsync(
-            Expression<Func<Consumption, bool>> predicate = null, bool loadDependencies = false)
-        {
-            try
-            {
-                return (loadDependencies ?
-                    _repository.GetAll(predicate, DependenciesIncludes)
-                    : _repository.GetAll(predicate))
-                        .OrderByDescending(x => x.Year)
-                        .ThenByDescending(x => x.Month)
-                        .ToListAsync();
-            }
-            catch (InvalidOperationException ex)
-            {
-                throw new BusinessLogicException(ex.Message, ex);
-            }
-        }
-    }
-
     public class ParameterValuesService(IRepository<ParameterValue> repository, IMapper mapper) : GenericEntityService<ParameterValue>(repository, mapper)
     {
         protected override Expression<Func<ParameterValue, object>>[] DependenciesIncludes =>
         [
             x => x.MethodologyParameter,
-            x => x.GrossEmission
+            x => x.SourceSubstance,
         ];
 
         protected override Task ValidateAsync(ParameterValue item)
@@ -214,39 +199,6 @@ namespace EmisTracking.Services.Services
 
         public override Task<List<ParameterValue>> GetAllAsync(
             Expression<Func<ParameterValue, bool>> predicate = null, bool loadDependencies = false)
-        {
-            try
-            {
-                return (loadDependencies ?
-                    _repository.GetAll(predicate, DependenciesIncludes)
-                    : _repository.GetAll(predicate))
-                        .OrderByDescending(x => x.Year)
-                        .ThenByDescending(x => x.Month)
-                        .ToListAsync();
-            }
-            catch (InvalidOperationException ex)
-            {
-                throw new BusinessLogicException(ex.Message, ex);
-            }
-        }
-    }
-
-    public class GrossEmissionsService(IRepository<GrossEmission> repository, IMapper mapper) : GenericEntityService<GrossEmission>(repository, mapper)
-    {
-        protected override Expression<Func<GrossEmission, object>>[] DependenciesIncludes =>
-        [
-            x => x.SourceSubstance,
-            x => x.Methodology,
-            x => x.Tax
-        ];
-
-        protected override Task ValidateAsync(GrossEmission item)
-        {
-            return Task.CompletedTask;
-        }
-
-        public override Task<List<GrossEmission>> GetAllAsync(
-            Expression<Func<GrossEmission, bool>> predicate = null, bool loadDependencies = false)
         {
             try
             {

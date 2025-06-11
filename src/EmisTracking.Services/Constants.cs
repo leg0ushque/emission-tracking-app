@@ -12,5 +12,7 @@
         public const string AdminRole = "Администратор";
         public const string EditorRole = "Редактор";
         // FIXME Добавить ролей
+
+        public const double DefaultParameterValue = 0.0d;
     }
 }

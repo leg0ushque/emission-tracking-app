@@ -1,4 +1,5 @@
-﻿using EmisTracking.Localization;
+﻿using Azure;
+using EmisTracking.Localization;
 using EmisTracking.Services;
 using EmisTracking.Services.Entities;
 using EmisTracking.Services.JwtAuth;
@@ -119,6 +120,17 @@ namespace EmisTracking.WebApi.Controllers
             var response = new ApiResponseModel<object>() { Success = tokenIsValid };
 
             return response.Success ? Ok(response) : Unauthorized(response);
+        }
+
+        [HttpGet("ping")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public IActionResult Ping()
+        {
+            return Ok(new ApiResponseModel<object>()
+            {
+                Success = true,
+                StatusCode = System.Net.HttpStatusCode.OK
+            });
         }
 
         private async Task<ApiResponseModel<string>> ChangeCurrentUserPasswordAsync(string oldPassword, string newPassword)

@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+
+	<ItemGroup>
+		<None Remove="appsettings.json" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Content Include="appsettings.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+		</Content>
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="NBomber" Version="5.8.2" />
+		<PackageReference Include="NBomber.Contracts" Version="5.6.1" />
+		<PackageReference Include="NBomber.WebSockets" Version="0.1.0" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+	</ItemGroup>
+
+	<ItemGroup>
+    <ProjectReference Include="..\..\src\EmisTracking.Services.WebApi\EmisTracking.Services.WebApi.csproj" />
+    <ProjectReference Include="..\..\src\EmisTracking.Services\EmisTracking.Services.csproj" />
+    <ProjectReference Include="..\..\src\EmisTracking.WebApi.Models\EmisTracking.WebApi.Models.csproj" />
+  </ItemGroup>
+
+</Project>

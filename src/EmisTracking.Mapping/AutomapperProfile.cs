@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using AutoMapper.Extensions.EnumMapping;
 using EmisTracking.Services.Entities;
+using EmisTracking.Services.Models;
 using EmisTracking.WebApi.Models.ViewModels;
 
 namespace EmisTracking.Mapping

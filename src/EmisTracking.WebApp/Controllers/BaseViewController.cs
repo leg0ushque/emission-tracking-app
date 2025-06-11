@@ -209,10 +209,7 @@ namespace EmisTracking.WebApp.Controllers
 
             foreach (var error in errors)
             {
-                if (!string.IsNullOrEmpty(error.Field))
-                {
-                    modelState.AddModelError(error.Field, error.Message);
-                }
+                modelState.AddModelError(error.Field, error.Message);
             }
         }
     }

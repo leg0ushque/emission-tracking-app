@@ -1,4 +1,6 @@
-﻿namespace EmisTracking.Localization
+﻿using System.Reflection.Metadata;
+
+namespace EmisTracking.Localization
 {
     public static class LangResources
     {
@@ -14,7 +16,7 @@
         public const string UpdateButtonText = "Изменить";
         public const string SaveButtonText = "Сохранить";
         public const string DeleteButtonText = "Удалить";
-        public const string SetGraduationYear = "Установить год выпуска ";
+        public const string CalculateButtonText = "Рассчитать";
         public const string RegisterButtonText = "Зарегистрироваться";
         public const string LoginButtonText = "Войти";
         public const string NoValue = "не установлено";
@@ -54,6 +56,12 @@
 
         public const string MissingParametersHint = "Следующие параметры представлены в формуле, но отсутствуют в списке ниже. Их небходимо досоздать (кликните для перехода на страницу создания)!";
         public const string ExtraParametersHint = "Следующие параметры избыточны и НЕ представлены в формуле. Они не влияют на работу системы, но возможно были упущены. Пожалуйста, проверьте список:";
+
+        public const string MissingMethodologyPollutants = "Некоторые загрязнители отсутствуют в источнике выброса";
+
+        public const string UnknownParameterTypeTemplate = "Неизвестный тип {0} у параметра методологии с Id='{1}'";
+
+        public const string NoApiConnectionMessage = "API сервер не отвечает. Проверьте соединение и повторите попытку, либо обратитесь в техническую поддержку!";
 
         // Названия сущностей
 
@@ -138,6 +146,7 @@
             public const string StartDate = "Дата начала";
             public const string EndDate = "Дата окончания";
             public const string CalculationDate = "Дата подсчёта";
+            public const string IsFilled = "Заполнен";
 
             // Auth & Accounts
             public const string Role = "Роль";

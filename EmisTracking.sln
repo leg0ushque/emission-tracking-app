@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmisTracking.WebApp", "src\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmisTracking.Tests", "tests\EmisTracking.Tests\EmisTracking.Tests.csproj", "{3125F12B-BAEB-4CDD-84F5-A61B9ACB2B22}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmisTracking.LoadTesting", "tests\EmisTracking.LoadTesting\EmisTracking.LoadTesting.csproj", "{5980E023-BEF5-5F75-AE0A-FE85F9D224BA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{3125F12B-BAEB-4CDD-84F5-A61B9ACB2B22}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3125F12B-BAEB-4CDD-84F5-A61B9ACB2B22}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3125F12B-BAEB-4CDD-84F5-A61B9ACB2B22}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5980E023-BEF5-5F75-AE0A-FE85F9D224BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5980E023-BEF5-5F75-AE0A-FE85F9D224BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5980E023-BEF5-5F75-AE0A-FE85F9D224BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5980E023-BEF5-5F75-AE0A-FE85F9D224BA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
