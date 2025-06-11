@@ -131,6 +131,8 @@ namespace EmisTracking.WebApp
             services.AddTransient<IBaseApiService<TaxRateViewModel>, TaxRateApiService>();
 
             services.AddTransient<IBaseApiService<TaxViewModel>, TaxApiService>();
+
+            services.AddTransient<IUserApiService, UserApiService>();
         }
     }
 }

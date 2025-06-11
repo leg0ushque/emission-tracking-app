@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EmisTracking.Services.Database.Migrations
 {
     [DbContext(typeof(UserDbContext))]
-    [Migration("20250323204508_InitialUdbCreate")]
+    [Migration("20250611080337_InitialUdbCreate")]
     partial class InitialUdbCreate
     {
         /// <inheritdoc />
@@ -103,9 +103,9 @@ namespace EmisTracking.Services.Database.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "8cf42fba-dabe-4643-9bbf-bedc267fe713",
+                            Id = "7ebb7e34-2f8e-43fc-accc-3c9e4afb11b8",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "4a1d3b4c-a22b-432f-a665-e6882611139d",
+                            ConcurrencyStamp = "f28e6b2f-e46d-42df-8f76-3b43efb2051e",
                             Email = "admin@mail.com",
                             EmailConfirmed = true,
                             FirstName = "Гл.",
@@ -114,9 +114,9 @@ namespace EmisTracking.Services.Database.Migrations
                             MiddleName = "",
                             NormalizedEmail = "admin@mail.com",
                             NormalizedUserName = "admin@mail.com",
-                            PasswordHash = "AQAAAAIAAYagAAAAEA30CZIw+ckPjkdAfPFdx5oCkgEpzV8Xh+Gofd4dw16wfWZhhY0ucpGkyXfY5LXreQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGL2WZYb78Z1KHi0oAevn8GrXHjRxK+r5wQTPBUw0K97WtpyNaDKWm0dDyAfaUlj1g==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "0415a354-0b88-4b5a-a431-2a776b02369d",
+                            SecurityStamp = "8660865c-6861-477e-9bcb-f5c55892ecc0",
                             TwoFactorEnabled = false,
                             UserName = "admin@mail.com"
                         });
@@ -158,8 +158,26 @@ namespace EmisTracking.Services.Database.Migrations
                         new
                         {
                             Id = "2",
-                            Name = "Иниженер",
-                            NormalizedName = "ИНИЖЕНЕР"
+                            Name = "Эколог",
+                            NormalizedName = "ЭКОЛОГ"
+                        },
+                        new
+                        {
+                            Id = "3",
+                            Name = "Бухгалтер",
+                            NormalizedName = "БУХГАЛТЕР"
+                        },
+                        new
+                        {
+                            Id = "4",
+                            Name = "Оператор",
+                            NormalizedName = "ОПЕРАТОР"
+                        },
+                        new
+                        {
+                            Id = "5",
+                            Name = "Руководитель предприятия",
+                            NormalizedName = "РУКОВОДИТЕЛЬ ПРЕДПРИЯТИЯ"
                         });
                 });
 
@@ -252,7 +270,7 @@ namespace EmisTracking.Services.Database.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "8cf42fba-dabe-4643-9bbf-bedc267fe713",
+                            UserId = "7ebb7e34-2f8e-43fc-accc-3c9e4afb11b8",
                             RoleId = "1"
                         });
                 });

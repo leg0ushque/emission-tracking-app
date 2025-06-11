@@ -1,0 +1,56 @@
+﻿@model EmisTracking.WebApi.Models.ViewModels.UserViewModel
+@using EmisTracking.Localization
+@using ServicesConstants = EmisTracking.Services.Constants;
+
+@{
+    ViewData[Constants.GenerateBreadcrumb] = new();
+    ViewData["Title"] = Model.FullName;
+
+    var isAdmin = (ViewData[Constants.ViewDataConstants.IsAdmin] as bool?).GetValueOrDefault();
+}
+
+@section Breadcrumb
+{
+    <li class="breadcrumb-item active">@ViewData["Title"]</li>
+}
+
+<a class="btn btn-outline-secondary" asp-action="Index" asp-controller="Users">
+    <i class="fas fa-arrow-left"></i>
+    @LangResources.ReturnToListButtonText
+</a>
+
+<p><strong>@LangResources.Fields.Email:</strong> @Model.Email</p>
+<p><strong>@LangResources.Fields.FirstName:</strong> @Model.FirstName</p>
+<p><strong>@LangResources.Fields.MiddleName:</strong> @Model.MiddleName</p>
+<p><strong>@LangResources.Fields.LastName:</strong> @Model.LastName</p>
+<p><strong>@LangResources.Fields.Role:</strong> @Model.RoleName</p>
+<p>
+    <a class="btn btn-outline-primary"
+       asp-controller="Users" asp-action="Update" asp-route-id="@Model.Id"
+       name="@LangResources.UpdateButtonText">
+        <i class="fas fa-pen"></i>
+    </a>
+</p>
+<p>
+    <a class="btn btn-outline-danger"
+       asp-controller="Users" asp-action="Delete" asp-route-id="@Model.Id"
+       text="@LangResources.DeleteButtonText">
+        <i class="fas fa-trash"></i>
+    </a>
+</p>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        await Html.RenderPartialAsync("_JqueryDatatable");
+
+        var columnWidths = new Queue<string>(new[] { "15%", "15%", "15%", "15%", "20%" });
+        if (isAdmin)
+        {
+            columnWidths.Enqueue(Constants.DefaultEditDeleteButtonsWidth);
+            columnWidths.Enqueue(Constants.DefaultEditDeleteButtonsWidth);
+        }
+
+        await Html.RenderPartialAsync("_DataTableInitialization", columnWidths);
+    }
+}

@@ -1,0 +1,88 @@
+﻿@model List<EmisTracking.WebApi.Models.ViewModels.UserViewModel>
+@using EmisTracking.Localization
+@using ServicesConstants = EmisTracking.Services.Constants;
+
+@{
+    ViewData[Constants.GenerateBreadcrumb] = new();
+    ViewData["Title"] = LangResources.Titles.UsersIndex;
+
+    var isAdmin = (ViewData[Constants.ViewDataConstants.IsAdmin] as bool?).GetValueOrDefault();
+}
+
+@section Breadcrumb
+{
+    <li class="breadcrumb-item active">@ViewData["Title"]</li>
+}
+
+<a class="btn btn-primary" asp-action="Register" asp-controller="Users">
+    <i class="fas fa-plus"></i>
+    @LangResources.RegisterButtonText
+</a>
+
+<table class="table-striped table-bordered" id="mainItemsTable">
+    <thead>
+        <tr>
+            <th scope="col">№</th>
+            <th scope="col">@LangResources.Fields.Email</th>
+            <th scope="col">@LangResources.Fields.FirstName</th>
+            <th scope="col">@LangResources.Fields.MiddleName</th>
+            <th scope="col">@LangResources.Fields.LastName</th>
+            <th scope="col">@LangResources.Fields.Role</th>
+
+            @if (isAdmin)
+            {
+                <th scope="col" orderable="false"></th>
+                <th scope="col" orderable="false"></th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td></td>
+                    <td>@item.Email</td>
+                    <td>@item.FirstName</td>
+                    <td>@item.MiddleName</td>
+                    <td>@item.LastName</td>
+                    <td>@item.RoleName</td>
+
+                    @if (isAdmin)
+                    {
+                        <td>
+                            <a class="btn btn-outline-primary"
+                               asp-controller="Users" asp-action="Update" asp-route-id="@item.Id"
+                               name="@LangResources.UpdateButtonText">
+                                <i class="fas fa-pen"></i>
+                            </a>
+                        </td>
+                        <td>
+                            <a class="btn btn-outline-danger"
+                               asp-controller="Users" asp-action="Delete" asp-route-id="@item.Id"
+                               text="@LangResources.DeleteButtonText">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </td>
+                    }
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        await Html.RenderPartialAsync("_JqueryDatatable");
+
+        var columnWidths = new Queue<string>(new[] { "15%", "15%", "15%", "15%", "20%" });
+        if (isAdmin)
+        {
+            columnWidths.Enqueue(Constants.DefaultEditDeleteButtonsWidth);
+            columnWidths.Enqueue(Constants.DefaultEditDeleteButtonsWidth);
+        }
+
+        await Html.RenderPartialAsync("_DataTableInitialization", columnWidths);
+    }
+}

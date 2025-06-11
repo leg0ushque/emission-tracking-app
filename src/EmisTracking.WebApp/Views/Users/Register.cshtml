@@ -1,0 +1,115 @@
+﻿@using EmisTracking.Localization
+@model EmisTracking.WebApi.Models.Models.RegisterModel;
+@{
+    ViewData["Title"] = LangResources.Titles.AuthRegistration;
+}
+
+<form asp-action="Register" asp-controller="Users" method="post" asp-antiforgery="true"
+      class="form-horizontal">
+    <div asp-validation-summary="ModelOnly" class="text-danger" id="validationSummary"></div>
+    <div class="row mb-3">
+        <label asp-for="Email" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-6">
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger inputError"></span>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label asp-for="LastName" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-6">
+            <input asp-for="LastName" class="form-control" />
+            <span asp-validation-for="LastName" class="text-danger inputError"></span>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label asp-for="FirstName" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-6">
+            <input asp-for="FirstName" class="form-control" />
+            <span asp-validation-for="FirstName" class="text-danger inputError"></span>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label asp-for="MiddleName" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-6">
+            <input asp-for="MiddleName" class="form-control" />
+            <span asp-validation-for="MiddleName" class="text-danger inputError"></span>
+        </div>
+    </div>
+    <div class="alert alert-secondary">
+        @LangResources.PasswordHint<br />
+        @LangResources.RememberPassword
+    </div>
+    <div class="row mb-3">
+        <label asp-for="Password" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-6">
+            <div class="input-group">
+                <input asp-for="Password" type="password" class="form-control" id="passwordInput" />
+                <div class="input-group-append">
+                    <button id="togglePassword" class="btn btn-outline-secondary" type="button" onclick="togglePasswordVisibility('#passwordInput', this)">
+                        <i class="fas fa-eye-slash"></i>
+                    </button>
+                </div>
+            </div>
+            <span asp-validation-for="Password" class="text-danger inputError"></span>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label asp-for="ConfirmPassword" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-6">
+            <div class="input-group">
+                <input asp-for="ConfirmPassword" type="password" class="form-control" id="confirmPasswordInput" />
+                <div class="input-group-append">
+                    <button id="toggleConfirmPassword" class="btn btn-outline-secondary" type="button" onclick="togglePasswordVisibility('#confirmPasswordInput', this)">
+                        <i class="fas fa-eye-slash"></i>
+                    </button>
+                </div>
+            </div>
+            <span asp-validation-for="ConfirmPassword" class="text-danger inputError"></span>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label asp-for="Role" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-6">
+            <select asp-for="Role" class="form-select">
+                <option value="" disabled selected>@LangResources.ChooseSomething</option>
+                @if (Model.Roles?.Any() ?? false)
+                {
+                    @foreach (var item in Model.Roles)
+                    {
+                        <option value="@item.Value">@item.Name</option>
+                    }
+                }
+            </select>
+            <span asp-validation-for="Role" class="text-danger inputError"></span>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-6">
+            <button type="submit" id="loginBtn" class="btn btn-primary">@LangResources.RegisterButtonText</button>
+        </div>
+    </div>
+</form>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        function togglePasswordVisibility(passwordInputId, iconElement) {
+            let passwordInput = $(passwordInputId);
+            let icon = $(iconElement).find('i'); // Target the <i> element inside the button
+
+            // Check the type of the input and toggle
+            if (passwordInput.attr('type') === 'password') {
+                passwordInput.attr('type', 'text'); // Show password
+                icon.attr('class', 'fas fa-eye'); // Explicitly set the closed eye icon
+            } else {
+                passwordInput.attr('type', 'password'); // Hide password
+                icon.attr('class', 'fas fa-eye-slash'); // Explicitly set the open eye icon
+            }
+        }
+    </script>
+}

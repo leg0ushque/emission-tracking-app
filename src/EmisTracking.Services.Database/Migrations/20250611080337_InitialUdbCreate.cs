@@ -167,18 +167,21 @@ namespace EmisTracking.Services.Database.Migrations
                 values: new object[,]
                 {
                     { "1", null, "Администратор", "АДМИНИСТРАТОР" },
-                    { "2", null, "Иниженер", "ИНИЖЕНЕР" }
+                    { "2", null, "Эколог", "ЭКОЛОГ" },
+                    { "3", null, "Бухгалтер", "БУХГАЛТЕР" },
+                    { "4", null, "Оператор", "ОПЕРАТОР" },
+                    { "5", null, "Руководитель предприятия", "РУКОВОДИТЕЛЬ ПРЕДПРИЯТИЯ" }
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "MiddleName", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "8cf42fba-dabe-4643-9bbf-bedc267fe713", 0, "4a1d3b4c-a22b-432f-a665-e6882611139d", "admin@mail.com", true, "Гл.", "Администратор", false, null, "", "admin@mail.com", "admin@mail.com", "AQAAAAIAAYagAAAAEA30CZIw+ckPjkdAfPFdx5oCkgEpzV8Xh+Gofd4dw16wfWZhhY0ucpGkyXfY5LXreQ==", null, false, "0415a354-0b88-4b5a-a431-2a776b02369d", false, "admin@mail.com" });
+                values: new object[] { "7ebb7e34-2f8e-43fc-accc-3c9e4afb11b8", 0, "f28e6b2f-e46d-42df-8f76-3b43efb2051e", "admin@mail.com", true, "Гл.", "Администратор", false, null, "", "admin@mail.com", "admin@mail.com", "AQAAAAIAAYagAAAAEGL2WZYb78Z1KHi0oAevn8GrXHjRxK+r5wQTPBUw0K97WtpyNaDKWm0dDyAfaUlj1g==", null, false, "8660865c-6861-477e-9bcb-f5c55892ecc0", false, "admin@mail.com" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
                 columns: new[] { "RoleId", "UserId" },
-                values: new object[] { "1", "8cf42fba-dabe-4643-9bbf-bedc267fe713" });
+                values: new object[] { "1", "7ebb7e34-2f8e-43fc-accc-3c9e4afb11b8" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

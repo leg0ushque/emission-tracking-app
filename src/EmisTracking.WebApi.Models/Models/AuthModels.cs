@@ -1,4 +1,5 @@
 ﻿using EmisTracking.Localization;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace EmisTracking.WebApi.Models.Models
@@ -33,8 +34,13 @@ namespace EmisTracking.WebApi.Models.Models
         public string ConfirmPassword { get; set; }
 
         [Display(Name = LangResources.Fields.Info)]
-        [Required(ErrorMessage = LangResources.MustBeFilledMessage)]
         public string Info { get; set; }
+
+        [Display(Name = LangResources.Fields.Role)]
+        [Required(ErrorMessage = LangResources.MustBeChosen)]
+        public string Role { get; set; }
+
+        public List<DropdownItemModel> Roles { get; set; }
     }
 
     public class ChangePasswordModel

@@ -169,6 +169,12 @@
                 <li class="nav-item">
                     @await Html.PartialAsync("_SidebarButton", ("Index", "Stats", "fa-solid fa-bottle-droplet", "Выбросы"))
                 </li>
+
+                <li class="nav-heading">Персонал</li>
+
+                <li class="nav-item">
+                    @await Html.PartialAsync("_SidebarButton", ("Index", "Users", "fas fa-solid fa-users", "Пользователи и роли"))
+                </li>
             }
             else
             {

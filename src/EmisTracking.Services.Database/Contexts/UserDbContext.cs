@@ -19,8 +19,11 @@ namespace EmisTracking.Services.Database.Contexts
             var adminRoleId = "1";
 
             builder.Entity<IdentityRole>().HasData(
-                new IdentityRole { Id = adminRoleId, Name = ServicesConstants.AdminRole, NormalizedName = ServicesConstants.AdminRole.ToUpper() }
-                //new IdentityRole { Id = "2", Name = ServicesConstants.EngineerRole, NormalizedName = ServicesConstants.EngineerRole.ToUpper() }
+                new IdentityRole { Id = adminRoleId, Name = ServicesConstants.AdminRole, NormalizedName = ServicesConstants.AdminRole.ToUpper() },
+                new IdentityRole { Id = "2", Name = ServicesConstants.EcologistRole, NormalizedName = ServicesConstants.EcologistRole.ToUpper() },
+                new IdentityRole { Id = "3", Name = ServicesConstants.AccountantRole, NormalizedName = ServicesConstants.AccountantRole.ToUpper() },
+                new IdentityRole { Id = "4", Name = ServicesConstants.OperatorRole, NormalizedName = ServicesConstants.OperatorRole.ToUpper() },
+                new IdentityRole { Id = "5", Name = ServicesConstants.DirectorRole, NormalizedName = ServicesConstants.DirectorRole.ToUpper() }
             );
 
             // FIRST USER

@@ -17,7 +17,7 @@ namespace EmisTracking.Localization
         public const string SaveButtonText = "Сохранить";
         public const string DeleteButtonText = "Удалить";
         public const string CalculateButtonText = "Рассчитать";
-        public const string RegisterButtonText = "Зарегистрироваться";
+        public const string RegisterButtonText = "Регистрация";
         public const string LoginButtonText = "Войти";
         public const string NoValue = "не установлено";
         public const string True = "Да";
@@ -43,6 +43,8 @@ namespace EmisTracking.Localization
         public const string ParametersNamesHint1 = "Название параметра произвольное, название в формуле - латиницей без скобок";
         public const string ParametersNamesHint2 = "Например, параметр удельного показателя, в формуле \"A*B*[Spec]\" указан как Spec";
         public const string FormulaHint = "Параметры в формуле следует записывать в квадратных скобках. Например [A]*[Mass]+[Spec1]";
+        public const string IncorrectRole = "Неправильная роль";
+        public const string RememberPassword = "Пожалуйста, запомните вводимый пароль. У Вас не будет другой возможности его увидеть!";
 
         public const string AuthUserNotFoundErrorMessageTemplate = "Пользователь {0} не найден.";
         public const string SignInFailedErrorMessage = "Не удалось выполнить вход. Проверьте введённые логин и пароль и повторите попытку снова!";
@@ -83,6 +85,7 @@ namespace EmisTracking.Localization
             public const string GrossEmission = "валовый выброс";
             public const string TaxRate = "ставка налога";
             public const string Tax = "налог";
+            public const string User = "пользователь";
         }
 
         public static class Months
@@ -235,7 +238,7 @@ namespace EmisTracking.Localization
 
             // Auth
             public const string AuthLogin = "Вход в учётную запись";
-            public const string AuthRegistration = "Регистрация (для учащихся)";
+            public const string AuthRegistration = "Регистрация";
             public const string AuthChangePassword = "Смена пароля";
 
             // Users

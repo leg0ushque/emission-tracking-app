@@ -229,7 +229,7 @@ namespace EmisTracking.WebApi.Controllers
 
             if (creationResult.Succeeded)
             {
-                await _userManager.AddToRoleAsync(systemUser, Constants.EditorRole);
+                await _userManager.AddToRoleAsync(systemUser, Constants.OperatorRole);
 
                 var eduUser = new User
                 {
@@ -262,7 +262,7 @@ namespace EmisTracking.WebApi.Controllers
 
             string roleInfo = Constants.AdminRole;
 
-            if (role == Constants.EditorRole)
+            if (role == Constants.OperatorRole)
             {
                 roleInfo = "Редактор"; // FIXME
             }

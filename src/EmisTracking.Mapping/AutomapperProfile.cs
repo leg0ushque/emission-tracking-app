@@ -26,6 +26,10 @@ namespace EmisTracking.Mapping
             CreateMap<GrossEmission, GrossEmissionViewModel>().ReverseMap();
             CreateMap<TaxRate, TaxRateViewModel>().ReverseMap();
             CreateMap<Tax, TaxViewModel>().ReverseMap();
+            CreateMap<User, UserViewModel>().ReverseMap();
+            CreateMap<User, FullUser>().ReverseMap();
+            CreateMap<UserViewModel, FullUser>().ReverseMap();
+            CreateMap<SystemUser, FullUser>().ReverseMap();
 
             CreateMap<Services.Enums.AggregateState, WebApi.Models.Enums.AggregateState>()
                 .ConvertUsingEnumMapping()

@@ -10,8 +10,10 @@
         public const string RoleInfoClaimType = "roleInfo";
 
         public const string AdminRole = "Администратор";
-        public const string EditorRole = "Редактор";
-        // FIXME Добавить ролей
+        public const string OperatorRole = "Оператор";
+        public const string AccountantRole = "Бухгалтер";
+        public const string EcologistRole = "Эколог";
+        public const string DirectorRole = "Руководитель предприятия";
 
         public const double DefaultParameterValue = 0.0d;
     }
