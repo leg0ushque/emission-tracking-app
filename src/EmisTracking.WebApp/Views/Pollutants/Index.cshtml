@@ -6,6 +6,8 @@
     ViewData["Title"] = LangResources.Titles.PollutantsIndex;
 
     var isAdmin = (ViewData[Constants.ViewDataConstants.IsAdmin] as bool?).GetValueOrDefault();
+    var isEcologist = (ViewData[Constants.ViewDataConstants.IsAdmin] as bool?).GetValueOrDefault();
+
     var hazardClasses = EnumHelper.HazardClasses;
     var aggStates = EnumHelper.AggregateStates;
 }
@@ -28,7 +30,7 @@
             <th scope="col">@LangResources.Fields.HazardClass</th>
             <th scope="col">@LangResources.Fields.AggregateState</th>
 
-            @if (isAdmin)
+            @if (isAdmin || isEcologist)
             {
                 <th scope="col" data-orderable="false" data-searchable="false"></th>
                 <th scope="col" data-orderable="false" data-searchable="false"></th>
@@ -46,7 +48,7 @@
                     <td>@hazardClasses[item.HazardClass]</td>
                     <td>@aggStates[item.AggregateState]</td>
 
-                    @if (isAdmin)
+                    @if (isAdmin || isEcologist)
                     {
                         <td>
                             <a class="btn btn-outline-primary"
@@ -75,7 +77,7 @@
         await Html.RenderPartialAsync("_JqueryDatatable");
 
         var columnWidths = new Queue<string>(new[] { "40%", "30%", "30%" });
-        if (isAdmin)
+        if (isAdmin || isEcologist)
         {
             columnWidths.Enqueue(Constants.DefaultEditDeleteButtonsWidth);
             columnWidths.Enqueue(Constants.DefaultEditDeleteButtonsWidth);

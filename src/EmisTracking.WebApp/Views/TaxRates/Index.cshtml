@@ -6,6 +6,8 @@
     ViewData["Title"] = LangResources.Titles.TaxRatesIndex;
 
     var isAdmin = (ViewData[Constants.ViewDataConstants.IsAdmin] as bool?).GetValueOrDefault();
+    var isDirector = (ViewData[Constants.ViewDataConstants.IsDirector] as bool?).GetValueOrDefault();
+    var isAccountant = (ViewData[Constants.ViewDataConstants.IsAccountant] as bool?).GetValueOrDefault();
     var hazClasses = EnumHelper.HazardClasses;
 }
 
@@ -28,7 +30,7 @@
             <th scope="col">@LangResources.Fields.StartDate</th>
             <th scope="col">@LangResources.Fields.EndDate</th>
 
-            @if (isAdmin)
+            @if (isAdmin || isAccountant)
             {
                 <th scope="col" data-orderable="false" data-searchable="false"></th>
                 <th scope="col" data-orderable="false" data-searchable="false"></th>
@@ -46,7 +48,7 @@
                     <td>@item.StartDate.ToShortDateString()</td>
                     <td>@(item.EndDate.HasValue ? item.EndDate.Value.ToShortDateString() : LangResources.NoValue)</td>
 
-                    @if (isAdmin)
+                    @if (isAdmin || isAccountant)
                     {
                         <td>
                             <a class="btn btn-outline-primary"
@@ -75,7 +77,7 @@
         await Html.RenderPartialAsync("_JqueryDatatable");
 
         var columnWidths = new Queue<string>(new[] { "20%", "20%", "30%", "30%" });
-        if (isAdmin)
+        if (isAdmin || isAccountant)
         {
             columnWidths.Enqueue(Constants.DefaultEditDeleteButtonsWidth);
             columnWidths.Enqueue(Constants.DefaultEditDeleteButtonsWidth);

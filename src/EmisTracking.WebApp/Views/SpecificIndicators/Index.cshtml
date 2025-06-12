@@ -5,6 +5,7 @@
     ViewData["Title"] = LangResources.Titles.SpecificIndicatorsIndex;
 
     var isAdmin = (ViewData[Constants.ViewDataConstants.IsAdmin] as bool?).GetValueOrDefault();
+    var isEcologist = (ViewData[Constants.ViewDataConstants.IsAdmin] as bool?).GetValueOrDefault();
 }
 
 @section Breadcrumb
@@ -25,7 +26,7 @@
             <th scope="col">@LangResources.Fields.Pollutant</th>
             <th scope="col">@LangResources.Fields.Value</th>
 
-            @if (isAdmin)
+            @if (isAdmin || isEcologist)
             {
                 <th scope="col" data-orderable="false" data-searchable="false"></th>
                 <th scope="col" data-orderable="false" data-searchable="false"></th>
@@ -50,7 +51,7 @@
                     </td>
                     <td>@item.Value</td>
 
-                    @if (isAdmin)
+                    @if (isAdmin || isEcologist)
                     {
                         <td>
                             <a class="btn btn-outline-primary"
@@ -79,7 +80,7 @@
         await Html.RenderPartialAsync("_JqueryDatatable");
 
         var columnWidths = new Queue<string>(new[] { "30%", "40%", "30%" });
-        if (isAdmin)
+        if (isAdmin || isEcologist)
         {
             columnWidths.Enqueue(Constants.DefaultEditDeleteButtonsWidth);
             columnWidths.Enqueue(Constants.DefaultEditDeleteButtonsWidth);

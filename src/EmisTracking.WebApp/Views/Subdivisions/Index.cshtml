@@ -5,6 +5,7 @@
     ViewData["Title"] = LangResources.Titles.SubdivisionsIndex;
 
     var isAdmin = (ViewData[Constants.ViewDataConstants.IsAdmin] as bool?).GetValueOrDefault();
+    var isOperator = (ViewData[Constants.ViewDataConstants.IsOperator] as bool?).GetValueOrDefault();
 }
 
 @section Breadcrumb
@@ -24,7 +25,7 @@
             <th scope="col">@LangResources.Fields.Area</th>
             <th scope="col">@LangResources.Fields.Name</th>
 
-            @if (isAdmin)
+            @if (isAdmin || isOperator)
             {
                 <th scope="col" data-orderable="false" data-searchable="false"></th>
                 <th scope="col" data-orderable="false" data-searchable="false"></th>
@@ -40,7 +41,7 @@
                     <td>@item.Area.Name</td>
                     <td>@item.Name</td>
 
-                    @if (isAdmin)
+                    @if (isAdmin || isOperator)
                     {
                         <td>
                             <a class="btn btn-outline-primary"
@@ -69,7 +70,7 @@
         await Html.RenderPartialAsync("_JqueryDatatable");
 
         var columnWidths = new Queue<string>(new[] { "30%", "40%" });
-        if (isAdmin)
+        if (isAdmin || isOperator)
         {
             columnWidths.Enqueue(Constants.DefaultEditDeleteButtonsWidth);
             columnWidths.Enqueue(Constants.DefaultEditDeleteButtonsWidth);

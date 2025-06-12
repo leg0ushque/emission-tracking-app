@@ -5,6 +5,8 @@
 @{
     ViewData["Title"] = "Подсчёт валового выброса"; // FIXME
     var parameterTypes = EnumHelper.ParameterTypes;
+
+    var isAdmin = (ViewData[Constants.ViewDataConstants.IsAdmin] as bool?).GetValueOrDefault();
 }
 
 <form asp-action="CalculateHandler" asp-controller="GrossEmissions" method="post">
@@ -113,27 +115,30 @@
         </table>
     }
 
-    @if (Model.CanBeCalculated)
+    @if (isAdmin)
     {
-        <p class="text-success">Все параметры заполнены, расчёты могут быть произведены</p>
+        @if (Model.CanBeCalculated)
+        {
+            <p class="text-success">Все параметры заполнены, расчёты могут быть произведены</p>
 
-        <div class="form-group row">
-            <div class="col-sm-6">
-                <button formaction="@Url.Action("FinalizeHandler", "GrossEmissions")" formmethod="post" class="btn btn-success">
-                    Рассчитать
-                </button>
+            <div class="form-group row">
+                <div class="col-sm-6">
+                    <button formaction="@Url.Action("FinalizeHandler", "GrossEmissions")" formmethod="post" class="btn btn-success">
+                        Рассчитать
+                    </button>
+                </div>
             </div>
-        </div>
-    }
-    else
-    {
-        <p class="text-danger">Пожалуйста, заполните все параметры для продолжения и нажмите кнопку</p>
+        }
+        else
+        {
+            <p class="text-danger">Пожалуйста, заполните все параметры для продолжения и нажмите кнопку</p>
 
-        <div class="form-group row">
-            <div class="col-sm-6">
-                <input type="submit" class="btn btn-primary" value="@LangResources.CalculateButtonText" />
+            <div class="form-group row">
+                <div class="col-sm-6">
+                    <input type="submit" class="btn btn-primary" value="@LangResources.CalculateButtonText" />
+                </div>
             </div>
-        </div>
+        }
     }
 </form>
 

@@ -6,6 +6,8 @@
     ViewData["Title"] = LangResources.Titles.SourceSubstancesIndex;
 
     var isAdmin = (ViewData[Constants.ViewDataConstants.IsAdmin] as bool?).GetValueOrDefault();
+    var isOperator = (ViewData[Constants.ViewDataConstants.IsOperator] as bool?).GetValueOrDefault();
+
     var gasCleaningUnitTypes = EnumHelper.GasCleaningUnitTypes;
 }
 
@@ -28,7 +30,7 @@
             <th scope="col">@LangResources.Fields.GasCleaningUnitType</th>
             <th scope="col">@LangResources.Fields.PurificationPercentage</th>
 
-            @if (isAdmin)
+            @if (isAdmin || isOperator)
             {
                 <th scope="col" data-orderable="false" data-searchable="false"></th>
                 <th scope="col" data-orderable="false" data-searchable="false"></th>
@@ -50,7 +52,7 @@
                     <td>@gasCleaningUnitTypes[item.GasCleaningUnitType]</td>
                     <td>@item.PurificationPercentage</td>
 
-                    @if (isAdmin)
+                    @if (isAdmin || isOperator)
                     {
                         <td>
                             <a class="btn btn-outline-primary"
@@ -79,7 +81,7 @@
         await Html.RenderPartialAsync("_JqueryDatatable");
 
         var columnWidths = new Queue<string>(new[] { "25%", "25%", "25%", "25%" });
-        if (isAdmin)
+        if (isAdmin || isOperator)
         {
             columnWidths.Enqueue(Constants.DefaultEditDeleteButtonsWidth);
             columnWidths.Enqueue(Constants.DefaultEditDeleteButtonsWidth);

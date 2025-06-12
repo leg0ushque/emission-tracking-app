@@ -14,39 +14,6 @@ namespace EmisTracking.WebApp.Controllers
     {
         private readonly IAuthApiService authApiService = authApiService;
 
-        [HttpGet("register")]
-        public IActionResult Register()
-        {
-            var model = new RegisterModel();
-
-            return View(model);
-        }
-
-        [HttpPost("register")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register([FromForm] RegisterModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-
-            var response = await authApiService.PostRegister(model);
-
-            if (response.Success)
-            {
-                SetTokenCookies(response.Data);
-
-                return RedirectToAction("Index", "Home");
-            }
-            else
-            {
-                UpdateModelStateErrors(ModelState, response.Errors, response.ErrorMessage);
-
-                return View(model);
-            }
-        }
-
         [AllowAnonymous]
         [HttpGet("login")]
         [LoadLayoutDataFilter]

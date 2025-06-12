@@ -148,16 +148,6 @@ namespace EmisTracking.WebApi.Controllers
                 return responseContent;
             }
 
-            // FIXME
-            var emissionUser = await _usersService.GetBySystemUserId(systemUser.Id);
-            if (emissionUser == null)
-            {
-                responseContent.Success = false;
-                responseContent.ErrorMessage = string.Format(LangResources.AuthUserNotFoundErrorMessageTemplate, systemUser.Id);
-
-                return responseContent;
-            }
-
             var result = await _userManager.ChangePasswordAsync(systemUser!, oldPassword, newPassword);
 
             if (!result.Succeeded)
@@ -168,7 +158,7 @@ namespace EmisTracking.WebApi.Controllers
                 return responseContent;
             }
 
-            var token = await CreateUserTokenAsync(emissionUser, systemUser);
+            var token = await CreateUserTokenAsync(systemUser);
 
             responseContent.Success = true;
             responseContent.Data = token;
@@ -194,17 +184,7 @@ namespace EmisTracking.WebApi.Controllers
                     return responseContent;
                 }
 
-                var emissionUser = await _usersService.GetBySystemUserId(systemUser.Id);
-
-                if (emissionUser == null && systemUser.Email != Services.Database.Constants.AdminMailbox)
-                {
-                    responseContent.Success = false;
-                    responseContent.ErrorMessage = string.Format(LangResources.AuthUserNotFoundErrorMessageTemplate, systemUser.Id);
-
-                    return responseContent;
-                }
-
-                var token = await CreateUserTokenAsync(emissionUser, systemUser);
+                var token = await CreateUserTokenAsync(systemUser);
 
                 responseContent.Success = true;
                 responseContent.Data = token;
@@ -231,14 +211,7 @@ namespace EmisTracking.WebApi.Controllers
             {
                 await _userManager.AddToRoleAsync(systemUser, Constants.OperatorRole);
 
-                var eduUser = new User
-                {
-                    SystemUserId = systemUser.Id,
-                };
-
-                eduUser.Id = await _usersService.AddAsync(eduUser);
-
-                var token = await CreateUserTokenAsync(eduUser, systemUser);
+                var token = await CreateUserTokenAsync(systemUser);
 
                 result.Success = true;
                 result.Data = token;
@@ -255,18 +228,12 @@ namespace EmisTracking.WebApi.Controllers
             return result;
         }
 
-        private async Task<string> CreateUserTokenAsync(User emissionUser, SystemUser systemUser)
+        private async Task<string> CreateUserTokenAsync(SystemUser systemUser)
         {
             var roles = await _userManager.GetRolesAsync(systemUser);
             var role = roles.FirstOrDefault();
 
-            string roleInfo = Constants.AdminRole;
-
-            if (role == Constants.OperatorRole)
-            {
-                roleInfo = "Редактор"; // FIXME
-            }
-            // FIXME Добавить другие роли
+            string roleInfo = role;
 
             return _jwtTokenService.GetToken(systemUser, roles, roleInfo);
         }

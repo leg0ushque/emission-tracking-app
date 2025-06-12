@@ -11,6 +11,7 @@
         : LangResources.Titles.OperatingTimesIndex;
 
     var isAdmin = (ViewData[Constants.ViewDataConstants.IsAdmin] as bool?).GetValueOrDefault();
+    var isOperator = (ViewData[Constants.ViewDataConstants.IsOperator] as bool?).GetValueOrDefault();
     var months = EnumHelper.Months;
 }
 
@@ -53,7 +54,7 @@ else
                 <th scope="col">@LangResources.Fields.Period</th>
                 <th scope="col">@LangResources.Fields.Hours</th>
 
-                @if (isAdmin)
+                @if (isAdmin || isOperator)
                 {
                     <th scope="col" data-orderable="false" data-searchable="false"></th>
                     <th scope="col" data-orderable="false" data-searchable="false"></th>
@@ -73,7 +74,7 @@ else
                         <td>@months[item.Month] @item.Year</td>
                         <td>@item.Hours</td>
 
-                        @if (isAdmin)
+                        @if (isAdmin || isOperator)
                         {
                             <td>
                                 <a class="btn btn-outline-primary"
@@ -109,9 +110,8 @@ else
         }
 
         columnWidths.Enqueue("15%");
-        //columnWidths.Enqueue("30%");
 
-        if (isAdmin)
+        if (isAdmin || isOperator)
         {
 
             columnWidths.Enqueue(Constants.DefaultEditDeleteButtonsWidth);
