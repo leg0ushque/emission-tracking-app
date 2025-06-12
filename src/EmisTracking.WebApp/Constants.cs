@@ -22,7 +22,10 @@
             public const string UserInfo = "UserInfo";
             public const string RoleInfo = "RoleInfo";
             public const string IsAdmin = "IsAdmin";
-            public const string IsEngineer = "IsEngineer";
+            public const string IsOperator = "IsOperator";
+            public const string IsEcologist = "IsEcologist";
+            public const string IsDirector = "IsDirector";
+            public const string IsAccountant = "IsAccountant";
         }
     }
 }

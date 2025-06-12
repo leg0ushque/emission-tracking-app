@@ -29,12 +29,20 @@ namespace EmisTracking.WebApp.Filters
                     : string.Empty;
 
                 var isAdmin = isAuthenticated && user!.IsInRole(ServicesConstants.AdminRole);
+                var isEcologist = isAuthenticated && user!.IsInRole(ServicesConstants.EcologistRole);
+                var isDirector = isAuthenticated && user!.IsInRole(ServicesConstants.DirectorRole);
+                var isOperator = isAuthenticated && user!.IsInRole(ServicesConstants.OperatorRole);
+                var isAccountant = isAuthenticated && user!.IsInRole(ServicesConstants.AccountantRole);
 
                 viewData[Constants.ViewDataConstants.IsAuthenticated] = isAuthenticated;
                 viewData[Constants.ViewDataConstants.RoleInfo] = roleInfo;
                 viewData[Constants.ViewDataConstants.UserInfo] = userInfo;
+
                 viewData[Constants.ViewDataConstants.IsAdmin] = isAdmin;
-                // FIXME Расширить список ролей!
+                viewData[Constants.ViewDataConstants.IsAccountant] = isAccountant;
+                viewData[Constants.ViewDataConstants.IsDirector] = isDirector;
+                viewData[Constants.ViewDataConstants.IsOperator] = isOperator;
+                viewData[Constants.ViewDataConstants.IsEcologist] = isEcologist;
             }
 
             base.OnActionExecuting(context);

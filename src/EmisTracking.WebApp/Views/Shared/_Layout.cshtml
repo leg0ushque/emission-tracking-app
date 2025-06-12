@@ -4,8 +4,12 @@
     var isAuthenticated = ViewData[Constants.ViewDataConstants.IsAuthenticated] as bool? ?? false;
     var roleInfo = ViewData[Constants.ViewDataConstants.RoleInfo] as string;
     var userInfo = ViewData[Constants.ViewDataConstants.UserInfo] as string;
+
     var isAdmin = ViewData[Constants.ViewDataConstants.IsAdmin] as bool? ?? false;
-    var isEngineer = ViewData[Constants.ViewDataConstants.IsEngineer] as bool? ?? false;
+    var isAccountant = ViewData[Constants.ViewDataConstants.IsAccountant] as bool? ?? false;
+    var isDirector = ViewData[Constants.ViewDataConstants.IsDirector] as bool? ?? false;
+    var isOperator = ViewData[Constants.ViewDataConstants.IsOperator] as bool? ?? false;
+    var isEcologist = ViewData[Constants.ViewDataConstants.IsEcologist] as bool? ?? false;
 }
 
 <!DOCTYPE html>
@@ -124,57 +128,74 @@
 
             @if (isAuthenticated)
             {
-                <li class="nav-heading">Объекты выбросов</li>
-                <li class="nav-item">
-                    @await Html.PartialAsync("_SidebarButton", ("Index", "Areas", "fas fa-solid fa-vector-square", LangResources.Titles.AreasIndex))
-                </li>
+                @if (isEcologist || isAdmin)
+                {
+                    <li class="nav-heading">Объекты выбросов</li>
+                    <li class="nav-item">
+                        @await Html.PartialAsync("_SidebarButton", ("Index", "Areas", "fas fa-solid fa-vector-square", LangResources.Titles.AreasIndex))
+                    </li>
 
-                <li class="nav-item">
-                    @await Html.PartialAsync("_SidebarButton", ("Index", "EmissionSources", "fas fa-solid fa-bullseye", "Источники выбросов"))
-                </li>
+                    <li class="nav-item">
+                        @await Html.PartialAsync("_SidebarButton", ("Index", "EmissionSources", "fas fa-solid fa-bullseye", "Источники выбросов"))
+                    </li>
+                }
 
-                <li class="nav-item">
-                    @await Html.PartialAsync("_SidebarButton", ("Index", "Modes", "fas fa-solid fa-clipboard-check", "Режимы"))
-                </li>
+                @if (isAdmin)
+                {
+                    <li class="nav-item">
+                        @await Html.PartialAsync("_SidebarButton", ("Index", "Modes", "fas fa-solid fa-clipboard-check", "Режимы"))
+                    </li>
 
-                <li class="nav-item">
-                    @await Html.PartialAsync("_SidebarButton", ("Index", "Methodologies", "fas fa-list", "Методики и параметры"))
-                </li>
+                    <li class="nav-item">
+                        @await Html.PartialAsync("_SidebarButton", ("Index", "Methodologies", "fas fa-list", "Методики и параметры"))
+                    </li>
+                }
 
-                <li class="nav-heading">Расход и удельные показатели</li>
+                @if (isAdmin || isEcologist)
+                {
+                    <li class="nav-heading">Расход и удельные показатели</li>
 
-                <li class="nav-item">
-                    @await Html.PartialAsync("_SidebarButton", ("Index", "Pollutants", "fas fa-book", "Общий перечень веществ"))
-                </li>
-                <li class="nav-item">
-                    @await Html.PartialAsync("_SidebarButton", ("Index", "ConsumptionGroups", "fas fa-list", "Расходные группы и удельные показатели"))
-                </li>
-                <li class="nav-item">
-                    @await Html.PartialAsync("_SidebarButton", ("Index", "Consumptions", "fas fa-clipboard-list", "Расход материалов"))
-                </li>
+                    <li class="nav-item">
+                        @await Html.PartialAsync("_SidebarButton", ("Index", "Pollutants", "fas fa-book", "Общий перечень веществ"))
+                    </li>
+                    <li class="nav-item">
+                        @await Html.PartialAsync("_SidebarButton", ("Index", "ConsumptionGroups", "fas fa-list", "Расходные группы и удельные показатели"))
+                    </li>
+                    <li class="nav-item">
+                        @await Html.PartialAsync("_SidebarButton", ("Index", "Consumptions", "fas fa-clipboard-list", "Расход материалов"))
+                    </li>
+                }
 
-                <li class="nav-heading">Расчёт и оплата налогов</li>
+                @if (isAdmin || isAccountant)
+                {
+                    <li class="nav-heading">Расчёт и оплата налогов</li>
 
-                <li class="nav-item">
-                    @await Html.PartialAsync("_SidebarButton", ("Index", "TaxRates", "fas fa-tag", "Ставки налога"))
-                </li>
+                    <li class="nav-item">
+                        @await Html.PartialAsync("_SidebarButton", ("Index", "TaxRates", "fas fa-tag", "Ставки налога"))
+                    </li>
 
-                <li class="nav-item">
-                    @await Html.PartialAsync("_SidebarButton", ("Index", "Taxes", "fas fa-receipt", "Налоговые выплаты"))
-                </li>
+                    <li class="nav-item">
+                        @await Html.PartialAsync("_SidebarButton", ("Index", "Taxes", "fas fa-receipt", "Налоговые выплаты"))
+                    </li>
+                }
 
+                @if (isAdmin || isAccountant || isDirector)
+                {
+                    <li class="nav-heading">Статистика</li>
 
-                <li class="nav-heading">Статистика</li>
+                    <li class="nav-item">
+                        @await Html.PartialAsync("_SidebarButton", ("Index", "Stats", "fa-solid fa-bottle-droplet", "Выбросы"))
+                    </li>
+                }
 
-                <li class="nav-item">
-                    @await Html.PartialAsync("_SidebarButton", ("Index", "Stats", "fa-solid fa-bottle-droplet", "Выбросы"))
-                </li>
+                @if (isAdmin || isDirector)
+                {
+                    <li class="nav-heading">Персонал</li>
 
-                <li class="nav-heading">Персонал</li>
-
-                <li class="nav-item">
-                    @await Html.PartialAsync("_SidebarButton", ("Index", "Users", "fas fa-solid fa-users", "Пользователи и роли"))
-                </li>
+                    <li class="nav-item">
+                        @await Html.PartialAsync("_SidebarButton", ("Index", "Users", "fas fa-solid fa-users", "Пользователи и роли"))
+                    </li>
+                }
             }
             else
             {
@@ -182,10 +203,6 @@
                     @await Html.PartialAsync("_SidebarButton", ("Login", "Auth", "fas fa-id-card", "Войти в аккаунт"))
                 </li>
             }
-            @*
-            <li class="nav-item">
-            @await Html.PartialAsync("_SidebarButton", ("Index", "help", "fas fa-question", "F.A.Q."))
-            </li> *@
         </ul>
 
     </aside>
