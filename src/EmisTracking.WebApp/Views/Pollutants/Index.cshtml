@@ -6,7 +6,7 @@
     ViewData["Title"] = LangResources.Titles.PollutantsIndex;
 
     var isAdmin = (ViewData[Constants.ViewDataConstants.IsAdmin] as bool?).GetValueOrDefault();
-    var isEcologist = (ViewData[Constants.ViewDataConstants.IsAdmin] as bool?).GetValueOrDefault();
+    var isEcologist = (ViewData[Constants.ViewDataConstants.IsEcologist] as bool?).GetValueOrDefault();
 
     var hazardClasses = EnumHelper.HazardClasses;
     var aggStates = EnumHelper.AggregateStates;

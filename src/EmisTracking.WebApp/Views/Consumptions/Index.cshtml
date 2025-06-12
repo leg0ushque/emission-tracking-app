@@ -5,7 +5,7 @@
     ViewData["Title"] = LangResources.Titles.ConsumptionsIndex;
 
     var isAdmin = (ViewData[Constants.ViewDataConstants.IsAdmin] as bool?).GetValueOrDefault();
-    var isEcologist = (ViewData[Constants.ViewDataConstants.IsAdmin] as bool?).GetValueOrDefault();
+    var isEcologist = (ViewData[Constants.ViewDataConstants.IsEcologist] as bool?).GetValueOrDefault();
 }
 
 @section Breadcrumb
