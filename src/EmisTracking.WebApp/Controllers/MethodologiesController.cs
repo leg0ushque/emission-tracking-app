@@ -13,6 +13,7 @@ namespace EmisTracking.WebApp.Controllers
 {
     [LoadLayoutDataFilter]
     [Route("[controller]")]
+    [Authorize(Roles = Services.Constants.AdminRole)]
     public class MethodologiesController : BaseDropdownViewController<MethodologyViewModel>
     {
         private readonly IBaseApiService<ModeViewModel> _modeService;

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace EmisTracking.WebApp.Controllers
 {
     [Route("[controller]")]
+    [Authorize(Roles = $"{Services.Constants.EcologistRole},{Services.Constants.AdminRole}}")]
     public class PollutantsController : BaseViewController<PollutantViewModel>
     {
         public PollutantsController(IBaseApiService<PollutantViewModel> apiService)

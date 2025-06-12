@@ -3,6 +3,7 @@ using EmisTracking.Services.WebApi.Services;
 using EmisTracking.WebApi.Models.Models;
 using EmisTracking.WebApi.Models.ViewModels;
 using EmisTracking.WebApp.Filters;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
@@ -12,6 +13,7 @@ namespace EmisTracking.WebApp.Controllers
 {
     [LoadLayoutDataFilter]
     [Route("[controller]")]
+    [Authorize(Roles = $"{Services.Constants.DirectorRole},{Services.Constants.AccountantRole},{Services.Constants.AdminRole}}")]
     public class GrossEmissionsController : BaseDropdownViewController<GrossEmissionViewModel>
     {
         private readonly IGrossEmissionApiService _grossEmissionService;

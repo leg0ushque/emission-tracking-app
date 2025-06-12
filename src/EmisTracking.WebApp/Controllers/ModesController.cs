@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace EmisTracking.WebApp.Controllers
 {
     [Route("[controller]")]
+    [Authorize(Roles = Services.Constants.AdminRole)]
     public class ModesController : BaseViewController<ModeViewModel>
     {
         public ModesController(IBaseApiService<ModeViewModel> apiService)

@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 namespace EmisTracking.WebApp.Controllers
 {
     [Route("[controller]")]
+    [Authorize(Roles = Services.Constants.AdminRole)]
     public class MethodologyParametersController : BaseDropdownViewController<MethodologyParameterViewModel>
     {
         private readonly IBaseApiService<MethodologyViewModel> _methodologyApiService;

@@ -3,6 +3,7 @@ using EmisTracking.Services.WebApi.Services;
 using EmisTracking.WebApi.Models.Models;
 using EmisTracking.WebApi.Models.ViewModels;
 using EmisTracking.WebApp.Filters;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ namespace EmisTracking.WebApp.Controllers
 {
     [Route("[controller]")]
     [LoadLayoutDataFilter]
+    [Authorize(Roles = $"{Services.Constants.DirectorRole},{Services.Constants.AdminRole}}")]
     public class UsersController : BaseViewController<UserViewModel>
     {
         private readonly IUserApiService _userService;

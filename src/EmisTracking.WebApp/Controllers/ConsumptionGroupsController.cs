@@ -13,6 +13,7 @@ namespace EmisTracking.WebApp.Controllers
 {
     [LoadLayoutDataFilter]
     [Route("[controller]")]
+    [Authorize(Roles = $"{Services.Constants.EcologistRole},{Services.Constants.AdminRole}}")]
     public class ConsumptionGroupsController : BaseDropdownViewController<ConsumptionGroupViewModel>
     {
         private readonly IBaseApiService<MethodologyViewModel> _methodologyService;
