@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace EmisTracking.WebApp.Controllers
 {
     [Route("[controller]")]
-    [Authorize(Roles = $"{Services.Constants.DirectorRole},{Services.Constants.AccountantRole},{Services.Constants.AdminRole}}")]
+    [Authorize(Roles = $"{Services.Constants.DirectorRole},{Services.Constants.AccountantRole},{Services.Constants.AdminRole}")]
     public class TaxesController : BaseViewController<TaxViewModel>
     {
         public TaxesController(IBaseApiService<TaxViewModel> apiService)

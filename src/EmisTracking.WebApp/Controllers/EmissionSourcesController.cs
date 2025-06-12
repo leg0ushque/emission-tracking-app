@@ -13,7 +13,7 @@ namespace EmisTracking.WebApp.Controllers
 {
     [LoadLayoutDataFilter]
     [Route("[controller]")]
-    [Authorize(Roles = $"{Services.Constants.OperatorRole},{Services.Constants.AdminRole}}")]
+    [Authorize(Roles = $"{Services.Constants.OperatorRole},{Services.Constants.AdminRole}")]
     public class EmissionSourcesController : BaseDropdownViewController<EmissionSourceViewModel>
     {
         private readonly IBaseApiService<SubdivisionViewModel> _subdivisionService;

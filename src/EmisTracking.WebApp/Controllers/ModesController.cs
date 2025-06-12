@@ -1,6 +1,7 @@
 ﻿using EmisTracking.Localization;
 using EmisTracking.Services.WebApi.Services;
 using EmisTracking.WebApi.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EmisTracking.WebApp.Controllers

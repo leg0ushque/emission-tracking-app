@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace EmisTracking.WebApp.Controllers
 {
     [Route("[controller]")]
-    [Authorize(Roles = $"{Services.Constants.OperatorRole},{Services.Constants.AdminRole}}")]
+    [Authorize(Roles = $"{Services.Constants.OperatorRole},{Services.Constants.AdminRole}")]
     public class SubdivisionsController : BaseDropdownViewController<SubdivisionViewModel>
     {
         private readonly IBaseApiService<AreaViewModel> _areaApiService;

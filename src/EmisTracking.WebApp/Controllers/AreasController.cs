@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace EmisTracking.WebApp.Controllers
 {
-    [Authorize(Roles =$"{Services.Constants.OperatorRole},{Services.Constants.AdminRole}}")]
+    [Authorize(Roles =$"{Services.Constants.OperatorRole},{Services.Constants.AdminRole}")]
     [Route("[controller]")]
     public class AreasController : BaseViewController<AreaViewModel>
     {

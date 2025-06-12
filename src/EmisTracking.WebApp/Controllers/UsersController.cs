@@ -13,7 +13,7 @@ namespace EmisTracking.WebApp.Controllers
 {
     [Route("[controller]")]
     [LoadLayoutDataFilter]
-    [Authorize(Roles = $"{Services.Constants.DirectorRole},{Services.Constants.AdminRole}}")]
+    [Authorize(Roles = $"{Services.Constants.DirectorRole},{Services.Constants.AdminRole}")]
     public class UsersController : BaseViewController<UserViewModel>
     {
         private readonly IUserApiService _userService;
