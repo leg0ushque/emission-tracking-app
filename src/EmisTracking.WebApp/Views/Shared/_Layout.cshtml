@@ -128,7 +128,7 @@
 
             @if (isAuthenticated)
             {
-                @if (isEcologist || isAdmin)
+                @if (isOperator || isAdmin)
                 {
                     <li class="nav-heading">Объекты выбросов</li>
                     <li class="nav-item">
@@ -166,7 +166,7 @@
                     </li>
                 }
 
-                @if (isAdmin || isAccountant)
+                @if (isAdmin || isAccountant || isDirector)
                 {
                     <li class="nav-heading">Расчёт и оплата налогов</li>
 
