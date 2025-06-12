@@ -1,11 +1,14 @@
 ﻿@model List<EmisTracking.WebApi.Models.ViewModels.ConsumptionViewModel>
 @using EmisTracking.Localization
+@using EmisTracking.WebApp.Helpers
 @{
     ViewData[Constants.GenerateBreadcrumb] = new();
     ViewData["Title"] = LangResources.Titles.ConsumptionsIndex;
 
     var isAdmin = (ViewData[Constants.ViewDataConstants.IsAdmin] as bool?).GetValueOrDefault();
     var isEcologist = (ViewData[Constants.ViewDataConstants.IsEcologist] as bool?).GetValueOrDefault();
+
+    var months = EnumHelper.Months;
 }
 
 @section Breadcrumb
@@ -42,7 +45,7 @@
                     <td></td>
                     <td>@item.ConsumptionGroup.Name</td>
                     <td>@item.Mass</td>
-                    <td>@item.Month</td>
+                    <td>@months[item.Month]</td>
                     <td>@item.Year</td>
 
                     @if (isAdmin || isEcologist)
