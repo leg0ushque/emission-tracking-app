@@ -130,7 +130,7 @@ namespace EmisTracking.Services.Services
                 var serializedData = JsonConvert.SerializeObject(missingPollutantsDetails);
 
                 throw new BusinessLogicException(
-                    $"{LangResources.MissingMethodologyPollutants}:\n{string.Join("; ", missingPollutants)}");
+                    $"{LangResources.MissingMethodologyPollutants}:\n{string.Join("; ", missingPollutantsDetails.Select(x => x.Value))}");
             }
             else
             {

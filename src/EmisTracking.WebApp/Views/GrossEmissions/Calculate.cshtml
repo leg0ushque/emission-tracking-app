@@ -16,11 +16,17 @@
     </a>
 </p>
 
+@if(!string.IsNullOrEmpty(Model.ErrorMessage))
+{
+    <p class="text-danger">@Model.ErrorMessage</p>
+}
+
 <form asp-action="CalculateHandler" asp-controller="GrossEmissions" method="post">
     <input type="hidden" asp-for="EmissionSourceId" class="form-select">
+    <input type="hidden" asp-for="EmissionSourceName" class="form-select">
     <input type="hidden" asp-for="MethodologyName" class="form-select">
 
-    @if (Model.Parameters != null && Model.Parameters.Count > 0)
+    @if (!string.IsNullOrEmpty(Model.ErrorMessage) || Model.Parameters != null && Model.Parameters.Count > 0)
     {
         <p>
             <b>@LangResources.Fields.Methodology:</b>
@@ -133,7 +139,7 @@
         </table>
     }
 
-    @if (isAdmin)
+    @if (isAdmin && string.IsNullOrEmpty(Model.ErrorMessage))
     {
         @if (Model.CanBeCalculated)
         {
@@ -159,8 +165,6 @@
         }
     }
 </form>
-
-
 
 @section Scripts {
     @{

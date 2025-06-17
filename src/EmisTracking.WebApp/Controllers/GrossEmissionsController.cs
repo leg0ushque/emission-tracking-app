@@ -1,4 +1,5 @@
 ﻿using EmisTracking.Localization;
+using EmisTracking.Services.Entities;
 using EmisTracking.Services.WebApi.Services;
 using EmisTracking.WebApi.Models.Models;
 using EmisTracking.WebApi.Models.ViewModels;
@@ -93,13 +94,30 @@ namespace EmisTracking.WebApp.Controllers
 
             if(calculationResponse.Success)
             {
-
                 return View(nameof(Calculate), calculationResponse.Data); // Остаёмся на той же странице, обновляя данные
             }
             else
             {
-                return View(Constants.ErrorView,
-                    (errorMessage: calculationResponse.ErrorMessage, controller: "EmissionSources", action: "Index"));
+                var methodologiesResponse = await _methodologyService.GetAllAsync(loadDependencies: true);
+
+                var currentDate = DateTime.Now;
+
+                var pageModel = new CalculationCheckResultViewModel
+                {
+                    EmissionSourceName = model.EmissionSourceName,
+                    EmissionSourceId = model.EmissionSourceId,
+                    Month = currentDate.Month,
+                    Year = currentDate.Year,
+                    MethodologyId = model.MethodologyId,
+                    MethodologyName = methodologiesResponse.Success ?
+                        methodologiesResponse.Data.FirstOrDefault(m => m.Id == model.MethodologyId).Name
+                        : LangResources.NoValue,
+                    Methodologies = methodologiesResponse.Success ? methodologiesResponse.Data
+                        .Select(x => new DropdownItemModel(x.Id, x.ShortName)).ToList() : [],
+                    ErrorMessage = calculationResponse.ErrorMessage
+                };
+
+                return View(nameof(Calculate), pageModel);
             }
         }
 

@@ -7,5 +7,7 @@ namespace EmisTracking.WebApi.Models.ViewModels
         public bool CanBeCalculated { get; set; }
 
         public List<CalculationParameterViewModel> Parameters { get; set; }
+
+        public string ErrorMessage { get; set; }
     }
 }
