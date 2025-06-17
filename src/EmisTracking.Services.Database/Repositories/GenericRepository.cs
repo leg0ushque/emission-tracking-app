@@ -28,7 +28,7 @@ namespace EmisTracking.Services.Database.Repositories
         {
             ArgumentNullException.ThrowIfNull(entityId);
 
-            IQueryable<TEntity> query = _context.Set<TEntity>();
+            IQueryable<TEntity> query = _context.Set<TEntity>().AsNoTracking();
 
             if (includes != null && includes.Length != 0)
             {

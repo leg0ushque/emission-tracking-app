@@ -16,5 +16,8 @@
         public const string DirectorRole = "Руководитель предприятия";
 
         public const double DefaultParameterValue = 0.0d;
+
+        public const double Epsilon = 0.00001; // для сравнений значений массы
+        public const double ZeroMass = 0.0d;
     }
 }

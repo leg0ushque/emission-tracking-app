@@ -9,6 +9,10 @@
     ViewData["Title"] = string.Format(LangResources.Titles.NameTemplate, Model.MainItem.Name);
 
     var isAdmin = (ViewData[Constants.ViewDataConstants.IsAdmin] as bool?).GetValueOrDefault();
+    var isOperator = (ViewData[Constants.ViewDataConstants.IsOperator] as bool?).GetValueOrDefault();
+    var isAccountant = (ViewData[Constants.ViewDataConstants.IsAccountant] as bool?).GetValueOrDefault();
+    var isEcologist = (ViewData[Constants.ViewDataConstants.IsEcologist] as bool?).GetValueOrDefault();
+
     var processCategories = EnumHelper.ProcessCategories;
     var gasCleaningUnitTypes = EnumHelper.GasCleaningUnitTypes;
     var processCategory = Model.MainItem.ProcessCategory.HasValue ? processCategories[Model.MainItem.ProcessCategory.Value] : LangResources.NoValue;
@@ -36,17 +40,34 @@
 <p><strong>@LangResources.Fields.Methodology:</strong> @(Model.MainItem.Methodology?.Name ?? LangResources.NoValue)</p>
 <p><strong>@LangResources.Fields.Mode:</strong> @(Model.MainItem.Mode?.Name ?? LangResources.NoValue)</p>
 
-@if (isAdmin)
+@if (isAdmin || isEcologist || isAccountant)
 {
-    <a class="btn btn-outline-primary" asp-controller="EmissionSources" asp-action="Update" asp-route-id="@Model.MainItem.Id" name="@LangResources.UpdateButtonText">
-        <i class="fas fa-pen"></i> @LangResources.UpdateButtonText
-    </a>
-    <a class="btn btn-outline-danger" asp-controller="EmissionSources" asp-action="Delete" asp-route-id="@Model.MainItem.Id" name="@LangResources.DeleteButtonText">
-        <i class="fas fa-trash"></i> @LangResources.DeleteButtonText
-    </a>
-    <br />
+    <p>
+        <a class="btn btn-outline-primary"
+           asp-controller="GrossEmissions" asp-action="Calculate" asp-route-id="@Model.MainItem.Id">
+            <i class="fas fa-gear"></i> @LangResources.Titles.GrossEmissionsIndex
+        </a>
+    </p>
 }
-<br />
+
+@if (isAdmin || isOperator)
+{
+    <p>
+        <a class="btn btn-outline-primary"
+           asp-controller="OperatingTimes" asp-action="GetBySource" asp-route-id="@Model.MainItem.Id">
+            <i class="fas fa-clock"></i> @LangResources.Titles.OperatingTimesIndex
+        </a>
+    </p>
+
+    <p>
+        <a class="btn btn-outline-primary" asp-controller="EmissionSources" asp-action="Update" asp-route-id="@Model.MainItem.Id" name="@LangResources.UpdateButtonText">
+            <i class="fas fa-pen"></i> @LangResources.UpdateButtonText
+        </a>
+        <a class="btn btn-outline-danger" asp-controller="EmissionSources" asp-action="Delete" asp-route-id="@Model.MainItem.Id" name="@LangResources.DeleteButtonText">
+            <i class="fas fa-trash"></i> @LangResources.DeleteButtonText
+        </a>
+    </p>
+}
 
 <h4>@LangResources.Titles.SourceSubstancesList</h4>
 
@@ -83,7 +104,7 @@
                     </td>
                     <td>@await Html.PartialAsync("_Boolean", item.IsRegulated)</td>
                     <td>@gasCleaningUnitTypes[item.GasCleaningUnitType]</td>
-                    <td>@(item.GasCleaningUnitType  == GasCleaningUnitType.Yes ? item.PurificationPercentage : "-")</td>
+                    <td>@(item.GasCleaningUnitType == GasCleaningUnitType.Yes ? item.PurificationPercentage : "-")</td>
                     <td>@item.AnnualAmount</td>
                 </tr>
             }

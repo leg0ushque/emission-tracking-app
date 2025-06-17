@@ -30,6 +30,7 @@ namespace EmisTracking.Mapping
             CreateMap<User, FullUser>().ReverseMap();
             CreateMap<UserViewModel, FullUser>().ReverseMap();
             CreateMap<SystemUser, FullUser>().ReverseMap();
+            CreateMap<CalculationCheckResult, CalculationCheckResultViewModel>().ReverseMap();
 
             CreateMap<Services.Enums.AggregateState, WebApi.Models.Enums.AggregateState>()
                 .ConvertUsingEnumMapping()

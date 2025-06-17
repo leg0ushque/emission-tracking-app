@@ -25,8 +25,7 @@ namespace EmisTracking.WebApp.Controllers
             IGrossEmissionApiService grossEmissionService,
             IBaseApiService<SourceSubstanceViewModel> sourceSubstanceService,
             IBaseApiService<MethodologyViewModel> methodologyService,
-            IBaseApiService<EmissionSourceViewModel> emissionSourceService,
-            IBaseApiService<TaxViewModel> taxService)
+            IBaseApiService<EmissionSourceViewModel> emissionSourceService)
         {
             _apiService = grossEmissionService;
             _grossEmissionService = grossEmissionService;
@@ -90,14 +89,18 @@ namespace EmisTracking.WebApp.Controllers
         [HttpPost("calculate")]
         public async Task<IActionResult> CalculateHandler([FromForm] CalculationFormViewModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(nameof(Calculate), model);
-            }
-
             var calculationResponse = await _grossEmissionService.СheckCalculation(model);
 
-            return View(nameof(Calculate), calculationResponse.Data); // Остаёмся на той же странице, обновляя данные
+            if(calculationResponse.Success)
+            {
+
+                return View(nameof(Calculate), calculationResponse.Data); // Остаёмся на той же странице, обновляя данные
+            }
+            else
+            {
+                return View(Constants.ErrorView,
+                    (errorMessage: calculationResponse.ErrorMessage, controller: "EmissionSources", action: "Index"));
+            }
         }
 
         [HttpPost("finalize")]

@@ -3,80 +3,99 @@
 @using EmisTracking.WebApp.Helpers
 @model CalculationCheckResultViewModel
 @{
-    ViewData["Title"] = "Подсчёт валового выброса"; // FIXME
+    ViewData["Title"] = $"{LangResources.GrossEmissionCalculation} - {Model.EmissionSourceName}";
     var parameterTypes = EnumHelper.ParameterTypes;
 
     var isAdmin = (ViewData[Constants.ViewDataConstants.IsAdmin] as bool?).GetValueOrDefault();
+    var months = EnumHelper.Months;
 }
 
+<p>
+    <a class="btn btn-outline-secondary" asp-controller="EmissionSources" asp-action="Item" asp-route-id="@Model.EmissionSourceId">
+        <i class="fas fa-arrow-left"></i> @string.Format(LangResources.Titles.NameTemplate, Model.EmissionSourceName)
+    </a>
+</p>
+
 <form asp-action="CalculateHandler" asp-controller="GrossEmissions" method="post">
-    <div class="row mb-3">
-        <label asp-for="MethodologyId" class="col-md-2 control-form-label"></label>
-        <div class="col-sm-6">
-            <select asp-for="MethodologyId" class="form-select">
-                <option value="" disabled selected>@LangResources.ChooseSomething</option>
-                @if (Model.Methodologies?.Any() ?? false)
-                {
-                    @foreach (var item in Model.Methodologies)
-                    {
-                        <option value="@item.Value">@item.Name</option>
-                    }
-                }
-            </select>
-            <span asp-validation-for="MethodologyId" class="text-danger"></span>
-        </div>
-    </div>
-
-    <div class="row mb-3">
-        <label asp-for="MethodologyId" class="col-md-2 control-form-label"></label>
-        <div class="col-sm-6">
-            <select asp-for="MethodologyId" class="form-select">
-                <option value="" disabled selected>@LangResources.ChooseSomething</option>
-                @if (Model.EmissionSources?.Any() ?? false)
-                {
-                    @foreach (var item in Model.Methodologies)
-                    {
-                        <option value="@item.Value">@item.Name</option>
-                    }
-                }
-            </select>
-            <span asp-validation-for="MethodologyId" class="text-danger"></span>
-        </div>
-    </div>
-
-    <div class="row mb-3">
-        <label asp-for="Month" class="col-md-2 control-form-label"></label>
-        <div class="col-sm-6">
-            <select asp-for="Month" class="form-select">
-                <option value="1">@LangResources.Months.January</option>
-                <option value="2">@LangResources.Months.February</option>
-                <option value="3">@LangResources.Months.March</option>
-                <option value="4">@LangResources.Months.April</option>
-                <option value="5">@LangResources.Months.May</option>
-                <option value="6">@LangResources.Months.June</option>
-                <option value="7">@LangResources.Months.July</option>
-                <option value="8">@LangResources.Months.August</option>
-                <option value="9">@LangResources.Months.September</option>
-                <option value="10">@LangResources.Months.October</option>
-                <option value="11">@LangResources.Months.November</option>
-                <option value="12">@LangResources.Months.December</option>
-            </select>
-            <span asp-validation-for="Month" class="text-danger"></span>
-        </div>
-    </div>
-
-    <div class="row mb-3">
-        <label asp-for="Year" class="col-md-2 control-form-label"></label>
-        <div class="col-sm-6">
-            <input asp-for="Year" class="form-control" />
-            <span asp-validation-for="Year" class="text-danger"></span>
-        </div>
-    </div>
+    <input type="hidden" asp-for="EmissionSourceId" class="form-select">
+    <input type="hidden" asp-for="MethodologyName" class="form-select">
 
     @if (Model.Parameters != null && Model.Parameters.Count > 0)
     {
-        <h3>@LangResources.Titles.ParameterValuesList</h3>
-        <table class="table">
+        <p>
+            <b>@LangResources.Fields.Methodology:</b>
+            <a asp-controller="Methodologies" asp-action="Item" asp-route-id="@Model.EmissionSourceId">
+                @Model.MethodologyName
+            </a>
+        </p>
+        <p>
+            <b>@LangResources.Fields.EmissionSource:</b>
+            <a asp-controller="EmissionSources" asp-action="Item" asp-route-id="@Model.EmissionSourceId">
+                @Model.EmissionSourceName
+            </a>
+        </p>
+        <p><b>@LangResources.Fields.Period:</b> @months[Model.Month] @Model.Year</p>
+
+        <input type="hidden" asp-for="MethodologyId" class="form-select">
+        <input type="hidden" asp-for="Month" class="form-select">
+        <input type="hidden" asp-for="Year" class="form-select">
+    }
+    else
+    {
+        <div class="row mb-3">
+            <label asp-for="MethodologyId" class="col-md-2 control-form-label"></label>
+            <div class="col-sm-6">
+                <select asp-for="MethodologyId" class="form-select">
+                    <option value="" disabled selected>@LangResources.ChooseSomething</option>
+                    @if (Model.Methodologies?.Any() ?? false)
+                    {
+                        @foreach (var item in Model.Methodologies)
+                        {
+                            <option value="@item.Value">@item.Name</option>
+                        }
+                    }
+                </select>
+                <span asp-validation-for="MethodologyId" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <label asp-for="Month" class="col-md-2 control-form-label"></label>
+            <div class="col-sm-6">
+                <select asp-for="Month" class="form-select">
+                    <option value="1">@LangResources.Months.January</option>
+                    <option value="2">@LangResources.Months.February</option>
+                    <option value="3">@LangResources.Months.March</option>
+                    <option value="4">@LangResources.Months.April</option>
+                    <option value="5">@LangResources.Months.May</option>
+                    <option value="6">@LangResources.Months.June</option>
+                    <option value="7">@LangResources.Months.July</option>
+                    <option value="8">@LangResources.Months.August</option>
+                    <option value="9">@LangResources.Months.September</option>
+                    <option value="10">@LangResources.Months.October</option>
+                    <option value="11">@LangResources.Months.November</option>
+                    <option value="12">@LangResources.Months.December</option>
+                </select>
+                <span asp-validation-for="Month" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <label asp-for="Year" class="col-md-2 control-form-label"></label>
+            <div class="col-sm-6">
+                <input asp-for="Year" class="form-control" />
+                <span asp-validation-for="Year" class="text-danger"></span>
+            </div>
+        </div>
+
+    }
+
+    @if (Model.Parameters != null && Model.Parameters.Count > 0)
+    {
+        <h3>@Model.MethodologyName</h3>
+        <h4>@LangResources.Titles.ParameterValuesList</h4>
+
+        <table class="table bordered">
             <thead>
                 <tr>
                     <th>@LangResources.Fields.SourceSubstance</th>

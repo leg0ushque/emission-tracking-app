@@ -19,19 +19,20 @@
 {
     @if (sourceId != null)
     {
-        <li class="breadcrumb-item active">@ViewData["Title"]</li>
+        <li class="breadcrumb-item">
+            <a asp-action="Item" asp-controller="EmissionSources" asp-route-id="@sourceId">
+                @sourceInfo
+            </a>
+        </li>
     }
-    else
-    {
-        <li class="breadcrumb-item active">@ViewData["Title"]</li>
-    }
+    <li class="breadcrumb-item active">@LangResources.Titles.OperatingTimesIndex</li>
 }
 
 @if (sourceId != null)
 {
     <a class="btn btn-primary" asp-action="CreateForEmissionSource" asp-controller="OperatingTimes" asp-route-id="@sourceId">
         <i class="fas fa-plus"></i>
-        @LangResources.CreateButtonText
+        @LangResources.AddButtonText
     </a>
 }
 else

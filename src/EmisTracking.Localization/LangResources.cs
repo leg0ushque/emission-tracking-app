@@ -19,6 +19,7 @@ namespace EmisTracking.Localization
         public const string CalculateButtonText = "Рассчитать";
         public const string RegisterButtonText = "Регистрация";
         public const string LoginButtonText = "Войти";
+        public const string AddButtonText = "Добавить";
         public const string NoValue = "не установлено";
         public const string True = "Да";
         public const string False = "Нет";
@@ -45,6 +46,7 @@ namespace EmisTracking.Localization
         public const string FormulaHint = "Параметры в формуле следует записывать в квадратных скобках. Например [A]*[Mass]+[Spec1]";
         public const string IncorrectRole = "Неправильная роль";
         public const string RememberPassword = "Пожалуйста, запомните вводимый пароль. У Вас не будет другой возможности его увидеть!";
+        public const string GrossEmissionCalculation = "Подсчёт валового выброса";
 
         public const string AuthUserNotFoundErrorMessageTemplate = "Пользователь {0} не найден.";
         public const string SignInFailedErrorMessage = "Не удалось выполнить вход. Проверьте введённые логин и пароль и повторите попытку снова!";

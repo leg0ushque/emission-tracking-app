@@ -23,8 +23,8 @@ namespace EmisTracking.WebApi.Filters
                 {
                     Success = false,
                     StatusCode = code,
-                    ErrorMessage = ex.InnerException?.Message ?? LangResources.DefaultErrorMessage,
-                    Errors = ex.FieldErrors.Select(e => new FieldErrorModel { Field = e.Field, Message = e.Message }).ToArray()
+                    ErrorMessage = (ex.InnerException?.Message ?? ex.Message) ?? LangResources.DefaultErrorMessage,
+                    Errors = ex.FieldErrors?.Select(e => new FieldErrorModel { Field = e.Field, Message = e.Message }).ToArray()
                 });
 
                 base.OnException(context);

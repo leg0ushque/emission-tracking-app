@@ -2,6 +2,7 @@
 using EmisTracking.Localization;
 using EmisTracking.Services.Entities;
 using EmisTracking.Services.Interfaces;
+using EmisTracking.Services.Models;
 using EmisTracking.Services.Services;
 using EmisTracking.WebApi.Filters;
 using EmisTracking.WebApi.Models.Models;
@@ -21,13 +22,18 @@ namespace EmisTracking.WebApi.Controllers
         private readonly IEntityService<Methodology> _methodologyService;
         private readonly IEntityService<EmissionSource> _emissionSourceService;
 
-        public GrossEmissionsController(IEntityService<GrossEmission> service, IMapper mapper,
-            IGrossEmissionService grossEmissionService)
+        public GrossEmissionsController(IEntityService<GrossEmission> service,
+            IGrossEmissionService grossEmissionService,
+            IEntityService<Methodology> methodologyService,
+            IEntityService<EmissionSource> emissionSourceService,
+            IMapper mapper)
         {
             _entityService = service;
             _mapper = mapper;
 
             _grossEmissionService = grossEmissionService;
+            _methodologyService = methodologyService;
+            _emissionSourceService = emissionSourceService;
         }
 
         protected override string EntityName => LangResources.Entities.GrossEmission;
@@ -84,37 +90,12 @@ namespace EmisTracking.WebApi.Controllers
                 foundEmissionSource.Name,
                 item.Month, item.Year);
 
-            return Ok(new ApiResponseModel<CalculationCheckResultViewModel>
+            return Ok(new ApiResponseModel<CalculationCheckResult>
             {
-                Data = _mapper.Map<CalculationCheckResultViewModel>(result),
+                Data = result,
                 Success = true,
                 StatusCode = System.Net.HttpStatusCode.OK
             });
         }
-
-        // _mapper.Map<TEntity>(item);
-        //    itemDto.Id = Guid.NewGuid().ToString();
-
-        //    var result = await _entityService.AddAsync(itemDto);
-
-        //    return Ok(new ApiResponseModel<string>
-        //    {
-        //        Success = true,
-        //        StatusCode = System.Net.HttpStatusCode.Created,
-        //        Data = result
-        //    });
-        //}
-
-
-        //var missingParameterModel = new MissingGrossParameterViewModel
-        //{
-        //    MethodologyId = model.MethodologyId,
-        //    MethodologyName = model.MethodologyName,
-        //    EmissionSourceId = model.EmissionSourceId,
-        //    EmissionSourceName = model.EmissionSourceName,
-        //    ParameterId = calculationRespose.Data.MissingParameter.ParameterId,
-        //    ParameterName = calculationRespose
-        //};
-
     }
 }

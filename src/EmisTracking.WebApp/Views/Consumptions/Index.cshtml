@@ -27,8 +27,7 @@
             <th scope="col">№</th>
             <th scope="col">@LangResources.Fields.ConsumptionGroup</th>
             <th scope="col">@LangResources.Fields.Mass</th>
-            <th scope="col">@LangResources.Fields.Month</th>
-            <th scope="col">@LangResources.Fields.Year</th>
+            <th scope="col">@LangResources.Fields.Period</th>
 
             @if (isAdmin || isEcologist)
             {
@@ -45,8 +44,7 @@
                     <td></td>
                     <td>@item.ConsumptionGroup.Name</td>
                     <td>@item.Mass</td>
-                    <td>@months[item.Month]</td>
-                    <td>@item.Year</td>
+                    <td>@months[item.Month] @item.Year</td>
 
                     @if (isAdmin || isEcologist)
                     {
@@ -76,7 +74,7 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
         await Html.RenderPartialAsync("_JqueryDatatable");
 
-        var columnWidths = new Queue<string>(new[] { "30%", "30%", "20%", "20%" });
+        var columnWidths = new Queue<string>(new[] { "30%", "30%", "20%" });
         if (isAdmin || isEcologist)
         {
             columnWidths.Enqueue(Constants.DefaultEditDeleteButtonsWidth);
