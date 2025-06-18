@@ -1,4 +1,5 @@
-﻿using EmisTracking.Localization;
+﻿using ClosedXML.Excel;
+using EmisTracking.Localization;
 using EmisTracking.Services.WebApi.Services;
 using EmisTracking.WebApi.Models.Models;
 using EmisTracking.WebApi.Models.ViewModels;
@@ -6,6 +7,9 @@ using EmisTracking.WebApp.Filters;
 using EmisTracking.WebApp.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -39,6 +43,7 @@ namespace EmisTracking.WebApp.Controllers
 
         protected override string CreationTitle => LangResources.Titles.EmissionSourcesCreate;
         protected override string UpdateTitle => LangResources.Titles.EmissionSourcesUpdate;
+
 
         [Authorize(Roles = Services.Constants.AdminRole)]
         [LoadLayoutDataFilter]
@@ -176,6 +181,32 @@ namespace EmisTracking.WebApp.Controllers
 
                 return View("Form", model);
             }
+        }
+
+        [HttpGet("excel/{id}")]
+        public async Task<IActionResult> ExportToExcel([FromRoute] string id)
+        {
+            var baseDirectory = AppContext.BaseDirectory;
+            var projectDirectory = Path.GetFullPath(Path.Combine(baseDirectory, "..", "..", ".."));
+
+            var filePath = Path.Combine(projectDirectory, Constants.ExcelTemplate);
+
+            using var workbook = new XLWorkbook(filePath);
+
+            var stream = new MemoryStream();
+            workbook.SaveAs(stream);
+
+            if (stream.Length == 0)
+            {
+                throw new Exception("Failed to write Excel workbook to stream.");
+            }
+
+            stream.Seek(0, SeekOrigin.Begin);
+
+            return new FileStreamResult(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+            {
+                FileDownloadName = "Выбросы.xlsx"
+            };
         }
 
         public override async Task LoadDropdownsValuesAsync(EmissionSourceViewModel model)
