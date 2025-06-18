@@ -24,10 +24,15 @@ namespace EmisTracking.Services.Services
             string emissionSourceName,
             int month, int year);
 
-        public List<GrossEmission> Calculate(string methodologyId, string emissionSourceId, string month, string year);
+        public Task<List<GrossEmission>> CalculateAsync(
+            Methodology methodology,
+            string emissionSourceId,
+            string emissionSourceName,
+            int month, int year);
     }
 
     public class GrossEmissionsService(
+        ICalculationService calculationService,
         IRepository<GrossEmission> repository,
         IRepository<MethodologyParameter> methodologyParameterRepository,
         IRepository<ParameterValue> parameterValueRepository,
@@ -38,6 +43,7 @@ namespace EmisTracking.Services.Services
         IRepository<ConsumptionGroup> consumptionGroupRepository,
         IMapper mapper) : GenericEntityService<GrossEmission>(repository, mapper), IGrossEmissionService
     {
+        private readonly ICalculationService calculationService = calculationService;
         private readonly IRepository<MethodologyParameter> _methodologyParameterRepository = methodologyParameterRepository;
         private readonly IRepository<ParameterValue> _parameterValueRepository = parameterValueRepository;
         private readonly IRepository<OperatingTime> _operatingTimeRepository = operatingTimeService;
@@ -127,14 +133,12 @@ namespace EmisTracking.Services.Services
                     .Select(i => new KeyValuePair<string, string>(i.Pollutant.Id, i.Pollutant.Name))
                     .ToList();
 
-                var serializedData = JsonConvert.SerializeObject(missingPollutantsDetails);
-
                 throw new BusinessLogicException(
                     $"{LangResources.MissingMethodologyPollutants}:\n{string.Join("; ", missingPollutantsDetails.Select(x => x.Value))}");
             }
             else
             {
-                // FIXME Log here!
+                // Additional log here!
             }
 
             var parameters = new List<CalculationParameter>();
@@ -155,6 +159,19 @@ namespace EmisTracking.Services.Services
                 }
             }
 
+            // а также параметры, не относящиеся к веществам
+            var nonSubstanceParameters = await _parameterValueRepository.GetAll(p =>
+                    p.Month == month
+                    && p.Year == year
+                    && p.SourceSubstanceId == null, includes: p => p.MethodologyParameter).ToListAsync();
+
+            if (nonSubstanceParameters.Count != 0)
+            {
+                existingSourceParameters.AddRange(nonSubstanceParameters);
+            }
+
+            // Произвести обработку по каждому
+
             foreach (var methodologyParameter in methodologyParameters)
             {
                 bool isSubstanceRelated = methodologyParameter.ParameterType == ParameterType.GasCleaningUnitPercent
@@ -167,6 +184,7 @@ namespace EmisTracking.Services.Services
                         month,
                         year,
                         existingSourceParameters,
+                        methodologyConsumptionGroups,
                         methodologySpecificIndicators,
                         isSubstanceRelated ? sourceSubstances : null);
 
@@ -186,9 +204,58 @@ namespace EmisTracking.Services.Services
             };
         }
 
-        public List<GrossEmission> Calculate(string methodologyId, string emissionSourceId, string month, string year)
+        public async Task<List<GrossEmission>> CalculateAsync(
+            Methodology methodology,
+            string emissionSourceId,
+            string emissionSourceName,
+            int month, int year)
         {
-            throw new NotImplementedException();
+            var checkResults = await CheckCalculationAsync(methodology.Id, methodology.Name, emissionSourceId, emissionSourceName, month, year);
+
+            if (!checkResults.CanBeCalculated)
+            {
+                throw new BusinessLogicException(LangResources.CantBeCalculated);
+            }
+
+            var methodologyParameters = await _methodologyParameterRepository
+                .GetAll(p => p.MethodologyId == methodology.Id)
+                .ToListAsync();
+
+            var sourceSubstances = await _sourceSubstancesRepository
+                .GetAll(s => s.EmissionSourceId == emissionSourceId && s.IsRegulated,
+                    includes: x => x.Pollutant)
+                .ToListAsync();
+
+            var grossEmissions = new List<GrossEmission>();
+
+            foreach(var substance in sourceSubstances)
+            {
+                var parameters = checkResults.Parameters.Where(p =>
+                    p.SourceSubstanceId == substance.Id || p.SourceSubstanceId == null)
+                    .ToDictionary(x =>
+                        methodologyParameters.FirstOrDefault(mp => mp.Id == x.MethodologyParameterId).FormulaName,
+                        x => x.Value);
+
+                var value = await calculationService.CalculateAsync(methodology.Formula, parameters);
+
+                var emissionToCreate = new GrossEmission
+                {
+                    CalculationDate = DateTime.Now,
+                    Mass = value,
+                    MethodologyId = methodology.Id,
+                    Methodology = methodology,
+                    Month = month,
+                    Year = year,
+                    SourceSubstance = substance,
+                    SourceSubstanceId = substance.Id,
+                };
+
+                emissionToCreate.Id = await _repository.CreateAsync(emissionToCreate);
+
+                grossEmissions.Add(emissionToCreate);
+            }
+
+            return grossEmissions;
         }
 
         private async Task<List<CalculationParameter>> FindOrCreateParameterAsync(
@@ -196,6 +263,7 @@ namespace EmisTracking.Services.Services
             MethodologyParameter parameter,
             int month, int year,
             List<ParameterValue> existingSourceParameters,
+            List<ConsumptionGroup> methodologyConsumptionGroups,
             List<SpecificIndicator> methodologySpecificIndicators,
             List<SourceSubstance> sourceSubstances)
         {
@@ -205,6 +273,12 @@ namespace EmisTracking.Services.Services
             {
                 case ParameterType.Numeric:
                     {
+                        var existingValue = await _parameterValueRepository.GetAll(o =>
+                            o.Year == year
+                            && o.Month == month
+                            && o.SourceSubstanceId == null
+                            && o.MethodologyParameterId == parameter.Id).FirstOrDefaultAsync();
+
                         var calculationParameter = await ProcessParameterAsync(
                             parameter.Id,
                             sourceSubstanceId: null,
@@ -212,7 +286,7 @@ namespace EmisTracking.Services.Services
                             parameter.Name,
                             month, year,
                             parameter.ParameterType,
-                            valueFromTable: null,
+                            valueFromTable: existingValue?.Value,
                             existingSourceParameters);
 
                         result.Add(calculationParameter);
@@ -263,16 +337,18 @@ namespace EmisTracking.Services.Services
                     {
                         foreach (var sourceSubstance in sourceSubstances)
                         {
-                            var groupsWithPollutants = methodologySpecificIndicators.Where(i =>
-                                i.Pollutant.Id == sourceSubstance.Pollutant.Id).Select(x => x.ConsumptionGroupId).ToList();
-
                             double totalMass = Constants.ZeroMass;
 
-                            foreach(var groupId in groupsWithPollutants)
+                            foreach(var group in methodologyConsumptionGroups)
                             {
-                                totalMass += await _consumptionRepository.GetAll(x =>
-                                        x.Month == month && x.Year == year && x.ConsumptionGroupId == groupId)
-                                    .SumAsync(x => x.Mass);
+                                if(methodologySpecificIndicators.Any(s =>
+                                    s.ConsumptionGroupId == group.Id
+                                    && s.PollutantId == sourceSubstance.PollutantId))
+                                {
+                                    totalMass += await _consumptionRepository.GetAll(x =>
+                                            x.Month == month && x.Year == year && x.ConsumptionGroupId == group.Id)
+                                        .SumAsync(x => x.Mass);
+                                }
                             }
 
                             var calculationParameters = await ProcessParameterAsync(
@@ -282,7 +358,7 @@ namespace EmisTracking.Services.Services
                                     parameter.Name,
                                     month, year,
                                     parameter.ParameterType,
-                                    valueFromTable: Math.Abs(totalMass - Constants.ZeroMass) > Constants.Epsilon ? totalMass : null,
+                                    valueFromTable: totalMass,
                                     existingSourceParameters);
 
                             result.Add(calculationParameters);

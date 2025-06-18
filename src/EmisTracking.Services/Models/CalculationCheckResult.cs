@@ -11,6 +11,7 @@ namespace EmisTracking.Services.Models
         public int Month { get; set; }
         public int Year { get; set; }
         public bool CanBeCalculated { get; set; }
+        public bool CalculatedSuccessfully { get; set; }
 
         public List<CalculationParameter> Parameters { get; set; }
     }

@@ -6,6 +6,7 @@ using EmisTracking.WebApi.Models.ViewModels;
 using EmisTracking.WebApp.Filters;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -124,16 +125,50 @@ namespace EmisTracking.WebApp.Controllers
         [HttpPost("finalize")]
         public async Task<IActionResult> FinalizeHandler([FromForm] CalculationFormViewModel model)
         {
+            var methodologiesResponse = await _methodologyService.GetAllAsync(loadDependencies: true);
+
+            var currentDate = DateTime.Now;
+
             var finalCalculationResponse = await _grossEmissionService.Calculate(model);
 
             if (finalCalculationResponse.Success)
             {
-                return View("CalculationResult", finalCalculationResponse.Data);
+                var calculationResultModel = new CalculationResultViewModel
+                {
+                    EmissionSourceName = model.EmissionSourceName,
+                    EmissionSourceId = model.EmissionSourceId,
+                    Month = currentDate.Month,
+                    Year = currentDate.Year,
+                    MethodologyId = model.MethodologyId,
+                    MethodologyName = methodologiesResponse.Success ?
+                        methodologiesResponse.Data.FirstOrDefault(m => m.Id == model.MethodologyId).Name
+                        : LangResources.NoValue,
+                    Methodologies = methodologiesResponse.Success ? methodologiesResponse.Data
+                        .Select(x => new DropdownItemModel(x.Id, x.ShortName)).ToList() : [],
+                    ErrorMessage = finalCalculationResponse.ErrorMessage,
+                    GrossEmissions = finalCalculationResponse.Data
+                };
+
+                return View("CalculationResult", calculationResultModel);
             }
             else
             {
-                return View(Constants.ErrorView,
-                    (errorMessage: finalCalculationResponse.ErrorMessage, controller: "GrossEmissions", action: nameof(Calculate)));
+                var pageModel = new CalculationCheckResultViewModel
+                {
+                    EmissionSourceName = model.EmissionSourceName,
+                    EmissionSourceId = model.EmissionSourceId,
+                    Month = currentDate.Month,
+                    Year = currentDate.Year,
+                    MethodologyId = model.MethodologyId,
+                    MethodologyName = methodologiesResponse.Success ?
+                        methodologiesResponse.Data.FirstOrDefault(m => m.Id == model.MethodologyId).Name
+                        : LangResources.NoValue,
+                    Methodologies = methodologiesResponse.Success ? methodologiesResponse.Data
+                        .Select(x => new DropdownItemModel(x.Id, x.ShortName)).ToList() : [],
+                    ErrorMessage = finalCalculationResponse.ErrorMessage
+                };
+
+                return View(nameof(Calculate), pageModel);
             }
         }
     }

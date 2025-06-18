@@ -1,4 +1,5 @@
 ﻿@using EmisTracking.Localization
+@using EmisTracking.WebApi.Models.Enums
 @using EmisTracking.WebApi.Models.ViewModels
 @using EmisTracking.WebApp.Helpers
 @model CalculationCheckResultViewModel
@@ -123,14 +124,82 @@
                         <td>
                             @if (!param.IsFilled)
                             {
-                                <span>ЗАПОЛНИТЬ?!</span>
-                                @* <a href="@Url.Action("FillParameter", "Parameter",
-                                    new { paramId = param.MethodologyParameterId, month = Model.Month, year = Model.Year })"
-                                   class="btn btn-warning">Заполнить</a> *@
+                                if(param.ParameterType == ParameterType.Numeric)
+                                {
+                                    <a class="btn btn-sm btn-outline-primary"
+                                    asp-controller="ParameterValues" asp-action="CreateForParameter"
+                                    asp-route-methodologyParameterId="@param.MethodologyParameterId"
+                                    asp-route-month="@Model.Month"
+                                    asp-route-year="@Model.Year"
+                                    target="_blank">
+                                        <i class="fas fa-plus"></i> @LangResources.AddButtonText <i class="fas fa-external-link-alt"></i>
+                                    </a>
+                                }
+                                else if (param.ParameterType == ParameterType.GasCleaningUnitPercent)
+                                {
+                                    <a class="btn btn-sm btn-outline-primary"
+                                    asp-controller="EmissionSources" asp-action="Item"
+                                    asp-route-methodologyParameterId="@Model.EmissionSourceId"
+                                    target="_blank">
+                                        @string.Format(LangResources.Titles.NameTemplate, Model.EmissionSourceName) <i class="fas fa-external-link-alt"></i>
+                                    </a>
+
+                                }
+                                else if (param.ParameterType == ParameterType.OperatingTime)
+                                {
+                                    <a class="btn btn-sm btn-outline-primary"
+                                    asp-controller="OperatingTimes" asp-action="CreateForEmissionSource"
+                                    asp-route-id="@Model.EmissionSourceId"
+                                    asp-route-month="@Model.Month"
+                                    asp-route-year="@Model.Year"
+                                    target="_blank">
+                                        <i class="fas fa-plus"></i> @LangResources.AddButtonText для @string.Format(LangResources.Titles.NameTemplate, Model.EmissionSourceName) <i class="fas fa-external-link-alt"></i>
+                                    </a>
+                                }
+                                else if (param.ParameterType == ParameterType.SpecificIndicator)
+                                {
+                                    <a class="btn btn-sm btn-outline-primary"
+                                    asp-controller="SpecificIndicators" asp-action="CreateForMethodologyGroups"
+                                    asp-route-id="@Model.MethodologyId"
+                                    asp-route-month="@Model.Month"
+                                    asp-route-year="@Model.Year"
+                                    target="_blank">
+                                        <i class="fas fa-plus"></i>@LangResources.AddButtonText <i class="fas fa-external-link-alt"></i>
+                                    </a>
+                                }
+                                else if (param.ParameterType == ParameterType.ConsumptionMass)
+                                {
+                                    <a class="btn btn-sm btn-outline-primary"
+                                    asp-controller="Consumptions" asp-action="CreateForMethodologyGroups"
+                                    asp-route-id="@Model.MethodologyId"
+                                    asp-route-month="@Model.Month"
+                                    asp-route-year="@Model.Year"
+                                    target="_blank">
+                                        <i class="fas fa-plus"></i>@LangResources.Titles.ConsumptionsCreate <i class="fas fa-external-link-alt"></i>
+                                    </a>
+                                }
+                                else
+                                {
+                                    <p>@LangResources.PleaseNotifyTechSupport</p>
+                                }
                             }
                             else
                             {
                                 @param.Value
+
+                                if(param.ParameterType == ParameterType.ConsumptionMass
+                                    && param.Value < 0.00001)
+                                {
+                                    <br />
+                                    <a class="btn btn-sm btn-outline-primary"
+                                       asp-controller="Consumptions" asp-action="CreateForMethodologyGroups"
+                                       asp-route-id="@Model.MethodologyId"
+                                       asp-route-month="@Model.Month"
+                                       asp-route-year="@Model.Year"
+                                       target="_blank">
+                                        <i class="fas fa-plus"></i>@LangResources.Titles.ConsumptionsCreate <i class="fas fa-external-link-alt"></i>
+                                    </a>
+                                }
                             }
                         </td>
                     </tr>

@@ -36,6 +36,33 @@ namespace EmisTracking.WebApp.Controllers
         protected override string CreationTitle => LangResources.Titles.ParameterValuesCreate;
         protected override string UpdateTitle => LangResources.Titles.ParameterValuesUpdate;
 
+        [Authorize]
+        [LoadLayoutDataFilter]
+        [HttpGet("{id}")]
+        public override async Task<IActionResult> Item([FromRoute] string id)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                return View(Constants.ErrorView, (LangResources.EmptyIdText, controller: string.Empty, action: nameof(Index)));
+            }
+
+            var response = await _apiService.GetByIdAsync(id, loadDependencies: true);
+
+            if (response.Success)
+            {
+                var methodologyResponse = await _methodologyService.GetByIdAsync(response.Data.MethodologyParameter.MethodologyId);
+
+                if (methodologyResponse.Success)
+                    response.Data.MethodologyParameter.Methodology = methodologyResponse.Data;
+
+                return View(response.Data);
+            }
+            else
+            {
+                return View(Constants.ErrorView, (errorMessage: response.ErrorMessage, controller: string.Empty, action: nameof(Index)));
+            }
+        }
+
         public override async Task LoadDropdownsValuesAsync(ParameterValueViewModel model)
         {
             var methodologyParametersResponse = await _methodologyParameterService.GetAllAsync();
@@ -53,16 +80,25 @@ namespace EmisTracking.WebApp.Controllers
 
         [Authorize]
         [LoadLayoutDataFilter]
-        [HttpGet("createForParameter/{id}")]
-        public async Task<IActionResult> CreateForEmissionSource([FromRoute] string id)
+        [HttpGet("createForParameter/{methodologyParameterId}")]
+        public async Task<IActionResult> CreateForParameter([FromRoute] string methodologyParameterId,
+            [FromQuery] int? month,
+            [FromQuery] int? year)
         {
             ViewData[AspAction] = nameof(Create);
             ViewData[Title] = CreationTitle;
 
             var model = new ParameterValueViewModel();
-            await LoadDropdownsValuesAsync(model);
+                await LoadDropdownsValuesAsync(model);
 
-            model.MethodologyParameterId = model.MethodologyParameters.Any(s => s.Value == id) ? id : null;
+            model.MethodologyParameterId = model.MethodologyParameters.Any(s =>
+                s.Value == methodologyParameterId) ? methodologyParameterId : null;
+
+            if(month.HasValue)
+                model.Month = month.Value;
+
+            if (year.HasValue)
+                model.Month = year.Value;
 
             return View(Constants.FormView, model);
         }

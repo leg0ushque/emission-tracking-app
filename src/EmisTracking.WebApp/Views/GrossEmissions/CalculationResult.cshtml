@@ -1,0 +1,61 @@
+﻿@using EmisTracking.Localization
+@using EmisTracking.WebApi.Models.Enums
+@using EmisTracking.WebApi.Models.ViewModels
+@using EmisTracking.WebApp.Helpers
+@model CalculationResultViewModel
+@{
+    ViewData["Title"] = $"{LangResources.GrossEmissionCalculation} - {Model.EmissionSourceName}";
+    var parameterTypes = EnumHelper.ParameterTypes;
+
+    var isAdmin = (ViewData[Constants.ViewDataConstants.IsAdmin] as bool?).GetValueOrDefault();
+    var months = EnumHelper.Months;
+}
+
+<p>
+    <a class="btn btn-outline-secondary" asp-controller="EmissionSources" asp-action="Item" asp-route-id="@Model.EmissionSourceId">
+        <i class="fas fa-arrow-left"></i> @string.Format(LangResources.Titles.NameTemplate, Model.EmissionSourceName)
+    </a>
+</p>
+
+@LangResources.CalculationResults:
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>@LangResources.Fields.SourceSubstance</th>
+            <th>@LangResources.Fields.Methodology</th>
+            <th>@LangResources.Fields.Mass</th>
+            <th>@LangResources.Fields.Month</th>
+            <th>@LangResources.Fields.Year</th>
+            <th>@LangResources.Fields.CalculationDate</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.GrossEmissions.Any())
+        {
+            foreach (var item in Model.GrossEmissions)
+            {
+                <tr>
+                    <td>@item.SourceSubstance.Pollutant.Name ?? @LangResources.NoValue</td>
+                    <td>@item.Methodology?.Name ?? @LangResources.NoValue</td>
+                    <td>@item.Mass</td>
+                    <td>@item.Month</td>
+                    <td>@item.Year</td>
+                    <td>@item.CalculationDate.ToShortDateString()</td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="6" class="text-center">@LangResources.NoValue</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

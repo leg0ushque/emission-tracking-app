@@ -68,7 +68,9 @@ namespace EmisTracking.WebApp.Controllers
         [Authorize]
         [LoadLayoutDataFilter]
         [HttpGet("createForEmissionSource/{id}")]
-        public async Task<IActionResult> CreateForEmissionSource([FromRoute] string id)
+        public async Task<IActionResult> CreateForEmissionSource([FromRoute] string id,
+            [FromQuery] int? month,
+            [FromQuery] int? year)
         {
             ViewData[AspAction] = nameof(Create);
             ViewData[Title] = CreationTitle;
@@ -80,8 +82,8 @@ namespace EmisTracking.WebApp.Controllers
 
             var currentDate = DateTime.Now;
 
-            model.Month = currentDate.Month;
-            model.Year = currentDate.Year;
+            model.Month = month.HasValue ? month.Value : currentDate.Month;
+            model.Year = year.HasValue ? year.Value : currentDate.Year;
 
             return View(Constants.FormView, model);
         }

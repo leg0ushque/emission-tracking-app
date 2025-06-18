@@ -5,6 +5,7 @@ using EmisTracking.WebApi.Models.ViewModels;
 using EmisTracking.WebApp.Filters;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -56,6 +57,35 @@ namespace EmisTracking.WebApp.Controllers
             var model = new SpecificIndicatorViewModel();
 
             await LoadDropdownsValuesAsync(model);
+
+            model.ConsumptionGroupId = model.ConsumptionGroups.Any(g => g.Value == id) ? id : null;
+
+            ViewData[AspAction] = nameof(Create);
+            ViewData[Title] = CreationTitle;
+
+            return View(Constants.FormView, model);
+        }
+
+        [Authorize]
+        [LoadLayoutDataFilter]
+        [HttpGet("createForMethodologyGroups/{id}")]
+        public async Task<IActionResult> CreateForMethodologyGroups([FromRoute] string id)
+        {
+            var model = new SpecificIndicatorViewModel();
+
+            var consumptionGroupsResponse = await _consumptionGroupService.GetAllAsync();
+            var pollutantsResponse = await _pollutantService.GetAllAsync();
+
+            if (consumptionGroupsResponse.Success && pollutantsResponse.Success)
+            {
+                model.ConsumptionGroups = consumptionGroupsResponse.Data.Where(g => g.MethodologyId == id)
+                    .Select(cg => new DropdownItemModel { Value = cg.Id, Name = cg.Name })
+                    .ToList();
+
+                model.Pollutants = pollutantsResponse.Data
+                    .Select(p => new DropdownItemModel { Value = p.Id, Name = p.Name })
+                    .ToList();
+            }
 
             model.ConsumptionGroupId = model.ConsumptionGroups.Any(g => g.Value == id) ? id : null;
 

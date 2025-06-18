@@ -10,6 +10,7 @@ using EmisTracking.WebApi.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace EmisTracking.WebApi.Controllers
@@ -93,6 +94,67 @@ namespace EmisTracking.WebApi.Controllers
             return Ok(new ApiResponseModel<CalculationCheckResult>
             {
                 Data = result,
+                Success = true,
+                StatusCode = System.Net.HttpStatusCode.OK
+            });
+        }
+
+
+        [Authorize]
+        [HttpPost("calculate")]
+        [BusinessLogicExceptionFilter]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public virtual async Task<IActionResult> Calculate([FromBody] CalculationCheckResultViewModel item)
+        {
+            if (item is null)
+            {
+                return CreateBadRequestResponse(ModelState);
+            }
+
+            if (string.IsNullOrEmpty(item.MethodologyId))
+            {
+                ModelState.AddModelError(nameof(item.MethodologyId), LangResources.MustBeFilledMessage);
+
+                return CreateBadRequestResponse(ModelState);
+            }
+
+            if (string.IsNullOrEmpty(item.EmissionSourceId))
+            {
+                ModelState.AddModelError(nameof(item.EmissionSourceId), LangResources.MustBeFilledMessage);
+
+                return CreateBadRequestResponse(ModelState);
+            }
+
+            var foundMethodology = await _methodologyService.GetByIdAsync(item.MethodologyId);
+            if (foundMethodology == null)
+            {
+                ModelState.AddModelError(nameof(item.MethodologyId),
+                    string.Format(LangResources.ItemNotFoundMessageTemplate, LangResources.Entities.Methodology, item.MethodologyId));
+
+                return CreateBadRequestResponse(ModelState);
+            }
+
+            var foundEmissionSource = await _emissionSourceService.GetByIdAsync(item.EmissionSourceId);
+            if (foundEmissionSource == null)
+            {
+                ModelState.AddModelError(nameof(item.MethodologyId),
+                    string.Format(LangResources.ItemNotFoundMessageTemplate, LangResources.Entities.Methodology, item.MethodologyId));
+
+                return CreateBadRequestResponse(ModelState);
+            }
+
+            var calculationResult = await _grossEmissionService.CalculateAsync(
+                foundMethodology,
+                foundEmissionSource.Id,
+                foundEmissionSource.Name,
+                item.Month,
+                item.Year);
+
+            return Ok(new ApiResponseModel<List<GrossEmissionViewModel>>
+            {
+                Data = _mapper.Map<List<GrossEmissionViewModel>>(calculationResult),
                 Success = true,
                 StatusCode = System.Net.HttpStatusCode.OK
             });

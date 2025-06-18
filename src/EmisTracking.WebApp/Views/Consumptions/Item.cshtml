@@ -1,5 +1,6 @@
 ﻿@using EmisTracking.WebApi.Models.ViewModels
 @using EmisTracking.Localization
+@using EmisTracking.WebApp.Helpers
 @model ConsumptionViewModel
 
 @{
@@ -7,6 +8,7 @@
     ViewData["Title"] = LangResources.Titles.ConsumptionsIndex;
 
     var isAdmin = (ViewData[Constants.ViewDataConstants.IsAdmin] as bool?).GetValueOrDefault();
+    var months = EnumHelper.Months;
 }
 
 @section Breadcrumb
@@ -17,8 +19,7 @@
 
 <p><strong>@LangResources.Fields.ConsumptionGroup:</strong> @Model.ConsumptionGroup.Name</p>
 <p><strong>@LangResources.Fields.Mass:</strong> @Model.Mass</p>
-<p><strong>@LangResources.Fields.Month:</strong> @Model.Month</p>
-<p><strong>@LangResources.Fields.Year:</strong> @Model.Year</p>
+<p><strong>@LangResources.Fields.Period:</strong> @months[Model.Month] @Model.Year</p>
 
 @if (isAdmin)
 {

@@ -1,12 +1,15 @@
 ﻿@using EmisTracking.WebApi.Models.ViewModels
 @using EmisTracking.Localization
+@using EmisTracking.WebApp.Helpers
 @model ParameterValueViewModel
 
 @{
+    var months = EnumHelper.Months;
     ViewData[Constants.GenerateBreadcrumb] = new();
-    ViewData["Title"] = LangResources.Titles.ParameterValuesIndex;
+    ViewData["Title"] = $"{Model.MethodologyParameter.Name} ({months[Model.Month]} {Model.Year})";
 
     var isAdmin = (ViewData[Constants.ViewDataConstants.IsAdmin] as bool?).GetValueOrDefault();
+    var paramTypes = EnumHelper.ParameterTypes;
 }
 
 @section Breadcrumb
@@ -15,9 +18,9 @@
     <li class="breadcrumb-item active">@ViewData["Title"]</li>
 }
 
-<p><strong>@LangResources.Fields.MethodologyParameter:</strong> @Model.MethodologyParameter.ParameterType</p>
-<p><strong>@LangResources.Fields.Month:</strong> @Model.Month</p>
-<p><strong>@LangResources.Fields.Year:</strong> @Model.Year</p>
+<p><strong>@LangResources.Fields.Methodology:</strong> @Model.MethodologyParameter.Methodology.ShortName</p>
+<p><strong>@LangResources.Fields.ParameterType:</strong> @paramTypes[Model.MethodologyParameter.ParameterType]</p>
+<p><strong>@LangResources.Fields.Period:</strong> @months[Model.Month] @Model.Year</p>
 <p><strong>@LangResources.Fields.Value:</strong> @Model.Value</p>
 
 @if (isAdmin)
