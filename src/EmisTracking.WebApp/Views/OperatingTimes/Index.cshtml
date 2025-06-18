@@ -13,6 +13,24 @@
     var isAdmin = (ViewData[Constants.ViewDataConstants.IsAdmin] as bool?).GetValueOrDefault();
     var isOperator = (ViewData[Constants.ViewDataConstants.IsOperator] as bool?).GetValueOrDefault();
     var months = EnumHelper.Months;
+
+    var chartSeries = new[]
+    {
+        new
+        {
+            name = sourceInfo,
+            data = Model
+                .OrderBy(r => r.Year).ThenBy(r => r.Month)
+                .Select(r => new { x = $"{r.Year}-{r.Month:D2}-01T00:00:00.000Z", y = r.Hours })
+                .ToArray()
+        }
+    };
+
+    var categories = Model
+        .OrderBy(r => r.Year).ThenBy(r => r.Month)
+        .Select(r => $"{r.Year}-{r.Month:D2}-01T00:00:00.000Z")
+        .Distinct()
+        .ToArray();
 }
 
 @section Breadcrumb
@@ -30,6 +48,68 @@
 
 @if (sourceId != null)
 {
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Время работы источика<span>/всё время</span></h5>
+
+                <!-- Line Chart -->
+                <div id="reportsChart" style="min-height: 365px;" class="">
+                </div>
+
+                <script>
+                    const series = @Html.Raw(Json.Serialize(chartSeries));
+                    const categories = @Html.Raw(Json.Serialize(categories));
+
+                    document.addEventListener("DOMContentLoaded", () => {
+                      new ApexCharts(document.querySelector("#reportsChart"), {
+                        series: series,
+                        chart: {
+                          height: 350,
+                          type: 'area',
+                          toolbar: {
+                            show: false
+                          },
+                        },
+                        markers: {
+                          size: 4
+                        },
+                        colors: ['#4154f1', '#2eca6a', '#ff771d', '#00bcd4'],
+                        fill: {
+                          type: "gradient",
+                          gradient: {
+                            shadeIntensity: 1,
+                            opacityFrom: 0.3,
+                            opacityTo: 0.4,
+                            stops: [0, 90, 100]
+                          }
+                        },
+                        dataLabels: {
+                          enabled: false
+                        },
+                        stroke: {
+                          curve: 'smooth',
+                          width: 2
+                        },
+                        xaxis: {
+                          type: 'datetime',
+                          labels: {
+                            format: 'MM/yy',
+                          },
+                          categories: categories
+                        },
+                        tooltip: {
+                          x: {
+                            format: 'MM/yy'
+                          },
+                        }
+                      }).render();
+                    });
+                </script>
+            </div>
+        </div>
+    </div>
+
     <a class="btn btn-primary" asp-action="CreateForEmissionSource" asp-controller="OperatingTimes" asp-route-id="@sourceId">
         <i class="fas fa-plus"></i>
         @LangResources.AddButtonText

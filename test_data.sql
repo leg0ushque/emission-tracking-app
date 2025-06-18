@@ -374,11 +374,11 @@ INSERT INTO [dbo].[TaxRates] ([Id], [HazardClass], [Amount], [StartDate], [EndDa
 
 
 
--- 12. Таблица: ParameterValues (Значения параметров)
+-- 14. Таблица: ParameterValues (Значения параметров)
 -- INSERT INTO ParameterValues (Id, MethodologyParameterId, Month, Year, Value, GrossEmissionId) VALUES
 -- ('GUID', 'GUID', 1, 2023, 0.0, 'GUID');
 
--- 8. Таблица: GrossEmissions (Общие выбросы)
+-- 15. Таблица: GrossEmissions (Общие выбросы)
 -- INSERT INTO GrossEmissions (Id, SourceSubstanceId, MethodologyId, Mass, Month, Year, TaxId) VALUES
 -- ('GUID', 'GUID', 'GUID', 0.0, 1, 2023, 'GUID');
 

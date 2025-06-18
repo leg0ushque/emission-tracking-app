@@ -9,12 +9,94 @@
     var isDirector = (ViewData[Constants.ViewDataConstants.IsDirector] as bool?).GetValueOrDefault();
     var isAccountant = (ViewData[Constants.ViewDataConstants.IsAccountant] as bool?).GetValueOrDefault();
     var hazClasses = EnumHelper.HazardClasses;
+
+    // группировка по классу опасности
+    var groupedData = Model
+        .GroupBy(r => r.HazardClass)
+        .ToDictionary(
+            g => g.Key,
+            g => g.OrderBy(r => r.StartDate).Select(r => new { x = r.StartDate.ToString("yyyy-MM-ddTHH:mm:ss.fffZ"), y = r.Amount }).ToArray()
+        );
+
+    var chartSeries = groupedData.Select(group => new
+    {
+        name = group.Key.ToString(), // класс опасности
+        data = group.Value // список точек X:Y
+    }).ToArray();
+
+    var categories = Model
+        .OrderBy(r => r.StartDate)
+        .Select(r => r.StartDate.ToString("yyyy-MM-ddTHH:mm:ss.fffZ"))
+        .Distinct()
+        .ToArray();
 }
 
 @section Breadcrumb
 {
     <li class="breadcrumb-item active">@ViewData["Title"]</li>
 }
+
+<div class="col-12">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Значения ставок налогов по классам опасности<span>/всё время</span></h5>
+
+            <!-- Line Chart -->
+            <div id="reportsChart" style="min-height: 365px;" class="">
+            </div>
+
+            <script>
+                const series = @Html.Raw(Json.Serialize(chartSeries));
+                const categories = @Html.Raw(Json.Serialize(categories));
+
+                document.addEventListener("DOMContentLoaded", () => {
+                  new ApexCharts(document.querySelector("#reportsChart"), {
+                    series: series,
+                    chart: {
+                      height: 350,
+                      type: 'area',
+                      toolbar: {
+                        show: false
+                      },
+                    },
+                    markers: {
+                      size: 4
+                    },
+                    colors: ['#4154f1', '#2eca6a', '#ff771d', '#00bcd4'],
+                    fill: {
+                      type: "gradient",
+                      gradient: {
+                        shadeIntensity: 1,
+                        opacityFrom: 0.3,
+                        opacityTo: 0.4,
+                        stops: [0, 90, 100]
+                      }
+                    },
+                    dataLabels: {
+                      enabled: false
+                    },
+                    stroke: {
+                      curve: 'smooth',
+                      width: 2
+                    },
+                    xaxis: {
+                      type: 'datetime',
+                      labels: {
+                        format: 'MM/yy',
+                      },
+                      categories: categories
+                    },
+                    tooltip: {
+                      x: {
+                        format: 'MM/yy'
+                      },
+                    }
+                  }).render();
+                });
+            </script>
+        </div>
+    </div>
+</div>
 
 <a class="btn btn-primary" asp-action="Create" asp-controller="TaxRates">
     <i class="fas fa-plus"></i>
