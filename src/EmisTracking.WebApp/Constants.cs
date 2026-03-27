@@ -14,6 +14,8 @@
         public const string FormView = "Form";
         public const string ErrorView = "Error";
 
+        public const string ExcelTemplate = "Выбросы.xlsx";
+
         public static class ViewDataConstants
         {
             public const string RoleInfoClaimType = "roleInfo";

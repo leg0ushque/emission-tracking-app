@@ -8,6 +8,7 @@ namespace EmisTracking.Services.WebApi.Services
 {
     public interface IGrossEmissionApiService : IBaseApiService<GrossEmissionViewModel>
     {
+        public Task<ApiResponseModel<List<GrossEmissionViewModel>>> GetBySource(string id);
         public Task<ApiResponseModel<List<GrossEmissionViewModel>>> Calculate(CalculationFormViewModel model);
         public Task<ApiResponseModel<CalculationCheckResultViewModel>> СheckCalculation(CalculationFormViewModel model);
     }
@@ -19,6 +20,11 @@ namespace EmisTracking.Services.WebApi.Services
         public GrossEmissionApiService(IHttpClientFactory httpClientFactory)
         {
             _httpClient = httpClientFactory.CreateClient(Constants.HttpClientName);
+        }
+
+        public Task<ApiResponseModel<List<GrossEmissionViewModel>>> GetBySource(string id)
+        {
+            return SendRequestAsync<List<GrossEmissionViewModel>>(HttpMethod.Get, $"{ControllerPath}/bySource/{id}");
         }
 
         public Task<ApiResponseModel<List<GrossEmissionViewModel>>> Calculate(CalculationFormViewModel model)

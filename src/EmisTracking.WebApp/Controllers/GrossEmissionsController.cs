@@ -1,4 +1,5 @@
-﻿using EmisTracking.Localization;
+﻿using ClosedXML.Excel;
+using EmisTracking.Localization;
 using EmisTracking.Services.Entities;
 using EmisTracking.Services.WebApi.Services;
 using EmisTracking.WebApi.Models.Models;
@@ -8,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -57,6 +59,26 @@ namespace EmisTracking.WebApp.Controllers
             }
         }
 
+        [HttpGet("bySource/{id}")]
+        public async Task<IActionResult> IndexBySource([FromRoute] string id)
+        {
+            var response = await _grossEmissionService.GetAllAsync(loadDependencies: true);
+
+            if (response.Success)
+            {
+                var foundEmissionSource = await _emissionSourceService.GetByIdAsync(id);
+
+                ViewData["EmissionSourceId"] = foundEmissionSource.Data?.Id;
+                ViewData["EmissionSourceName"] = foundEmissionSource.Data?.Name ?? string.Empty;
+
+                return View("Index", response.Data);
+            }
+            else
+            {
+                return View(Constants.ErrorView, (errorMessage: response.ErrorMessage, controller: string.Empty, action: nameof(Index)));
+            }
+        }
+
         [HttpGet("calculate/{emissionSourceId}")]
         public async Task<IActionResult> Calculate([FromRoute] string emissionSourceId)
         {
@@ -91,35 +113,44 @@ namespace EmisTracking.WebApp.Controllers
         [HttpPost("calculate")]
         public async Task<IActionResult> CalculateHandler([FromForm] CalculationFormViewModel model)
         {
-            var calculationResponse = await _grossEmissionService.СheckCalculation(model);
+            ApiResponseModel<CalculationCheckResultViewModel> calculationResponse = null;
 
-            if(calculationResponse.Success)
+            var existingGrossEmission = await _grossEmissionService.GetBySource(model.EmissionSourceId);
+
+            if (existingGrossEmission.Success && !existingGrossEmission.Data.Any(i => i.Month == model.Month && i.Year == model.Year))
             {
-                return View(nameof(Calculate), calculationResponse.Data); // Остаёмся на той же странице, обновляя данные
+                calculationResponse = await _grossEmissionService.СheckCalculation(model);
+
+                if (calculationResponse.Success)
+                {
+                    return View(nameof(Calculate), calculationResponse.Data); // Остаёмся на той же странице, обновляя данные
+                }
             }
             else
             {
-                var methodologiesResponse = await _methodologyService.GetAllAsync(loadDependencies: true);
-
-                var currentDate = DateTime.Now;
-
-                var pageModel = new CalculationCheckResultViewModel
-                {
-                    EmissionSourceName = model.EmissionSourceName,
-                    EmissionSourceId = model.EmissionSourceId,
-                    Month = currentDate.Month,
-                    Year = currentDate.Year,
-                    MethodologyId = model.MethodologyId,
-                    MethodologyName = methodologiesResponse.Success ?
-                        methodologiesResponse.Data.FirstOrDefault(m => m.Id == model.MethodologyId).Name
-                        : LangResources.NoValue,
-                    Methodologies = methodologiesResponse.Success ? methodologiesResponse.Data
-                        .Select(x => new DropdownItemModel(x.Id, x.ShortName)).ToList() : [],
-                    ErrorMessage = calculationResponse.ErrorMessage
-                };
-
-                return View(nameof(Calculate), pageModel);
+                calculationResponse = new ApiResponseModel<CalculationCheckResultViewModel> { ErrorMessage = LangResources.AlreadyCalculated };
             }
+
+            var methodologiesResponse = await _methodologyService.GetAllAsync(loadDependencies: true);
+
+            var currentDate = DateTime.Now;
+
+            var pageModel = new CalculationCheckResultViewModel
+            {
+                EmissionSourceName = model.EmissionSourceName,
+                EmissionSourceId = model.EmissionSourceId,
+                Month = currentDate.Month,
+                Year = currentDate.Year,
+                MethodologyId = model.MethodologyId,
+                MethodologyName = methodologiesResponse.Success ?
+                    methodologiesResponse.Data.FirstOrDefault(m => m.Id == model.MethodologyId).Name
+                    : LangResources.NoValue,
+                Methodologies = methodologiesResponse.Success ? methodologiesResponse.Data
+                    .Select(x => new DropdownItemModel(x.Id, x.ShortName)).ToList() : [],
+                ErrorMessage = calculationResponse?.ErrorMessage
+            };
+
+            return View(nameof(Calculate), pageModel);
         }
 
         [HttpPost("finalize")]
@@ -149,7 +180,11 @@ namespace EmisTracking.WebApp.Controllers
                     GrossEmissions = finalCalculationResponse.Data
                 };
 
-                return View("CalculationResult", calculationResultModel);
+
+                ViewData["EmissionSourceId"] = model.EmissionSourceId;
+                ViewData["EmissionSourceName"] = model.EmissionSourceName ?? string.Empty;
+
+                return RedirectToAction("Index", routeValues: new { id = model.EmissionSourceId });
             }
             else
             {

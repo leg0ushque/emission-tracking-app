@@ -19,6 +19,7 @@ namespace EmisTracking.WebApi.Controllers
     [Route("api/[controller]")]
     public class GrossEmissionsController : EntityController<GrossEmissionViewModel, GrossEmission>
     {
+        private readonly IEntityService<SourceSubstance> _sourceSubstanceService;
         private readonly IGrossEmissionService _grossEmissionService;
         private readonly IEntityService<Methodology> _methodologyService;
         private readonly IEntityService<EmissionSource> _emissionSourceService;
@@ -27,7 +28,8 @@ namespace EmisTracking.WebApi.Controllers
             IGrossEmissionService grossEmissionService,
             IEntityService<Methodology> methodologyService,
             IEntityService<EmissionSource> emissionSourceService,
-            IMapper mapper)
+            IMapper mapper,
+            IEntityService<SourceSubstance> sourceSubstanceService)
         {
             _entityService = service;
             _mapper = mapper;
@@ -35,9 +37,39 @@ namespace EmisTracking.WebApi.Controllers
             _grossEmissionService = grossEmissionService;
             _methodologyService = methodologyService;
             _emissionSourceService = emissionSourceService;
+            _sourceSubstanceService = sourceSubstanceService;
         }
 
         protected override string EntityName => LangResources.Entities.GrossEmission;
+
+        [Authorize]
+        [HttpGet("bySource/{emissionSourceId}")]
+        [BusinessLogicExceptionFilter]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<IActionResult> GetAllBySource([FromRoute] string emissionSourceId, [FromQuery] bool loadDependencies = false)
+        {
+            var emissionSourceSubstances = await _sourceSubstanceService.GetAllAsync(x => x.EmissionSourceId == emissionSourceId, loadDependencies);
+
+            var list = new List<GrossEmission>();
+
+            foreach(var substance in emissionSourceSubstances)
+            {
+                var emissions = await _entityService.GetAllAsync(x => x.SourceSubstanceId == substance.Id, loadDependencies);
+
+                list.AddRange(emissions);
+            }
+
+            var itemModelsList = _mapper.Map<List<GrossEmissionViewModel>>(list);
+
+            return Ok(new ApiResponseModel<List<GrossEmissionViewModel>>
+            {
+                Success = true,
+                StatusCode = System.Net.HttpStatusCode.OK,
+                Data = itemModelsList
+            });
+        }
 
         [Authorize]
         [HttpPost("checkCalculation")]

@@ -26,6 +26,7 @@ namespace EmisTracking.WebApp.Controllers
         [HttpGet("")]
         public virtual async Task<IActionResult> Index()
         {
+
             var response = await _apiService.GetAllAsync(loadDependencies: true);
 
             if (response.Success)

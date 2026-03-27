@@ -48,6 +48,7 @@ namespace EmisTracking.Localization
         public const string IncorrectRole = "Неправильная роль";
         public const string RememberPassword = "Пожалуйста, запомните вводимый пароль. У Вас не будет другой возможности его увидеть!";
         public const string GrossEmissionCalculation = "Подсчёт валового выброса";
+        public const string AlreadyCalculated = "Валовые выбросы за выбранный период уже подсчитаны!";
         public const string PleaseNotifyTechSupport = "Ошибка. Пожалуйста, обратитесь в техподдержку!";
 
         public const string AuthUserNotFoundErrorMessageTemplate = "Пользователь {0} не найден.";
@@ -340,6 +341,7 @@ namespace EmisTracking.Localization
             public const string GrossEmissionsIndex = "Валовые выбросы";
             public const string GrossEmissionsCreate = "Добавление валового выброса";
             public const string GrossEmissionsUpdate = "Изменение валового выброса";
+            public const string GrossEmissionsСalculate = "Подсчёт валовых выбросов";
 
             // Tax Rates and Taxes
             public const string TaxRatesList = "Список ставок налога";

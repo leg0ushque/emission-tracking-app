@@ -243,14 +243,15 @@ namespace EmisTracking.Services.Services
                     CalculationDate = DateTime.Now,
                     Mass = value,
                     MethodologyId = methodology.Id,
-                    Methodology = methodology,
                     Month = month,
                     Year = year,
-                    SourceSubstance = substance,
                     SourceSubstanceId = substance.Id,
                 };
 
                 emissionToCreate.Id = await _repository.CreateAsync(emissionToCreate);
+                emissionToCreate.Methodology = methodology;
+                emissionToCreate.SourceSubstance = substance;
+
 
                 grossEmissions.Add(emissionToCreate);
             }
